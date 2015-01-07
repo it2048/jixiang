@@ -5,7 +5,7 @@
 
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-        'name' => '风际游戏官网-后台系统',
+        'name' => '吉祥甘孜-后台系统',
         'language'=>'zh_cn',
         'defaultController' => 'v0',
 	// preloading 'log' component
@@ -23,8 +23,8 @@ return array(
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
             'gii' => array(
-                'class' => 'system.gii.GiiModule',
-                'password' => '654321',
+//                'class' => 'system.gii.GiiModule',
+//                'password' => '654321',
                 // If removed, Gii defaults to localhost only. Edit carefully to taste.
                 //'ipFilters' => array('127.0.0.1'),
             )
@@ -77,7 +77,7 @@ return array(
         ),
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
-			'errorAction'=>'home/error',
+			//'errorAction'=>'home/error',
 		),
 		'log'=>array(
 			'class'=>'CLogRouter',
@@ -100,6 +100,5 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'account_url'=>'http://10.221.8.154/web/index.php',
 	),
 );
