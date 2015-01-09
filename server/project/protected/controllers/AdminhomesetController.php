@@ -213,19 +213,66 @@ class AdminhomesetController extends AdminSet
         $id = Yii::app()->getRequest()->getParam("id", ""); //编号
         $type = Yii::app()->getRequest()->getParam("news_type", 1); //类型
         $status = Yii::app()->getRequest()->getParam("news_status", 1); //状态
-        $title = Yii::app()->getRequest()->getParam("news_title", ""); //标题
-        $content = Yii::app()->getRequest()->getParam("news_content", ""); //内容
+        $title = Yii::app()->getRequest()->getParam("news_title", ""); //用户名
+        $content = Yii::app()->getRequest()->getParam("news_content", ""); //用户名
+        $source = Yii::app()->getRequest()->getParam("news_source", ""); //来源
+        $child_list = Yii::app()->getRequest()->getParam("news_relationid", ""); //关联
+
+        $comment = Yii::app()->getRequest()->getParam("news_comment", ""); //关联
+        $han = Yii::app()->getRequest()->getParam("news_han", ""); //关联
+        $like = Yii::app()->getRequest()->getParam("news_like", ""); //关联
+        $hate = Yii::app()->getRequest()->getParam("news_hate", ""); //关联
+
+        $img_url = Yii::app()->getRequest()->getParam("news_img", "");
         $username = $this->getUserName(); //用户名
 
-        if($id!==""&&$username!=""&&$title!=""&&$content!="")
+        $model = AppJxNews::model()->findByPk($id);
+        if($img_url=="")
         {
-            $model = AppJxNews::model()->findByPk($id);
+            if(!empty($_FILES['news_up']['name']))
+            {
+                $img = array("png","jpg");
+                $_tmp_pathinfo = pathinfo($_FILES['news_up']['name']);
+                if (in_array(strtolower($_tmp_pathinfo['extension']),$img)) {
+                    //设置图片路径
+                    $flname = Yii::app()->params['filetmpcache'].'/'.time().".".md5($username).".".$_tmp_pathinfo['extension'];
+                    $dest_file_path = Yii::app()->basePath . '/../public/upload'.$flname;
+                    $filepathh = dirname($dest_file_path);
+                    if (!file_exists($filepathh))
+                        $b_mkdir = mkdir($filepathh, 0777, true);
+                    else
+                        $b_mkdir = true;
+                    if ($b_mkdir && is_dir($filepathh)) {
+                        //转存文件到 $dest_file_path路径
+                        if (move_uploaded_file($_FILES['news_up']['tmp_name'], $dest_file_path)) {
+                            $img_url ='/public/upload'.$flname;
+                            if(strpos($model->img_url,"http://")===false)
+                                @unlink(Yii::app()->basePath . '/..'.$model->img_url);
+                        }
+                    }
+                } else {
+                    $msg["msg"] = '上传的文件格式只能为jpg,png';
+                    $msg["code"] = 3;
+                }
+            }
+        }
+
+        if($id!==""&&$username!=""&&$img_url!="")
+        {
             $model->title = $title;
             $model->type = $type;
             $model->status = $status;
             $model->content = $content;
-            $model->add_time = time();
-            $model->add_user = $username;
+            $model->addtime = time();
+            $model->source = $source;
+            $model->child_list = $child_list;
+            $model->comment = $comment;
+            $model->han = $han;
+            $model->like = $like;
+            $model->hate = $hate;
+            $model->img_url= $img_url;
+
+
             if($model->save())
             {
                 $this->msgsucc($msg);

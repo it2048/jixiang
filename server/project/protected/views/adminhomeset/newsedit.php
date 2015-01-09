@@ -24,8 +24,12 @@
                 <input  name="news_hate" type="text" class="required" size="2" value="<?php echo $models->hate;?>">
             </p>
             <p class="nowrap">
+                <label>图片地址：</label>
+                <input  name="news_img" type="text" class="textInput" size="50" value="<?php echo $models->img_url;?>">
+            </p>
+            <p class="nowrap">
                 <label>封面图片上传：</label>
-                <input name="news_img" type="file">
+                <input name="news_up" type="file">
             </p>
             <p class="nowrap">
                 <label>标题：</label>
@@ -34,7 +38,7 @@
             </p>
             <p class="nowrap">
                 <label>来源：</label>
-                <input  name="news_source" type="text" class="textInput required" size="50" value="">
+                <input  name="news_source" type="text" class="textInput required" size="50" value="<?php echo $models->source;?>">
             </p>
             <p class="nowrap">
                 <label>关联新闻编号：</label>
