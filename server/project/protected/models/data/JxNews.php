@@ -13,6 +13,11 @@
  * @property integer $type
  * @property string $child_list
  * @property integer $comment
+ * @property integer $like
+ * @property integer $han
+ * @property integer $hate
+ * @property string $source
+ * @property integer $status
  */
 class JxNews extends CActiveRecord
 {
@@ -42,13 +47,14 @@ class JxNews extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, addtime, adduser, title, content, img_url, type', 'required'),
-			array('id, addtime, type, comment', 'numerical', 'integerOnly'=>true),
+			array('addtime, adduser', 'required'),
+			array('addtime, type, comment, like, han, hate, status', 'numerical', 'integerOnly'=>true),
 			array('adduser', 'length', 'max'=>32),
-			array('title, img_url, child_list', 'length', 'max'=>128),
+			array('title, img_url, child_list, source', 'length', 'max'=>128),
+			array('content', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, addtime, adduser, title, content, img_url, type, child_list, comment', 'safe', 'on'=>'search'),
+			array('id, addtime, adduser, title, content, img_url, type, child_list, comment, like, han, hate, source, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -78,6 +84,11 @@ class JxNews extends CActiveRecord
 			'type' => 'Type',
 			'child_list' => 'Child List',
 			'comment' => 'Comment',
+			'like' => 'Like',
+			'han' => 'Han',
+			'hate' => 'Hate',
+			'source' => 'Source',
+			'status' => 'Status',
 		);
 	}
 
@@ -101,6 +112,11 @@ class JxNews extends CActiveRecord
 		$criteria->compare('type',$this->type);
 		$criteria->compare('child_list',$this->child_list,true);
 		$criteria->compare('comment',$this->comment);
+		$criteria->compare('like',$this->like);
+		$criteria->compare('han',$this->han);
+		$criteria->compare('hate',$this->hate);
+		$criteria->compare('source',$this->source,true);
+		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
