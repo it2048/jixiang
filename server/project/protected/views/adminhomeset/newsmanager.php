@@ -36,7 +36,7 @@
                 <td title="<?php echo strip_tags($value['content']); ?>"><?php echo mb_substr(strip_tags($value['content']),0,50,"utf-8");?></td>
                 <td><?php echo date("Y-m-d H:i:s", $value['addtime']); ?></td>
                 <td><?php echo $value['adduser']; ?></td>
-                <td><a href="<?php echo $value['img_url']; ?>" class="btnView" target="_blank">图片查看</a></td>
+                <td><a href="<?php echo Yii::app()->request->baseUrl.$value['img_url']; ?>" class="btnView" target="_blank">图片查看</a></td>
                 <td><?php echo TmpList::$news_list[$value['type']]; ?></td>
                 <td><?php echo $value['child_list']; ?></td>
                 <td><?php echo $value['comment']; ?></td>
