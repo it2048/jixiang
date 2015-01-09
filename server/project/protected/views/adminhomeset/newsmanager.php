@@ -5,10 +5,10 @@
 <div class="pageContent">
     <div class="panelBar">
         <ul class="toolBar">
-            <li><a class="add" mask="true" height="560" width="600" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsadd');?>"><span>添加文章</span></a></li>
+            <li><a class="add" mask="true" height="560" width="600" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsadd');?>"><span>添加</span></a></li>
         </ul>
     </div>
-    <table class="table" width="1020" layoutH="76">
+    <table class="table" width="1040" layoutH="76">
         <thead>
         <tr>
             <th width="20">编号</th>
@@ -16,11 +16,16 @@
             <th width="180">内容</th>
             <th width="60">添加时间</th>
             <th width="60">添加人</th>
-            <th width="40">状态</th>
-            <th width="40">类型</th>
-            <th width="40">是否发布</th>
+            <th width="40">封面查看</th>
+            <th width="40">新闻类型</th>
+            <th width="40">关联文章</th>
+            <th width="40">评论数量</th>
+            <th width="40">点赞数量</th>
+            <th width="40">汗数量</th>
+            <th width="40">厌恶数量</th>
+            <th width="40">新闻来源</th>
+            <th width="40">是否为广告</th>
             <th width="80">编辑</th>
-            <th width="30">预览</th>
         </tr>
         </thead>
         <tbody>
@@ -29,18 +34,21 @@
                 <td><?php echo $value['id']; ?></td>
                 <td title="<?php echo $value['title']; ?>"><?php echo $value['title']; ?></td>
                 <td title="<?php echo strip_tags($value['content']); ?>"><?php echo mb_substr(strip_tags($value['content']),0,50,"utf-8");?></td>
-                <td><?php echo date("Y-m-d H:i:s", $value['add_time']); ?></td>
-                <td><?php echo $value['add_user']; ?></td>
-                <td><?php echo $value['status']==0?"普通":"<p style='color:red;margin-top:3px;'>置顶</p>"; ?></td>
-                <td><?php $arr = array("新闻","公告","活动","新手指导","系统玩法","特色玩法"); echo $arr[$value['type']]; ?></td>
-                <td><?php echo $value['publish']==1?"已发布":"<p style='color:red;margin-top:3px;'>未发布</p>"; ?></td>
+                <td><?php echo date("Y-m-d H:i:s", $value['addtime']); ?></td>
+                <td><?php echo $value['adduser']; ?></td>
+                <td><a href="<?php echo $value['img_url']; ?>" class="btnView" target="_blank">图片查看</a></td>
+                <td><?php echo TmpList::$news_list[$value['type']]; ?></td>
+                <td><?php echo $value['child_list']; ?></td>
+                <td><?php echo $value['comment']; ?></td>
+                <td><?php echo $value['like']; ?></td>
+                <td><?php echo $value['han']; ?></td>
+                <td><?php echo $value['hate']; ?></td>
+                <td><?php echo $value['source']; ?></td>
+                <td><?php echo $value['status']==1?"普通":"广告"; ?></td>
                 <td>
                     <a title="确实要删除这条记录吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsdel',array('id'=>$value['id'])); ?>" class="btnDel">删除</a>
                     <a title="编辑" height="560" mask="true" width="620" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsedit',array('id'=>$value['id'])); ?>" class="btnEdit">编辑</a>
-                    <a title="确实要<?php echo $value['publish']==0?"发布":"取消发布"; ?>这条记录吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php
-                    echo Yii::app()->createAbsoluteUrl('adminhomeset/publish',array('id'=>$value['id'])); ?>" class="<?php echo $value['publish']==0?"btnSelect":"btnAttach"; ?>"><?php echo $value['publish']==0?"发布":"取消发布"; ?></a>
                 </td>
-                <td><a href="<?php echo Yii::app()->createAbsoluteUrl('home/articletmp',array('id'=>$value['id'])); ?>" class="btnLook" target="_blank">预览</a></td>
             </tr>
         <?php }?>
         </tbody>

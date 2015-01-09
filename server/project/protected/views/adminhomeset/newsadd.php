@@ -2,26 +2,35 @@
     <form method="post" action="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newssave'); ?>" class="pageForm required-validate" onsubmit="return iframeCallback(this, viData);" enctype="multipart/form-data">
         <div class="pageFormContent" layoutH="56">
             <p>
-                <label>文章类型：</label>
+                <label>新闻类型：</label>
                 <select class="combox" name="news_type">
-                    <option value="0" selected>新闻</option>
-                    <option value="1">公告</option>
-                    <option value="2">活动</option>
-                    <option value="3">新手指导</option>
-                    <option value="4">系统玩法</option>
-                    <option value="5">特色玩法</option>
+                    <?php foreach(TmpList::$news_list as $k=>$val){
+                        printf('<option value="%s">%s</option>',$k,$val);
+                    } ?>
                 </select>
             </p>
             <p>
-                <label>文章状态：</label>
+                <label>新闻状态：</label>
                 <select class="combox" name="news_status">
-                    <option value="0" selected>普通</option>
+                    <option value="0">普通</option>
                     <option value="1">置顶</option>
                 </select>
             </p>
             <p class="nowrap">
+                <label>封面图片上传：</label>
+                <input name="news_img" type="file">
+            </p>
+            <p class="nowrap">
                 <label>标题：</label>
                 <input  name="news_title" type="text" class="textInput required" size="50" value="">
+            </p>
+            <p class="nowrap">
+                <label>来源：</label>
+                <input  name="news_source" type="text" class="textInput required" size="50" value="">
+            </p>
+            <p class="nowrap">
+                <label>关联新闻编号：</label>
+                <input name="news_relationid" class="tagsck" type="text" size="50" value=""/><span class="info">以“,”号分割</span>
             </p>
             <p>
                 <textarea class="editor" upImgUrl="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/imgupload'); ?>" upImgExt="jpg,jpeg,gif,png" name="news_content" rows="21" cols="79" >文章内容</textarea>

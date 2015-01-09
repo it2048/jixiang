@@ -13,11 +13,11 @@ class AdminhomesetController extends AdminSet
         $pages['countPage'] = Yii::app()->getRequest()->getParam("countPage", 0); //总共多少记录
         $pages['numPerPage'] = Yii::app()->getRequest()->getParam("numPerPage", 50); //每页多少条数据
         $criteria = new CDbCriteria;
-        $pages['countPage'] = AppRsNews::model()->count($criteria);
+        $pages['countPage'] = AppJxNews::model()->count($criteria);
         $criteria->limit = $pages['numPerPage'];
         $criteria->offset = $pages['numPerPage'] * ($pages['pageNum'] - 1);
         $criteria->order = 'id DESC';
-        $allList = AppRsNews::model()->findAll($criteria);
+        $allList = AppJxNews::model()->findAll($criteria);
         $this->renderPartial('newsmanager', array(
             'models' => $allList,
             'pages' => $pages),false,true);
@@ -41,17 +41,47 @@ class AdminhomesetController extends AdminSet
         $status = Yii::app()->getRequest()->getParam("news_status", 1); //状态
         $title = Yii::app()->getRequest()->getParam("news_title", ""); //用户名
         $content = Yii::app()->getRequest()->getParam("news_content", ""); //用户名
+        $source = Yii::app()->getRequest()->getParam("news_source", ""); //来源
+        $child_list = Yii::app()->getRequest()->getParam("news_relationid", ""); //关联
         $username = $this->getUserName(); //用户名
-
-        if($username!=""&&$title!=""&&$content!="")
+        $img_url = "";
+        if(!empty($_FILES['news_img']['name']))
         {
-            $model = new AppRsNews();
+            $img = array("png","jpg");
+            $_tmp_pathinfo = pathinfo($_FILES['news_img']['name']);
+            if (in_array(strtolower($_tmp_pathinfo['extension']),$img)) {
+                //设置图片路径
+                $flname = Yii::app()->params['filetmpcache'].'/'.time().".".md5($username).".".$_tmp_pathinfo['extension'];
+                $dest_file_path = Yii::app()->basePath . '/../public/upload'.$flname;
+                $filepathh = dirname($dest_file_path);
+                if (!file_exists($filepathh))
+                    $b_mkdir = mkdir($filepathh, 0777, true);
+                else
+                    $b_mkdir = true;
+                if ($b_mkdir && is_dir($filepathh)) {
+                    //转存文件到 $dest_file_path路径
+                    if (move_uploaded_file($_FILES['news_img']['tmp_name'], $dest_file_path)) {
+                        $img_url ='/public/upload'.$flname;
+                    }
+                }
+            } else {
+                $msg["msg"] = '上传的文件格式只能为jpg,png';
+                $msg["code"] = 3;
+            }
+        }
+
+        if($username!=""&&$title!="")
+        {
+            $model = new AppJxNews();
             $model->title = $title;
             $model->type = $type;
             $model->status = $status;
             $model->content = $content;
-            $model->add_time = time();
-            $model->add_user = $username;
+            $model->addtime = time();
+            $model->adduser = $username;
+            $model->img_url = $img_url;
+            $model->source = $source;
+            $model->child_list = $child_list;
             if($model->save())
             {
                 $this->msgsucc($msg);
@@ -60,7 +90,6 @@ class AdminhomesetController extends AdminSet
             {
                 $msg['msg'] = "存入数据库异常";
             }
-
         }else{
             $msg['msg'] = "必填项不能为空";
         }
@@ -101,7 +130,7 @@ class AdminhomesetController extends AdminSet
         $id = Yii::app()->getRequest()->getParam("id", 0); //用户名
         $model = array();
         if($id!="")
-            $model = AppRsNews::model()->findByPk($id);
+            $model = AppJxNews::model()->findByPk($id);
         $this->renderPartial('newsedit',array("models"=>$model));
     }
     
@@ -162,7 +191,7 @@ class AdminhomesetController extends AdminSet
             if ($b_mkdir && is_dir($filepathh)) {
                 //转存文件到 $dest_file_path路径
                 if (move_uploaded_file($_FILES[$inputName]['tmp_name'], $dest_file_path)) {
-                    $img_url ='http://rs.windplay.cn/public/'.$flname;
+                    $img_url ='http://it2048.cn/api/jixiang/server/project/public/'.$flname;
                     $msg="{'url':'".$img_url."','localname':'".$this->jsonString($localName)."','id':1}";
                 }
             } 
@@ -190,7 +219,7 @@ class AdminhomesetController extends AdminSet
 
         if($id!==""&&$username!=""&&$title!=""&&$content!="")
         {
-            $model = AppRsNews::model()->findByPk($id);
+            $model = AppJxNews::model()->findByPk($id);
             $model->title = $title;
             $model->type = $type;
             $model->status = $status;
@@ -208,6 +237,28 @@ class AdminhomesetController extends AdminSet
 
         }else{
             $msg['msg'] = "必填项不能为空";
+        }
+        echo json_encode($msg);
+    }
+
+    /**
+     * 删除新闻
+     */
+    public function actionNewsDel()
+    {
+        $msg = $this->msgcode();
+        $id = Yii::app()->getRequest()->getParam("id", 0); //用户名
+        if($id!=0)
+        {
+            if(AppJxNews::model()->deleteByPk($id))
+            {
+                $this->msgsucc($msg);
+            }
+            else
+                $msg['msg'] = "数据删除失败";
+        }else
+        {
+            $msg['msg'] = "id不能为空";
         }
         echo json_encode($msg);
     }

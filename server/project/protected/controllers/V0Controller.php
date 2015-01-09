@@ -10,9 +10,9 @@ class V0Controller extends Controller
     {
         $sign =Yii::app()->getRequest()->getParam("sign");
         $data =Yii::app()->getRequest()->getParam("data");
-        $solt = "xFlaSd!$&258";
+        $salt = "xFlaSd!$&258";
         $arr = array("code"=>1,"msg"=>"Error","data"=>null);
-        if($sign==md5($data.$solt))
+        if($sign==md5($data.$salt))
         {
             $arr['code'] = 0;
             $arr['msg'] = "验证成功";
@@ -29,9 +29,9 @@ class V0Controller extends Controller
             'playerId' => 3,
             'playerName' => 4
         );
-        $solt = "xFlaSd!$&258";
+        $salt = "xFlaSd!$&258";
         $data = json_encode($params);
-        $sign = md5($data.$solt);
+        $sign = md5($data.$salt);
         $rtnList = array(
             "data"=>$data,
             "sign"=>$sign

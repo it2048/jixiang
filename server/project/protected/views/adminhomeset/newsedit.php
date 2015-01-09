@@ -2,30 +2,46 @@
     <form method="post" action="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsupdate'); ?>" class="pageForm required-validate" onsubmit="return iframeCallback(this, viData);" enctype="multipart/form-data">
         <div class="pageFormContent" layoutH="56">
             <p>
-                <label>文章类型：</label>
+                <label>新闻类型：</label>
                 <select class="combox" name="news_type">
-                    <option value="0" <?php echo $models->type==0?"selected":"";?>>新闻</option>
-                    <option value="1" <?php echo $models->type==1?"selected":"";?>>公告</option>
-                    <option value="2" <?php echo $models->type==2?"selected":"";?>>活动</option>
-                    <option value="3" <?php echo $models->type==3?"selected":"";?>>新手指导</option>
-                    <option value="4" <?php echo $models->type==4?"selected":"";?>>系统玩法</option>
-                    <option value="5" <?php echo $models->type==5?"selected":"";?>>特色玩法</option>
+                    <?php foreach(TmpList::$news_list as $k=>$val){
+                        printf('<option value="%s" %s>%s</option>',$k,$models->type==0?"selected":"",$val);
+                    } ?>
                 </select>
             </p>
             <p>
-                <label>文章状态：</label>
+                <label>新闻状态：</label>
                 <select class="combox" name="news_status">
                     <option value="0" <?php echo $models->status==0?"selected":"";?>>普通</option>
                     <option value="1" <?php echo $models->status==1?"selected":"";?>>置顶</option>
                 </select>
             </p>
             <p class="nowrap">
+                <label>评论,赞,汗,厌：</label>
+                <input  name="news_comment" type="text" class="required" size="2" value="<?php echo $models->comment;?>">
+                <input  name="news_like" type="text" class="required" size="2" value="<?php echo $models->like;?>">
+                <input  name="news_han" type="text" class="required" size="2" value="<?php echo $models->han;?>">
+                <input  name="news_hate" type="text" class="required" size="2" value="<?php echo $models->hate;?>">
+            </p>
+            <p class="nowrap">
+                <label>封面图片上传：</label>
+                <input name="news_img" type="file">
+            </p>
+            <p class="nowrap">
                 <label>标题：</label>
                 <input  name="news_title" type="text" class="textInput required" size="50" value="<?php echo $models->title;?>">
                 <input  name="id" type="hidden" value="<?php echo $models->id;?>">
             </p>
+            <p class="nowrap">
+                <label>来源：</label>
+                <input  name="news_source" type="text" class="textInput required" size="50" value="">
+            </p>
+            <p class="nowrap">
+                <label>关联新闻编号：</label>
+                <input name="news_relationid" class="tagsck" type="text" size="50" value="<?php echo $models->child_list;?>"/><span class="info">以“,”号分割</span>
+            </p>
             <p>
-                <textarea class="editor" upImgUrl="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/imgupload'); ?>" upImgExt="jpg,jpeg,gif,png" name="news_content" rows="21" cols="79"><?php echo $models->content;?></textarea>
+                <textarea class="editor" upImgUrl="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/imgupload'); ?>" upImgExt="jpg,jpeg,gif,png" name="news_content" rows="21" cols="79" ><?php echo $models->content;?></textarea>
             </p>
         </div>
         <div class="formBar">
