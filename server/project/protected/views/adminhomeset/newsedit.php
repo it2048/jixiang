@@ -5,7 +5,7 @@
                 <label>新闻类型：</label>
                 <select class="combox" name="news_type">
                     <?php foreach(TmpList::$news_list as $k=>$val){
-                        printf('<option value="%s" %s>%s</option>',$k,$models->type==0?"selected":"",$val);
+                        printf('<option value="%s" %s>%s</option>',$k,$models->type==$k?"selected":"",$val);
                     } ?>
                 </select>
             </p>

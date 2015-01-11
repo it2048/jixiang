@@ -1,6 +1,5 @@
-
 CREATE TABLE IF NOT EXISTS `jx_news` (
-  `id` int(11) NOT NULL COMMENT '自增编号',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增编号',
   `addtime` int(11) NOT NULL COMMENT '添加时间',
   `adduser` varchar(32) NOT NULL COMMENT '添加用户',
   `title` varchar(128) NOT NULL COMMENT '标题',
@@ -13,5 +12,7 @@ CREATE TABLE IF NOT EXISTS `jx_news` (
   `han` int(11) DEFAULT NULL COMMENT '汗数',
   `hate` int(11) DEFAULT NULL COMMENT '厌恶数',
   `source` varchar(128) DEFAULT NULL COMMENT '来源',
-  `status` int(11) DEFAULT NULL COMMENT '0表示普通，1为置顶(广告)'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='新闻列表';
+  `status` int(11) DEFAULT NULL COMMENT '0表示普通，1为置顶(广告)',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='新闻列表' AUTO_INCREMENT=1 ;
