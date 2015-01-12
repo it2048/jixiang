@@ -1,0 +1,594 @@
+2015/01/07 16:56:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "login"。' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('login')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jixiang/server/project/index.php/login
+---
+2015/01/07 16:57:36 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "login"。' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('login')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jixiang/server/project/index.php/login
+---
+2015/01/07 16:57:37 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "login"。' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('login')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jixiang/server/project/index.php/login
+---
+2015/01/07 16:57:58 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "login"。' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('login')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jixiang/server/project/index.php/login
+---
+2015/01/07 16:57:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "login"。' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('login')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jixiang/server/project/index.php/login
+---
+2015/01/07 16:57:59 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "login"。' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('login')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jixiang/server/project/index.php/login
+---
+2015/01/07 16:58:19 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "login/index"。' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('login/index')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jixiang/server/project/index.php/login/index
+---
+2015/01/07 17:30:01 [error] [exception.CException] exception 'CException' with message 'CAssetManager.basePath "D:\xampp\htdocs\jixiang\server\project\assets" 是无效的. 请确定它是一个可被 Web server process 写入资料的目录.' in D:\xampp\htdocs\yii\framework\web\CAssetManager.php:138
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CAssetManager.php(123): CAssetManager->setBasePath('D:\xampp\htdocs...')
+#1 D:\xampp\htdocs\yii\framework\web\CAssetManager.php(217): CAssetManager->getBasePath()
+#2 D:\xampp\htdocs\yii\framework\gii\GiiModule.php(142): CAssetManager->publish('D:\xampp\htdocs...')
+#3 D:\xampp\htdocs\yii\framework\base\CComponent.php(111): GiiModule->getAssetsUrl()
+#4 D:\xampp\htdocs\yii\framework\base\CModule.php(105): CComponent->__get('assetsUrl')
+#5 D:\xampp\htdocs\yii\framework\gii\views\layouts\main.php(5): CModule->__get('assetsUrl')
+#6 D:\xampp\htdocs\yii\framework\web\CBaseController.php(126): require('D:\xampp\htdocs...')
+#7 D:\xampp\htdocs\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('D:\xampp\htdocs...', Array, true)
+#8 D:\xampp\htdocs\yii\framework\web\widgets\CContentDecorator.php(76): CBaseController->renderFile('D:\xampp\htdocs...', Array, true)
+#9 D:\xampp\htdocs\yii\framework\web\widgets\CContentDecorator.php(54): CContentDecorator->decorate('<div class="con...')
+#10 D:\xampp\htdocs\yii\framework\web\widgets\COutputProcessor.php(44): CContentDecorator->processOutput('<div class="con...')
+#11 D:\xampp\htdocs\yii\framework\web\CBaseController.php(206): COutputProcessor->run()
+#12 D:\xampp\htdocs\yii\framework\web\CBaseController.php(300): CBaseController->endWidget('CContentDecorat...')
+#13 D:\xampp\htdocs\yii\framework\gii\views\layouts\column1.php(7): CBaseController->endContent()
+#14 D:\xampp\htdocs\yii\framework\web\CBaseController.php(126): require('D:\xampp\htdocs...')
+#15 D:\xampp\htdocs\yii\framework\web\CBaseController.php(95): CBaseController->renderInternal('D:\xampp\htdocs...', Array, true)
+#16 D:\xampp\htdocs\yii\framework\web\CController.php(784): CBaseController->renderFile('D:\xampp\htdocs...', Array, true)
+#17 D:\xampp\htdocs\yii\framework\gii\controllers\DefaultController.php(47): CController->render('login', Array)
+#18 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): DefaultController->actionLogin()
+#19 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#20 D:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#21 D:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#22 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#23 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii/default/log...')
+#24 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#25 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#26 {main}
+REQUEST_URI=/jixiang/server/project/index.php/gii/default/login
+---
+2015/01/11 16:45:59 [error] [php] PDO::__construct(): MySQL server has gone away (D:\xampp\htdocs\yii\framework\db\CDbConnection.php:423)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive()
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CWebApplication->getComponent()
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CWebApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): AppJxNews->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct()
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\JxNews.php(31): model()
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppJxNews.php(18): model()
+#9 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminhomesetController.php(16): model()
+#10 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminhomesetController->actionNewsManager()
+#11 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#12 D:\xampp\htdocs\yii\framework\web\filters\CFilterChain.php(133): AdminhomesetController->runAction()
+#13 D:\xampp\htdocs\jixiang\server\project\protected\components\AdminSet.php(32): CFilterChain->run()
+#14 D:\xampp\htdocs\yii\framework\web\filters\CInlineFilter.php(58): AdminhomesetController->filterAuthCheck()
+#15 D:\xampp\htdocs\yii\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#16 D:\xampp\htdocs\yii\framework\web\CController.php(291): CFilterChain->run()
+#17 D:\xampp\htdocs\yii\framework\web\CController.php(265): AdminhomesetController->runActionWithFilters()
+#18 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): AdminhomesetController->run()
+#19 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#20 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#21 D:\xampp\htdocs\jixiang\server\project\index.php(13): CWebApplication->run()
+REQUEST_URI=/jixiang/server/project/index.php/adminhomeset/newsmanager?_=1420991146474
+in D:\xampp\htdocs\jixiang\server\project\protected\models\data\JxNews.php (31)
+in D:\xampp\htdocs\jixiang\server\project\protected\models\AppJxNews.php (18)
+in D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminhomesetController.php (16)
+2015/01/11 17:32:58 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'jixiang.rs_admin' doesn't exist. The SQL statement executed was: SHOW FULL COLUMNS FROM `rs_admin`.
+in D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php (100)
+in D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php (18)
+in D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php (18)
+2015/01/11 17:32:58 [error] [exception.CDbException] exception 'CDbException' with message '数据库中无法找到 active record class "AppRsAdmin" 对应的 table "rs_admin".' in D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php:2310
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(AppRsAdmin))
+#1 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): CActiveRecord::model('AppRsAdmin')
+#2 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): RsAdmin::model('AppRsAdmin')
+#3 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): AppRsAdmin::model()
+#4 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#5 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#6 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#7 D:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#8 D:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#9 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#10 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('adminlogin/logi...')
+#11 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#12 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#13 {main}
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+HTTP_REFERER=http://127.0.0.1/jixiang/server/project/index.php/adminlogin/index
+---
+2015/01/11 17:38:38 [error] [php] PDO::__construct(): MySQL server has gone away (D:\xampp\htdocs\yii\framework\db\CDbConnection.php:423)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive()
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CWebApplication->getComponent()
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CWebApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): AppRsAdmin->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct()
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): model()
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): model()
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): AdminloginController->runAction()
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): AdminloginController->runActionWithFilters()
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): AdminloginController->run()
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CWebApplication->run()
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+in D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php (100)
+in D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php (18)
+in D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php (18)
+2015/01/11 17:38:45 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] ip not in whitelist' in D:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(AppRsAdmin))
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): CActiveRecord::model('AppRsAdmin')
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): RsAdmin::model('AppRsAdmin')
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): AppRsAdmin::model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('adminlogin/logi...')
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+HTTP_REFERER=http://127.0.0.1/jixiang/server/project/index.php/adminlogin/index
+---
+2015/01/11 17:44:22 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] ip not in whitelist' in D:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(AppRsAdmin))
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): CActiveRecord::model('AppRsAdmin')
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): RsAdmin::model('AppRsAdmin')
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): AppRsAdmin::model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('adminlogin/logi...')
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+HTTP_REFERER=http://127.0.0.1/jixiang/server/project/index.php/adminlogin/index
+---
+2015/01/11 17:44:22 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] ip not in whitelist' in D:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(AppRsAdmin))
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): CActiveRecord::model('AppRsAdmin')
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): RsAdmin::model('AppRsAdmin')
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): AppRsAdmin::model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('adminlogin/logi...')
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+HTTP_REFERER=http://127.0.0.1/jixiang/server/project/index.php/adminlogin/index
+---
+2015/01/11 17:44:25 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] ip not in whitelist' in D:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(AppRsAdmin))
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): CActiveRecord::model('AppRsAdmin')
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): RsAdmin::model('AppRsAdmin')
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): AppRsAdmin::model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('adminlogin/logi...')
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+HTTP_REFERER=http://127.0.0.1/jixiang/server/project/index.php/adminlogin/index
+---
+2015/01/11 17:44:27 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] ip not in whitelist' in D:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(AppRsAdmin))
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): CActiveRecord::model('AppRsAdmin')
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): RsAdmin::model('AppRsAdmin')
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): AppRsAdmin::model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('adminlogin/logi...')
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+HTTP_REFERER=http://127.0.0.1/jixiang/server/project/index.php/adminlogin/index
+---
+2015/01/11 17:50:56 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] ip not in whitelist' in D:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(AppRsAdmin))
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): CActiveRecord::model('AppRsAdmin')
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): RsAdmin::model('AppRsAdmin')
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): AppRsAdmin::model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('adminlogin/logi...')
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+HTTP_REFERER=http://127.0.0.1/jixiang/server/project/index.php/adminlogin/index
+---
+2015/01/11 17:52:14 [error] [php] PDO::__construct(): MySQL server has gone away (D:\xampp\htdocs\yii\framework\db\CDbConnection.php:423)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive()
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CWebApplication->getComponent()
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CWebApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): AppRsAdmin->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct()
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): model()
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): model()
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): AdminloginController->runAction()
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): AdminloginController->runActionWithFilters()
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): AdminloginController->run()
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CWebApplication->run()
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+in D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php (100)
+in D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php (18)
+in D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php (18)
+2015/01/11 17:55:32 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] ip not in whitelist' in D:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(AppRsAdmin))
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): CActiveRecord::model('AppRsAdmin')
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): RsAdmin::model('AppRsAdmin')
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): AppRsAdmin::model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('adminlogin/logi...')
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+HTTP_REFERER=http://127.0.0.1/jixiang/server/project/index.php/adminlogin/index
+---
+2015/01/11 17:55:35 [error] [php] PDO::__construct(): MySQL server has gone away (D:\xampp\htdocs\yii\framework\db\CDbConnection.php:423)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive()
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CWebApplication->getComponent()
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CWebApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): AppRsAdmin->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct()
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): model()
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): model()
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): AdminloginController->runAction()
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): AdminloginController->runActionWithFilters()
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): AdminloginController->run()
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CWebApplication->run()
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+in D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php (100)
+in D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php (18)
+in D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php (18)
+2015/01/11 17:55:42 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] ip not in whitelist' in D:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(AppRsAdmin))
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): CActiveRecord::model('AppRsAdmin')
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): RsAdmin::model('AppRsAdmin')
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): AppRsAdmin::model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('adminlogin/logi...')
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+HTTP_REFERER=http://127.0.0.1/jixiang/server/project/index.php/adminlogin/index
+---
+2015/01/11 17:58:25 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] ip not in whitelist' in D:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(AppRsAdmin))
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): CActiveRecord::model('AppRsAdmin')
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): RsAdmin::model('AppRsAdmin')
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): AppRsAdmin::model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('adminlogin/logi...')
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+HTTP_REFERER=http://127.0.0.1/jixiang/server/project/index.php/adminlogin/index
+---
+2015/01/11 17:58:32 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[HY000] [1045] ip not in whitelist' in D:\xampp\htdocs\yii\framework\db\CDbConnection.php:381
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive(true)
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CModule->getComponent('db')
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): CActiveRecord->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct(Object(AppRsAdmin))
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): CActiveRecord::model('AppRsAdmin')
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): RsAdmin::model('AppRsAdmin')
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): AppRsAdmin::model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('login')
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('adminlogin/logi...')
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+HTTP_REFERER=http://127.0.0.1/jixiang/server/project/index.php/adminlogin/index
+---
+2015/01/11 17:59:18 [error] [php] PDO::__construct(): MySQL server has gone away (D:\xampp\htdocs\yii\framework\db\CDbConnection.php:423)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive()
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CWebApplication->getComponent()
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CWebApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): AppRsAdmin->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct()
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): model()
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): model()
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): AdminloginController->runAction()
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): AdminloginController->runActionWithFilters()
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): AdminloginController->run()
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CWebApplication->run()
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+in D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php (100)
+in D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php (18)
+in D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php (18)
+2015/01/12 14:29:51 [error] [php] PDO::__construct(): MySQL server has gone away (D:\xampp\htdocs\yii\framework\db\CDbConnection.php:423)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive()
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CWebApplication->getComponent()
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CWebApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): AppRsAdmin->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct()
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): model()
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): model()
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): AdminloginController->runAction()
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): AdminloginController->runActionWithFilters()
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): AdminloginController->run()
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CWebApplication->run()
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+in D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php (100)
+in D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php (18)
+in D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php (18)
+2015/01/12 15:17:30 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "home/index"。' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('home/index')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jixiang/server/project/index.php/home/index
+HTTP_REFERER=http://127.0.0.1/jixiang/server/project/index.php/admincontent/index/
+---
+2015/01/12 16:01:25 [error] [php] PDO::__construct():  (D:\xampp\htdocs\yii\framework\db\CDbConnection.php:423)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(330): CDbConnection->open()
+#1 D:\xampp\htdocs\yii\framework\db\CDbConnection.php(308): CDbConnection->setActive()
+#2 D:\xampp\htdocs\yii\framework\base\CModule.php(387): CDbConnection->init()
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(438): CWebApplication->getComponent()
+#4 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(623): CWebApplication->getDb()
+#5 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(2309): AppRsAdmin->getDbConnection()
+#6 D:\xampp\htdocs\yii\framework\db\ar\CActiveRecord.php(387): CActiveRecordMetaData->__construct()
+#7 D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php(100): model()
+#8 D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php(18): model()
+#9 D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php(18): model()
+#10 D:\xampp\htdocs\jixiang\server\project\protected\controllers\AdminloginController.php(19): UserIdentity->authenticate()
+#11 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): AdminloginController->actionLogin()
+#12 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#13 D:\xampp\htdocs\yii\framework\web\CController.php(286): AdminloginController->runAction()
+#14 D:\xampp\htdocs\yii\framework\web\CController.php(265): AdminloginController->runActionWithFilters()
+#15 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): AdminloginController->run()
+#16 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#17 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#18 D:\xampp\htdocs\jixiang\server\project\index.php(13): CWebApplication->run()
+REQUEST_URI=/jixiang/server/project/index.php/adminlogin/login
+in D:\xampp\htdocs\jixiang\server\project\protected\models\data\RsAdmin.php (100)
+in D:\xampp\htdocs\jixiang\server\project\protected\models\AppRsAdmin.php (18)
+in D:\xampp\htdocs\jixiang\server\project\protected\components\UserIdentity.php (18)
+2015/01/12 17:21:50 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\xampp\htdocs\yii\framework\gii\GiiModule.php:168
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#4 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/jixiang/server/project/index.php/gii
+---
+2015/01/12 17:21:53 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\xampp\htdocs\yii\framework\gii\GiiModule.php:168
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#4 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/jixiang/server/project/index.php/gii
+---
+2015/01/12 17:35:48 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "adminuser/usermanager"。' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('adminuser/userm...')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jixiang/server/project/index.php/adminuser/usermanager?_=1421080548452
+HTTP_REFERER=http://192.168.1.100/jixiang/server/project/index.php/admincontent/index/
+---
+2015/01/12 17:36:30 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "adminuser/usermanager"。' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('adminuser/userm...')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jixiang/server/project/index.php/adminuser/usermanager?_=1421080590470
+HTTP_REFERER=http://192.168.1.100/jixiang/server/project/index.php/admincontent/index/
+---
+2015/01/12 17:57:04 [error] [exception.CHttpException.404] exception 'CHttpException' with message '无法解析请求 "admincomment/commentmanager"。' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('admincomment/co...')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\jixiang\server\project\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/jixiang/server/project/index.php/admincomment/commentmanager?_=1421081824029
+HTTP_REFERER=http://192.168.1.100/jixiang/server/project/index.php/admincontent/index/
+---
