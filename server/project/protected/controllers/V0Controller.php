@@ -50,6 +50,7 @@ class V0Controller extends Controller
             $ayy[$v['type']]["img_url"] = "http://it2048.cn/api/".Yii::app()->request->baseUrl.$v['img_url'];
         }
         $this->msgsucc($msg);
+        $msg['data'] = $ayy;
         echo json_encode($msg);
     }
 
