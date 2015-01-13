@@ -49,18 +49,22 @@ class V0Controller extends Controller
         $msg = $this->msgcode();
         $connection = Yii::app()->db;
         $sql = 'select * from(select * from jixiang.jx_news order by id desc )a group by type';
+
+        $sql1 = 'select * from(select * from jixiang.jx_news where img_url is not null and type in(0,2,3) order by id desc )a group by type';
+        $row1 =  $connection->createCommand($sql1)->query();
+        foreach($row1 as $v)
+        {
+            if($v['type']==2)
+                $typ = 1;
+            else
+                $typ = 0;
+            array_push($slide,array('id'=>$v['type'],"title"=>$v['title'],"img_url"=>"http://it2048.cn/api/".Yii::app()->request->baseUrl.$v['img_url'],"type"=>$typ));
+        }
+
         $rows = $connection->createCommand($sql)->query();
         foreach ($rows as $v ){
             $ayy[$v['type']]["title"] = $v['title'];
             $ayy[$v['type']]["img_url"] = "http://it2048.cn/api/".Yii::app()->request->baseUrl.$v['img_url'];
-            if($v['type']==0||$v['type']==2||$v['type']==3)
-            {
-                if($v['type']==2)
-                    $typ = 1;
-                else
-                    $typ = 0;
-                array_push($slide,array('id'=>$v['type'],"title"=>$v['title'],"img_url"=>"http://it2048.cn/api/".Yii::app()->request->baseUrl.$v['img_url'],"type"=>$typ));
-            }
         }
         $this->msgsucc($msg);
         $msg['data'] = array("slide"=>$slide,"list"=>$ayy);
