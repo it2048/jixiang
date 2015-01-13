@@ -25,11 +25,11 @@ class AdmindegreeController extends AdminSet
         $pages['countPage'] = Yii::app()->getRequest()->getParam("countPage", 0); //总共多少记录
         $pages['numPerPage'] = Yii::app()->getRequest()->getParam("numPerPage", 50); //每页多少条数据
         $criteria = new CDbCriteria;
-        $pages['countPage'] = AppJxdegree::model()->count($criteria);
+        $pages['countPage'] = AppJxDegree::model()->count($criteria);
         $criteria->limit = $pages['numPerPage'];
         $criteria->offset = $pages['numPerPage'] * ($pages['pageNum'] - 1);
         $criteria->order = 'news_id DESC';
-        $allList = AppJxdegree::model()->findAll($criteria);
+        $allList = AppJxDegree::model()->findAll($criteria);
         $this->renderPartial('degreemanager', array(
             'models' => $allList,
             'pages' => $pages,
@@ -48,7 +48,7 @@ class AdmindegreeController extends AdminSet
         $news = Yii::app()->getRequest()->getParam("news_id", 0); //用户名
         if($user!=0&&$news!=0)
         {
-            if(AppJxdegree::model()->deleteAll("user_id=:uid and news_id=:nid",array(":uid"=>$user,":nid"=>$news)))
+            if(AppJxDegree::model()->deleteAll("user_id=:uid and news_id=:nid",array(":uid"=>$user,":nid"=>$news)))
             {
                 $this->msgsucc($msg);
             }
