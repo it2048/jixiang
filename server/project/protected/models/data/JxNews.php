@@ -18,6 +18,7 @@
  * @property integer $hate
  * @property string $source
  * @property integer $status
+ * @property integer $comtype
  */
 class JxNews extends CActiveRecord
 {
@@ -47,14 +48,13 @@ class JxNews extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('addtime, adduser', 'required'),
-			array('addtime, type, comment, like, han, hate, status', 'numerical', 'integerOnly'=>true),
+			array('addtime, adduser, title, content, img_url, type', 'required'),
+			array('addtime, type, comment, like, han, hate, status, comtype', 'numerical', 'integerOnly'=>true),
 			array('adduser', 'length', 'max'=>32),
 			array('title, img_url, child_list, source', 'length', 'max'=>128),
-			array('content', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, addtime, adduser, title, content, img_url, type, child_list, comment, like, han, hate, source, status', 'safe', 'on'=>'search'),
+			array('id, addtime, adduser, title, content, img_url, type, child_list, comment, like, han, hate, source, status, comtype', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -89,6 +89,7 @@ class JxNews extends CActiveRecord
 			'hate' => 'Hate',
 			'source' => 'Source',
 			'status' => 'Status',
+			'comtype' => 'Comtype',
 		);
 	}
 
@@ -117,6 +118,7 @@ class JxNews extends CActiveRecord
 		$criteria->compare('hate',$this->hate);
 		$criteria->compare('source',$this->source,true);
 		$criteria->compare('status',$this->status);
+		$criteria->compare('comtype',$this->comtype);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

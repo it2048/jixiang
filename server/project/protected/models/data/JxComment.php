@@ -10,6 +10,7 @@
  * @property integer $user_id
  * @property string $comment
  * @property integer $parent_user
+ * @property integer $addtime
  */
 class JxComment extends CActiveRecord
 {
@@ -39,12 +40,12 @@ class JxComment extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('news_id, user_id, comment', 'required'),
-			array('news_id, parent_id, user_id, parent_user', 'numerical', 'integerOnly'=>true),
+			array('news_id, user_id, comment, addtime', 'required'),
+			array('news_id, parent_id, user_id, parent_user, addtime', 'numerical', 'integerOnly'=>true),
 			array('comment', 'length', 'max'=>2048),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, news_id, parent_id, user_id, comment, parent_user', 'safe', 'on'=>'search'),
+			array('id, news_id, parent_id, user_id, comment, parent_user, addtime', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,6 +72,7 @@ class JxComment extends CActiveRecord
 			'user_id' => 'User',
 			'comment' => 'Comment',
 			'parent_user' => 'Parent User',
+			'addtime' => 'Addtime',
 		);
 	}
 
@@ -91,6 +93,7 @@ class JxComment extends CActiveRecord
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('comment',$this->comment,true);
 		$criteria->compare('parent_user',$this->parent_user);
+		$criteria->compare('addtime',$this->addtime);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -48,6 +48,13 @@
                 <td>
                     <a title="确实要删除这条记录吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsdel',array('id'=>$value['id'])); ?>" class="btnDel">删除</a>
                     <a title="编辑" height="560" mask="true" width="620" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsedit',array('id'=>$value['id'])); ?>" class="btnEdit">编辑</a>
+                    <?php
+                    if($value['comtype']==0){
+                        ?>
+                        <a title="确实要关闭评论吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/gb',array('id'=>$value['id'])); ?>" class="btnEdit">封号</a>
+                    <?php }else{ ?>
+                        <a title="确实要打开评论吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/dk',array('id'=>$value['id'])); ?>" class="btnAssign">解封</a>
+                    <?php }?>
                 </td>
             </tr>
         <?php }?>
