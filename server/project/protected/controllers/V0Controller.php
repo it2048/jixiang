@@ -70,6 +70,6 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
-        print_r(RemoteCurl::getInstance()->post('http://127.0.0.1/jixiang/server/project/index.php', http_build_query($rtnList)));
+        print_r(RemoteCurl::getInstance()->post('http://it2048.cn/api/jixiang/server/project/index.php', http_build_query($rtnList)));
     }
 }
