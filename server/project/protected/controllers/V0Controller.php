@@ -90,7 +90,7 @@ class V0Controller extends Controller
             $i = 0;
             foreach($list as $val)
             {
-                $summary = mb_substr(trim(strip_tags($val['content'])),0,50,"utf-8");
+                $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
                 if($i<4)
                     $slideArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
                 $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
@@ -99,13 +99,13 @@ class V0Controller extends Controller
         }else{
             foreach($slide as $val)
             {
-                $summary = mb_substr(trim(strip_tags($val['content'])),0,50,"utf-8");
+                $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
                 array_push($slideArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary));
             }
             $i = 0;
             foreach($list as $val)
             {
-                $summary = mb_substr(trim(strip_tags($val['content'])),0,50,"utf-8");
+                $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
                 $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
                 $i++;
             }
