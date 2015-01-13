@@ -31,9 +31,9 @@
                     <?php 
                     if($value['type']==0){
                     ?>
-                    <a title="确实要冻结吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminuser/userfh',array('id'=>$value['id'])); ?>" class="btnEdit">封号</a>
+                    <a title="确实要冻结吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminuser/userfh',array('id'=>$value['id'])); ?>" class="btnEdit">冻结</a>
                     <?php }else{ ?>
-                    <a title="确实要解冻吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminuser/userjf',array('id'=>$value['id'])); ?>" class="btnEdit">解封</a>
+                    <a title="确实要解冻吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminuser/userjf',array('id'=>$value['id'])); ?>" class="btnInfo">解冻</a>
                     <?php }?>
                     <a title="确实要重置密码为123456吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminuser/usermm',array('id'=>$value['id'])); ?>" class="btnAssign">重置密码</a>
                 </td>
