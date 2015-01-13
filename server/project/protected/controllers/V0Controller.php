@@ -35,6 +35,7 @@ class V0Controller extends Controller
     public function homenews($arr)
     {
         $ayy = array();
+        $slide = array();
         foreach(TmpList::$news_list as $k=>$val)
         {
             if($k==2)
@@ -52,7 +53,34 @@ class V0Controller extends Controller
         foreach ($rows as $v ){
             $ayy[$v['type']]["title"] = $v['title'];
             $ayy[$v['type']]["img_url"] = "http://it2048.cn/api/".Yii::app()->request->baseUrl.$v['img_url'];
+            if($v['type']==0||$v['type']==2||$v['type']==3)
+            {
+                if($v['type']==2)
+                    $typ = 1;
+                else
+                    $typ = 0;
+                array_push($slide,array('id'=>$v['type'],"title"=>$v['title'],"img_url"=>"http://it2048.cn/api/".Yii::app()->request->baseUrl.$v['img_url'],"type"=>$typ));
+            }
         }
+        $this->msgsucc($msg);
+        $msg['data'] = array("slide"=>$slide,"list"=>$ayy);
+        echo json_encode($msg);
+    }
+
+    /**
+     * 首页新闻接口
+     * @param $arr
+     */
+    public function homeslide($arr)
+    {
+        $ayy = array();
+        $slide = AppJxNews::model()->findAll("type in(0,2,3) and img_url is not null and status=1 order by id desc");
+
+        foreach($slide as $val)
+        {
+
+        }
+
         $this->msgsucc($msg);
         $msg['data'] = $ayy;
         echo json_encode($msg);
@@ -169,7 +197,7 @@ class V0Controller extends Controller
     public function actionDemo()
     {
         $params = array(
-            'action' => 'typepage',
+            'action' => 'homenews',
             'id' => 0,
             'type' => 0,
             'page' => 1
