@@ -129,7 +129,8 @@ class V0Controller extends Controller
         $sta = $type==3?1:0;
         foreach($list as $val)
         {
-            array_push($listArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime']));
+            $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
+            array_push($listArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary));
         }
         $msg['code'] = 0;
         $msg['msg'] = "成功";
@@ -182,13 +183,158 @@ class V0Controller extends Controller
         }
         echo json_encode($msg);
     }
+    /**
+     * 新闻详情
+     * @param type $arr
+     */
+    public function newsdesc($arr)
+    {
+        $msg = $this->msgcode();
+        $id = $arr['id'];
+        $type = $arr['type'];
+        $row = AppJxNews::model()->findByPk($id);
+        $src = ltrim($row['source'],"《");
+        $src = rtrim($row['source'],"》");
+        $this->msgsucc($msg);
+        if($type==0)
+        {
+            $msg['data'] = array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
+                    ,"content"=>$row['content']
+                    ,"img_url"=>$row['img_url']
+                    ,"comment"=>$row['comment']
+                    ,"like"=>$row['like']
+                    ,"han"=>$row['han']
+                    ,"hate"=>$row['hate']
+                    ,"source"=>$src);
+        }else
+        {
+            $tmp = array();
+            array_push($tmp,array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
+                    ,"content"=>$row['content']
+                    ,"img_url"=>$row['img_url']
+                    ,"comment"=>$row['comment']
+                    ,"like"=>$row['like']
+                    ,"han"=>$row['han']
+                    ,"hate"=>$row['hate']
+                    ,"source"=>$src));
+            $rowLs = AppJxNews::model()->findAll("id in(".$row['child_list'].")");
 
+            foreach ($rowLs as $val) {
+                $sou = ltrim($val['source'],"《");
+                $sou = rtrim($val['source'],"》");
+                array_push($tmp,array("id"=>$val['id'],"addtime"=>$val['addtime'],"title"=>$val['title']
+                    ,"content"=>$val['content']
+                    ,"img_url"=>$val['img_url']
+                    ,"comment"=>$val['comment']
+                    ,"like"=>$val['like']
+                    ,"han"=>$val['han']
+                    ,"hate"=>$val['hate']
+                    ,"source"=>$sou));
+            }
+            $msg['data'] = $tmp;
+        }
+        echo json_encode($msg);
+    }
+    /**
+     * 获取token
+     * @param type $id
+     * @return type
+     */
+    private function getToken($id)
+    {
+        $salt = "xFl@&^852";
+        $data = date("Y-m-d",time());
+        $userId = $id;
+        return substr(md5($salt.$data.$userId),3,16);
+    }
+    /**
+     * 验证用户是否已经登录
+     * @param type $id
+     * @param type $token
+     * @return type
+     */
+    private function chkToken($id,$token)
+    {
+        $salt = "xFl@&^852";
+        $data = date("Y-m-d",time());
+        $userId = $id;
+        return $token==substr(md5($salt.$data.$userId),3,11);
+    }
+    
+    /**
+     * 帐号登录
+     */
+    public function login($arr)
+    {
+        $msg = $this->msgcode();
+        $salt = "xFl@&^852";
+        $tel = $arr['tel'];
+        $password = $arr['password'];
+        if($tel==""||$password=="")
+        {
+            $msg['msg'] = "存在必填项为空，请确定参数满足条件";
+            echo json_encode($msg);die();
+        }
+        $mod = AppJxUser::model()->find("tel=:tl and type==0",array("tl"=>$tel));
+        if(!empty($mod)&&md5($password.$salt)==$mod->password)
+        {
+            $this->msgsucc($msg);
+            $msg['data'] = array("id"=>$mod->id,
+                    "token"=>$this->getToken($mod->id));
+        }
+        else
+            $msg['msg'] = "帐号或者密码错误";
+        echo json_encode($msg);
+    }
+    
+    /**
+     * 帐号注册
+     * @param type $arr
+     */
+    public function register($arr)
+    {
+        $msg = $this->msgcode();
+        $salt = "xFl@&^852";
+        $tel = $arr['tel'];
+        $password = $arr['password'];
+        if($tel==""||$password=="")
+        {
+            $msg['msg'] = "存在必填项为空，请确定参数满足条件";
+            echo json_encode($msg);die();
+        }
+        $mod = AppJxUser::model()->find("tel=:tl",array("tl"=>$tel));
+        if(empty($mod))
+        {
+            $model = new AppJxUser();
+            $model->tel = $tel;
+            $model->password = md5($password.$salt);
+            $model->fhtime = time();
+            $model->ctime = time();
+            //注册用户默认是被封号的
+            $model->type = 1;
+            if($model->save())
+            {
+                $this->msgsucc($msg);
+                $id = $model->attributes['id'];
+                $msg['data'] = array("id"=>$id,
+                    "token"=>$this->getToken($id));
+            }else
+            {
+                $msg['msg'] = "注册失败";
+            }
+        }else
+        {
+            $msg['msg'] = "电话已经存在";
+        }
+        echo json_encode($msg);
+    }
+    
     public function actionDemo()
     {
         $params = array(
-            'action' => 'typelist',
-            'id' => 0,
-            'type' => 0,
+            'action' => 'login',
+            'tel' => 12345678901,
+            'password' => "123123",
             'page' => 1
         );
         $salt = "xFlaSd!$&258";

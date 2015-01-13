@@ -11,7 +11,7 @@
             <th width="60">昵称</th>
             <th width="60">头像</th>
             <th width="40">状态</th>
-            <th width="90">封号时间</th>
+            <th width="90">冻结时间</th>
             <th width="90">创建时间</th>
             <th width="180">编辑</th>
         </tr>
@@ -23,7 +23,7 @@
                 <td><?php echo $value['tel']; ?></td>
                 <td><?php echo $value['uname']; ?></td>
                 <td><a href="<?php echo Yii::app()->request->baseUrl.$value['img_url']; ?>" class="btnView" target="_blank">头像查看</a></td>
-                <td><?php echo $value['type']==1?"封号":"正常"; ?></td>
+                <td><?php echo $value['type']==1?"冻结":"正常"; ?></td>
                 <td><?php echo empty($value['fhtime'])?"":date("Y-m-d H:i:s", $value['fhtime']); ?></td>
                 <td><?php echo date("Y-m-d H:i:s", $value['ctime']); ?></td>
                 <td>
@@ -31,9 +31,9 @@
                     <?php 
                     if($value['type']==0){
                     ?>
-                    <a title="确实要封号吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminuser/userfh',array('id'=>$value['id'])); ?>" class="btnEdit">封号</a>
+                    <a title="确实要冻结吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminuser/userfh',array('id'=>$value['id'])); ?>" class="btnEdit">封号</a>
                     <?php }else{ ?>
-                    <a title="确实要解封吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminuser/userjf',array('id'=>$value['id'])); ?>" class="btnEdit">解封</a>
+                    <a title="确实要解冻吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminuser/userjf',array('id'=>$value['id'])); ?>" class="btnEdit">解封</a>
                     <?php }?>
                     <a title="确实要重置密码为123456吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminuser/usermm',array('id'=>$value['id'])); ?>" class="btnAssign">重置密码</a>
                 </td>
