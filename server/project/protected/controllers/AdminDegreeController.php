@@ -1,6 +1,6 @@
 <?php
 
-class AdminDegreeController extends AdminSet
+class AdmindegreeController extends AdminSet
 {
     /**
      * 新闻管理

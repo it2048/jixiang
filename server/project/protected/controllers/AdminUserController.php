@@ -1,6 +1,6 @@
 <?php
 
-class AdminUserController extends AdminSet
+class AdminuserController extends AdminSet
 {
     /**
      * 新闻管理
