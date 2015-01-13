@@ -44,7 +44,7 @@ class V0Controller extends Controller
                 $type = 2;
             else
                 $type = 0;
-            $ayy[$k] = array('id'=>$k,"title"=>"","img_url"=>"","type"=>$type);
+            $ayy[$k] = array('id'=>$k,"title"=>"","img_url"=>"","type"=>$type,"news_id"=>NULL);
         }
         $msg = $this->msgcode();
         $connection = Yii::app()->db;
@@ -58,35 +58,17 @@ class V0Controller extends Controller
                 $typ = 1;
             else
                 $typ = 0;
-            array_push($slide,array('id'=>$v['type'],"title"=>$v['title'],"img_url"=>"http://it2048.cn/api/".Yii::app()->request->baseUrl.$v['img_url'],"type"=>$typ));
+            array_push($slide,array('id'=>$v['type'],"title"=>$v['title'],"img_url"=>"http://it2048.cn/api/".Yii::app()->request->baseUrl.$v['img_url'],"type"=>$typ,"news_id"=>$v['id']));
         }
 
         $rows = $connection->createCommand($sql)->query();
         foreach ($rows as $v ){
             $ayy[$v['type']]["title"] = $v['title'];
+            $ayy[$v['type']]["news_id"] = $v['id'];
             $ayy[$v['type']]["img_url"] = "http://it2048.cn/api/".Yii::app()->request->baseUrl.$v['img_url'];
         }
         $this->msgsucc($msg);
         $msg['data'] = array("slide"=>$slide,"list"=>$ayy);
-        echo json_encode($msg);
-    }
-
-    /**
-     * 首页新闻接口
-     * @param $arr
-     */
-    public function homeslide($arr)
-    {
-        $ayy = array();
-        $slide = AppJxNews::model()->findAll("type in(0,2,3) and img_url is not null and status=1 order by id desc");
-
-        foreach($slide as $val)
-        {
-
-        }
-
-        $this->msgsucc($msg);
-        $msg['data'] = $ayy;
         echo json_encode($msg);
     }
 
@@ -108,20 +90,23 @@ class V0Controller extends Controller
             $i = 0;
             foreach($list as $val)
             {
+                $summary = mb_substr(trim(strip_tags($val['content'])),0,50,"utf-8");
                 if($i<4)
-                    $slideArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime']);
-                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime']);
+                    $slideArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
+                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
                 $i++;
             }
         }else{
             foreach($slide as $val)
             {
-                array_push($slideArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime']));
+                $summary = mb_substr(trim(strip_tags($val['content'])),0,50,"utf-8");
+                array_push($slideArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary));
             }
             $i = 0;
             foreach($list as $val)
             {
-                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime']);
+                $summary = mb_substr(trim(strip_tags($val['content'])),0,50,"utf-8");
+                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
                 $i++;
             }
         }
@@ -201,7 +186,7 @@ class V0Controller extends Controller
     public function actionDemo()
     {
         $params = array(
-            'action' => 'homenews',
+            'action' => 'typelist',
             'id' => 0,
             'type' => 0,
             'page' => 1
@@ -213,6 +198,6 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
-        print_r(RemoteCurl::getInstance()->post('http://127.0.0.1/jixiang/server/project/index.php', http_build_query($rtnList)));
+        print_r(RemoteCurl::getInstance()->post('http://192.168.1.100/jixiang/server/project/index.php', http_build_query($rtnList)));
     }
 }
