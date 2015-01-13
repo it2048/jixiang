@@ -28,6 +28,10 @@ class V0Controller extends Controller
     }
 
 
+    /**
+     * 首页新闻接口
+     * @param $arr
+     */
     public function homenews($arr)
     {
         $ayy = array();
@@ -54,15 +58,121 @@ class V0Controller extends Controller
         echo json_encode($msg);
     }
 
+    /**
+     * 新闻分类接口
+     * @param $type
+     * @param $msg
+     *
+     */
+    private function cateNews($type,&$msg)
+    {
+        $slideArr = array();
+        $listArr = array();
+        $slide = AppJxNews::model()->findAll("type=:tp and img_url is not null and status=1 order by id desc limit 0,4",array(":tp"=>$type));
+        $list = AppJxNews::model()->findAll("type=:tp order by id desc limit 0,24",array(":tp"=>$type));
+        $sta = $type==3?1:0;
+        if(empty($slide))
+        {
+            $i = 0;
+            foreach($list as $val)
+            {
+                if($i<4)
+                    $slideArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime']);
+                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime']);
+                $i++;
+            }
+        }else{
+            foreach($slide as $val)
+            {
+                array_push($slideArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime']));
+            }
+            $i = 0;
+            foreach($list as $val)
+            {
+                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime']);
+                $i++;
+            }
+        }
+        $msg['code'] = 0;
+        $msg['msg'] = "成功";
+        $msg['data'] = array("slide"=>$slideArr,"list"=>$listArr);
+    }
+
+    /**
+     * 分类分页接口
+     * @param $type
+     * @param $msg
+     * @param $page
+     */
+    private function catepage($type,&$msg,$page)
+    {
+        $listArr = array();
+        $cnt = ($page-1)*20;
+        $list = AppJxNews::model()->findAll("type=:tp order by id desc limit {$cnt},20",array(":tp"=>$type));
+        $sta = $type==3?1:0;
+        foreach($list as $val)
+        {
+            array_push($listArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$val['img_url'],"type"=>$sta,"time"=>$val['addtime']));
+        }
+        $msg['code'] = 0;
+        $msg['msg'] = "成功";
+        $msg['data'] = $listArr;
+    }
+
+    /**
+     * 天气显示接口
+     *
+     */
+    private function weather()
+    {
+
+    }
+    public function typelist($arr)
+    {
+        $msg = $this->msgcode();
+        $type = $arr['id'];
+        $status = $arr['type'];
+        //新闻
+        if($status==0)
+        {
+            $this->cateNews($type,$msg);
+        //图片
+        }elseif($status==1)
+        {
+            $this->cateNews(2,$msg);
+        //天气
+        }elseif($status==2)
+        {
+            $this->weather();
+        }
+        echo json_encode($msg);
+    }
+
+    public function typepage($arr)
+    {
+        $msg = $this->msgcode();
+        $type = $arr['id'];
+        $status = $arr['type'];
+        $page = $arr['page'];
+        //新闻
+        if($status==0)
+        {
+            $this->catepage($type,$msg,$page);
+            //图片
+        }elseif($status==1)
+        {
+            $this->catepage(2,$msg,$page);
+        }
+        echo json_encode($msg);
+    }
 
     public function actionDemo()
     {
         $params = array(
-            'action' => 'homenews',
-            'zoneId' => 1,
-            'serverId' => 2,
-            'playerId' => 3,
-            'playerName' => 4
+            'action' => 'typepage',
+            'id' => 0,
+            'type' => 0,
+            'page' => 1
         );
         $salt = "xFlaSd!$&258";
         $data = json_encode($params);
@@ -71,6 +181,6 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
-        print_r(RemoteCurl::getInstance()->post('http://it2048.cn/api/jixiang/server/project/index.php', http_build_query($rtnList)));
+        print_r(RemoteCurl::getInstance()->post('http://127.0.0.1/jixiang/server/project/index.php', http_build_query($rtnList)));
     }
 }
