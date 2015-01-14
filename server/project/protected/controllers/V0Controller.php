@@ -290,12 +290,41 @@ class V0Controller extends Controller
         echo json_encode($msg);
     }
 
-    public function commentList($arr)
+    public function commentlist($arr)
     {
         $msg = $this->msgcode();
         $news_id = $arr['news_id'];
-        $comm = AppJxComment::model()->findAll();
+        $userList = AppJxUser::model()->findAll();
+        $userApp = array();
+        $userNc = array();
+        $userImg = array();
+        foreach($userList as $val)
+        {
+            $userApp[$val->id] = $val->tel;
+            $userNc[$val->id] = $val->uname;
+            $userImg[$val->id] = $val->img_url;
+        }
+        $page = $arr['page'];
+        $star = 20*($page-1);
+        $comm = AppJxComment::model()->findAll("news_id={$news_id} order by id desc limit {$star},20");
+        $this->msgsucc($msg);
+        $allList = array();
+        foreach($comm as $val)
+        {
+            array_push($allList,array(
+                "id"=>$val->id,
+                "parent_id"=>$val->parent_id,
+                "user_id"=>$val->user_id,
+                "comment"=>$val->comment,
+                "user_account"=>$userApp[$val->user_id],
+                "user_nic"=>$userNc[$val->user_id],
+                "user_img"=>"http://it2048.cn".Yii::app()->request->baseUrl.$userImg[$val->user_id]
+            ));
+        }
+        $msg['data'] = $allList;
+        echo json_encode($msg);
     }
+
 
     /**
      * 评论
@@ -321,9 +350,14 @@ class V0Controller extends Controller
                 break;
             }
         }
+        $newmodel = AppJxNews::model()->find("id={$news_id} and comtype=0");
         if(!$bl)
         {
             $msg['msg'] = "评论中包含非法词汇";
+        }
+        elseif(empty($newmodel))
+        {
+            $msg['msg'] = "该文章静止评论";
         }
         elseif($user_id==""||$token==""||$news_id==""||$content=="")
         {
@@ -397,9 +431,9 @@ class V0Controller extends Controller
     public function actionDemo()
     {
         $params = array(
-            'action' => 'typelist',
-            'id' => 2,
-            'type' => 1
+            'action' => 'commentList',
+            'news_id' => 11,
+            'page' => 1
         );
 
 
