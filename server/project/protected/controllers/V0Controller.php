@@ -278,7 +278,7 @@ class V0Controller extends Controller
             $msg['msg'] = "存在必填项为空，请确定参数满足条件";
             echo json_encode($msg);die();
         }
-        $mod = AppJxUser::model()->find("tel=:tl and type==0",array("tl"=>$tel));
+        $mod = AppJxUser::model()->find("tel=:tl and type=0",array("tl"=>$tel));
         if(!empty($mod)&&md5($password.$salt)==$mod->password)
         {
             $this->msgsucc($msg);
@@ -427,13 +427,77 @@ class V0Controller extends Controller
         echo json_encode($msg);
     }
 
+    /**
+     * 点赞的状态
+     * @param $arr
+     */
+    public function zanstatus($arr)
+    {
+        $msg = $this->msgcode();
+        $user_id = $arr['user_id'];
+        $token = $arr['token'];
+        $news_id = $arr['news_id'];
+        if(!$this->chkToken($user_id,$token))
+        {
+            $msg['code'] = 2;
+            $msg['msg'] = "无权限，请登录";
+        }else{
+            $id = AppJxDegree::model()->find("news_id={$news_id} and user_id={$user_id}");
+            $this->msgsucc($msg);
+            if(empty($id))
+            {
+                $msg['data'] = 0;
+            }else
+            {
+                $msg['data'] = $id->type;
+            }
+        }
+        echo json_encode($msg);
+    }
+
+    /**
+     * 点赞的状态
+     * @param $arr
+     */
+    public function setzan($arr)
+    {
+        $msg = $this->msgcode();
+        $user_id = $arr['user_id'];
+        $token = $arr['token'];
+        $news_id = $arr['news_id'];
+        $type = $arr['type'];
+        if(!$this->chkToken($user_id,$token))
+        {
+            $msg['code'] = 2;
+            $msg['msg'] = "无权限，请登录";
+        }else{
+            $id = AppJxDegree::model()->find("news_id={$news_id} and user_id={$user_id}");
+            $this->msgsucc($msg);
+            if(empty($id))
+            {
+                $modl = new AppJxDegree();
+                $modl->news_id = $news_id;
+                $modl->user_id = $user_id;
+                $modl->type = $type;
+                $modl->save();
+
+            }else
+            {
+                $id->type = $type;
+                $id->save();
+            }
+        }
+        echo json_encode($msg);
+    }
 
     public function actionDemo()
     {
         $params = array(
-            'action' => 'commentList',
-            'news_id' => 11,
-            'page' => 1
+            'action' => 'setzan',
+            'token' => '121c0402b2c0e8b3',
+            'news_id'=>'11',
+            'user_id'=>'6',
+            'type'=>2
         );
 
 
