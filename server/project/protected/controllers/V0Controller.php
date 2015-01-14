@@ -94,7 +94,7 @@ class V0Controller extends Controller
         $listArr = array();
         $slide = AppJxNews::model()->findAll("type=:tp and img_url is not null and status=1 order by id desc limit 0,4",array(":tp"=>$type));
         $list = AppJxNews::model()->findAll("type=:tp order by id desc limit 0,24",array(":tp"=>$type));
-        $sta = $type==3?1:0;
+        $sta = $type==2?1:0;
         if(empty($slide))
         {
             $i = 0;
@@ -131,6 +131,34 @@ class V0Controller extends Controller
         $msg['data'] = array("slide"=>$slideArr,"list"=>$listArr);
     }
 
+    
+        /**
+     * 新闻分类接口
+     * @param $type
+     * @param $msg
+     *
+     */
+    private function cateImg($type,&$msg,$page=1)
+    {
+        $listArr = array();
+        $lmt = ($page-1)*20;
+        $list = AppJxNews::model()->findAll("type=:tp and child_list!='' order by id desc limit {$lmt},20",array(":tp"=>$type));
+        $sta = 1;
+        $i = 0;
+        foreach($list as $val)
+        {
+            $ct = substr_count($val['child_list'],',');
+            if($ct==0) $ct = 2;
+            else $ct += 2;
+            $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
+            $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],$sta),
+                "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
+            $i++;
+        }
+        $msg['code'] = 0;
+        $msg['msg'] = "成功";
+        $msg['data'] = array("slide"=>array(),"list"=>$listArr);
+    }
     /**
      * 分类分页接口
      * @param $type
@@ -176,7 +204,7 @@ class V0Controller extends Controller
         //图片
         }elseif($status==1)
         {
-            $this->cateNews(2,$msg);
+            $this->cateImg(2,$msg);
         //天气
         }elseif($status==2)
         {
@@ -198,7 +226,7 @@ class V0Controller extends Controller
             //图片
         }elseif($status==1)
         {
-            $this->catepage(2,$msg,$page);
+            $this->cateImg(2,$msg,$page);
         }
         echo json_encode($msg);
     }
@@ -552,9 +580,9 @@ class V0Controller extends Controller
     public function actionDemo()
     {
         $params = array(
-            'action' => 'homenews',
-            'id' => '0',
-            'type'=>0
+            'action' => 'typelist',
+            'id' => '1',
+            'type'=>1
         );
         $salt = "xFlaSd!$&258";
         $data = json_encode($params);
