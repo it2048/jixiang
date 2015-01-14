@@ -43,7 +43,7 @@
             <a class="logo" href="#"><?php echo Yii::app()->name;?></a>
             <ul class="nav">
                 <li><a href="<?php echo Yii::app()->createAbsoluteUrl('admincontent/usernewpass'); ?>" target="dialog" width="600">设置</a></li>
-                <li><a href="<?php echo Yii::app()->createAbsoluteUrl('home/index'); ?>" target="_blank">首页</a></li>
+                <li><a href="<?php echo Yii::app()->createAbsoluteUrl('adminlogin/index'); ?>" target="_blank">首页</a></li>
                 <li><a href="<?php echo Yii::app()->createAbsoluteUrl('admincontent/logout'); ?>">退出</a></li>
             </ul>
         </div>
