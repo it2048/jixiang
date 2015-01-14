@@ -327,7 +327,7 @@ class V0Controller extends Controller
                 "comment"=>$val->comment,
                 "user_account"=>$userApp[$val->user_id],
                 "user_nic"=>$userNc[$val->user_id],
-                "addtime"=>$userNc[$val->addtime],
+                "addtime"=>$val->addtime,
                 "user_img"=>"http://it2048.cn".Yii::app()->request->baseUrl.$userImg[$val->user_id]
             ));
         }
