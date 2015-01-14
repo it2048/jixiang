@@ -1,25 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "jx_user".
+ * This is the model class for table "jx_collect".
  *
- * The followings are the available columns in table 'jx_user':
+ * The followings are the available columns in table 'jx_collect':
  * @property integer $id
- * @property string $tel
- * @property string $password
- * @property string $uname
- * @property string $img_url
- * @property integer $type
- * @property integer $fhtime
- * @property integer $ctime
- * @property string $check
+ * @property string $user_id
+ * @property string $news_id
+ * @property string $time
  */
-class JxUser extends CActiveRecord
+class JxCollect extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return JxUser the static model class
+	 * @return JxCollect the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -31,7 +26,7 @@ class JxUser extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'jx_user';
+		return 'jx_collect';
 	}
 
 	/**
@@ -42,13 +37,10 @@ class JxUser extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tel, password, type, ctime', 'required'),
-			array('type, fhtime, ctime', 'numerical', 'integerOnly'=>true),
-			array('tel, password, uname, img_url', 'length', 'max'=>45),
-			array('check', 'length', 'max'=>8),
+			array('user_id, news_id, time', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, tel, password, uname, img_url, type, fhtime, ctime, check', 'safe', 'on'=>'search'),
+			array('id, user_id, news_id, time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,14 +62,9 @@ class JxUser extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'tel' => 'Tel',
-			'password' => 'Password',
-			'uname' => 'Uname',
-			'img_url' => 'Img Url',
-			'type' => 'Type',
-			'fhtime' => 'Fhtime',
-			'ctime' => 'Ctime',
-			'check' => 'Check',
+			'user_id' => 'User',
+			'news_id' => 'News',
+			'time' => 'Time',
 		);
 	}
 
@@ -93,14 +80,9 @@ class JxUser extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('tel',$this->tel,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('uname',$this->uname,true);
-		$criteria->compare('img_url',$this->img_url,true);
-		$criteria->compare('type',$this->type);
-		$criteria->compare('fhtime',$this->fhtime);
-		$criteria->compare('ctime',$this->ctime);
-		$criteria->compare('check',$this->check,true);
+		$criteria->compare('user_id',$this->user_id,true);
+		$criteria->compare('news_id',$this->news_id,true);
+		$criteria->compare('time',$this->time,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
