@@ -58,14 +58,14 @@ class V0Controller extends Controller
                 $typ = 1;
             else
                 $typ = 0;
-            array_push($slide,array('id'=>$v['type'],"title"=>$v['title'],"img_url"=>"http://it2048.cn/api/".Yii::app()->request->baseUrl.$v['img_url'],"type"=>$typ,"news_id"=>$v['id']));
+            array_push($slide,array('id'=>$v['type'],"title"=>$v['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$v['img_url'],"type"=>$typ,"news_id"=>$v['id']));
         }
 
         $rows = $connection->createCommand($sql)->query();
         foreach ($rows as $v ){
             $ayy[$v['type']]["title"] = $v['title'];
             $ayy[$v['type']]["news_id"] = $v['id'];
-            $ayy[$v['type']]["img_url"] = "http://it2048.cn/api/".Yii::app()->request->baseUrl.$v['img_url'];
+            $ayy[$v['type']]["img_url"] = "http://it2048.cn/".Yii::app()->request->baseUrl.$v['img_url'];
         }
         $this->msgsucc($msg);
         $msg['data'] = array("slide"=>$slide,"list"=>$ayy);
@@ -92,21 +92,21 @@ class V0Controller extends Controller
             {
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
                 if($i<4)
-                    $slideArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn/api".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
-                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn/api".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
+                    $slideArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
+                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
                 $i++;
             }
         }else{
             foreach($slide as $val)
             {
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-                array_push($slideArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn/api".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary));
+                array_push($slideArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary));
             }
             $i = 0;
             foreach($list as $val)
             {
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn/api".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
+                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
                 $i++;
             }
         }
@@ -130,7 +130,7 @@ class V0Controller extends Controller
         foreach($list as $val)
         {
             $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-            array_push($listArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn/api".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary));
+            array_push($listArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary));
         }
         $msg['code'] = 0;
         $msg['msg'] = "成功";
@@ -200,7 +200,7 @@ class V0Controller extends Controller
         {
             $msg['data'] = array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
                     ,"content"=>$row['content']
-                    ,"img_url"=>"http://it2048.cn/api".Yii::app()->request->baseUrl.$row['img_url']
+                    ,"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$row['img_url']
                     ,"comment"=>$row['comment']
                     ,"like"=>$row['like']
                     ,"han"=>$row['han']
@@ -211,7 +211,7 @@ class V0Controller extends Controller
             $tmp = array();
             array_push($tmp,array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
                     ,"content"=>$row['content']
-                    ,"img_url"=>"http://it2048.cn/api".Yii::app()->request->baseUrl.$row['img_url']
+                    ,"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$row['img_url']
                     ,"comment"=>$row['comment']
                     ,"like"=>$row['like']
                     ,"han"=>$row['han']
@@ -224,7 +224,7 @@ class V0Controller extends Controller
                 $sou = rtrim($val['source'],"》");
                 array_push($tmp,array("id"=>$val['id'],"addtime"=>$val['addtime'],"title"=>$val['title']
                     ,"content"=>$val['content']
-                    ,"img_url"=>"http://it2048.cn/api".Yii::app()->request->baseUrl.$val['img_url']
+                    ,"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url']
                     ,"comment"=>$val['comment']
                     ,"like"=>$val['like']
                     ,"han"=>$val['han']
