@@ -220,12 +220,13 @@ class V0Controller extends Controller
                     ,"han"=>$row['han']
                     ,"hate"=>$row['hate']
                     ,"source"=>$src));
-            $rowLs = AppJxNews::model()->findAll("id in(".$row['child_list'].")");
-
-            foreach ($rowLs as $val) {
-                $sou = ltrim($val['source'],"《");
-                $sou = rtrim($sou,"》");
-                array_push($tmp,array("id"=>$val['id'],"addtime"=>$val['addtime'],"title"=>$val['title']
+            if(!empty($row['child_list']))
+            {
+                $rowLs = AppJxNews::model()->findAll("id in(".$row['child_list'].")");
+                foreach ($rowLs as $val) {
+                    $sou = ltrim($val['source'],"《");
+                    $sou = rtrim($sou,"》");
+                    array_push($tmp,array("id"=>$val['id'],"addtime"=>$val['addtime'],"title"=>$val['title']
                     ,"content"=>$val['content']
                     ,"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url']
                     ,"comment"=>$val['comment']
@@ -233,7 +234,9 @@ class V0Controller extends Controller
                     ,"han"=>$val['han']
                     ,"hate"=>$val['hate']
                     ,"source"=>$sou));
+                }
             }
+
             $msg['data'] = $tmp;
         }
         echo json_encode($msg);
@@ -493,11 +496,9 @@ class V0Controller extends Controller
     public function actionDemo()
     {
         $params = array(
-            'action' => 'setzan',
-            'token' => '121c0402b2c0e8b3',
-            'news_id'=>'11',
-            'user_id'=>'6',
-            'type'=>2
+            'action' => 'newsdesc',
+            'id' => '14',
+            'type'=>'1'
         );
 
 
