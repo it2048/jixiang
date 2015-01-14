@@ -360,7 +360,7 @@ class V0Controller extends Controller
                 break;
             }
         }
-        $newmodel = AppJxNews::model()->find("id={$news_id} and comtype=0");
+        $newmodel = AppJxNews::model()->find("id={$news_id} and (comtype is null or comtype=0)");
         if(!$bl)
         {
             $msg['msg'] = "评论中包含非法词汇";
@@ -392,7 +392,7 @@ class V0Controller extends Controller
                 $this->msgsucc($msg);
             }
         }
-        echo json_encode($msg);
+        print_r($msg);
     }
     
     /**
@@ -482,6 +482,7 @@ class V0Controller extends Controller
             $msg['msg'] = "无权限，请登录";
         }else{
             $id = AppJxDegree::model()->find("news_id={$news_id} and user_id={$user_id}");
+            $news = AppJxNews::model()->findByPk($news_id);
             $this->msgsucc($msg);
             if(empty($id))
             {
@@ -490,9 +491,47 @@ class V0Controller extends Controller
                 $modl->user_id = $user_id;
                 $modl->type = $type;
                 $modl->save();
+                if(!empty($news))
+                {
+                    if($type==1)
+                    {
+                        $news->like = $news->like+1;
+                    }elseif($type==2)
+                    {
+                        $news->han = $news->han+1;
+                    }elseif($type==3)
+                    {
+                        $news->hate = $news->hate+1;
+                    }
+                    $news->save();
+                }
 
             }else
             {
+                if(!empty($news))
+                {
+                    if($type==1)
+                    {
+                        $news->like = $news->like+1;
+                    }elseif($type==2)
+                    {
+                        $news->han = $news->han+1;
+                    }elseif($type==3)
+                    {
+                        $news->hate = $news->hate+1;
+                    }
+                    if($id->type==1)
+                    {
+                        $news->like = $news->like-1;
+                    }elseif($id->type==2)
+                    {
+                        $news->han = $news->han-1;
+                    }elseif($id->type==3)
+                    {
+                        $news->hate = $news->hate-1;
+                    }
+                    $news->save();
+                }
                 $id->type = $type;
                 $id->save();
             }
@@ -503,12 +542,14 @@ class V0Controller extends Controller
     public function actionDemo()
     {
         $params = array(
-            'action' => 'newsdesc',
-            'id' => '14',
-            'type'=>'1'
+            'action' => 'setzan',
+            'user_id' => '6',
+            'token'=>'121c0402b2c0e8b3',
+            'news_id'=>'14',
+            'type'=>'2',
+            'parent_id'=>'',
+            'parent_user'=>''
         );
-
-
         $salt = "xFlaSd!$&258";
         $data = json_encode($params);
         $sign = md5($data.$salt);

@@ -47,7 +47,14 @@ class AdmincommentController extends AdminSet
         $id = Yii::app()->getRequest()->getParam("id", 0); //用户名
         if($id!=0)
         {
-            if(AppJxComment::model()->deleteByPk($id))
+            $comm = AppJxComment::model()->findByPk($id);
+            $news = AppJxNews::model()->findByPk($comm->news_id);
+            if(!empty($news))
+            {
+                $news->comment = $news->comment-1;
+                $news->save();
+            }
+            if($comm->delete())
             {
                 $this->msgsucc($msg);
             }

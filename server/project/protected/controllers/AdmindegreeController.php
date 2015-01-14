@@ -48,6 +48,22 @@ class AdmindegreeController extends AdminSet
         $news = Yii::app()->getRequest()->getParam("news_id", 0); //用户名
         if($user!=0&&$news!=0)
         {
+            $comm = AppJxDegree::model()->find("news_id={$news} and user_id={$user}");
+            $news = AppJxNews::model()->findByPk($comm->news_id);
+            if(!empty($news))
+            {
+                if($comm->type==1)
+                {
+                    $news->like = $news->like-1;
+                }elseif($comm->type==2)
+                {
+                    $news->han = $news->han-1;
+                }elseif($comm->type==3)
+                {
+                    $news->hate = $news->hate-1;
+                }
+                $news->save();
+            }
             if(AppJxDegree::model()->deleteAll("user_id=:uid and news_id=:nid",array(":uid"=>$user,":nid"=>$news)))
             {
                 $this->msgsucc($msg);
