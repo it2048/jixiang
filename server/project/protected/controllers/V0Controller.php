@@ -72,10 +72,10 @@ class V0Controller extends Controller
         echo json_encode($msg);
     }
 
-    protected function getSlt($url)
+    protected function getSlt($url,$sta)
     {
-        $utl = "";
-        if(strpos($url,"/slt")!==false)
+        $utl = $url;
+        if($sta!==2&&strpos($url,"/slt")!==false)
         {
             $utl = str_replace("/slt","/slt/slt",$url);
         }
@@ -105,7 +105,7 @@ class V0Controller extends Controller
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
                 if($i<4)
                     $slideArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
-                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url']),"type"=>$sta,
+                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],$sta),"type"=>$sta,
                     "time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
                 $i++;
             }
@@ -121,7 +121,7 @@ class V0Controller extends Controller
                 $ct = substr_count($val['child_list'],',')+2;
                 if($ct==2) $ct=1;
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url']),
+                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],$sta),
                     "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
                 $i++;
             }
@@ -148,7 +148,7 @@ class V0Controller extends Controller
             $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
             $ct = substr_count($val['child_list'],',')+2;
             if($ct==2) $ct=1;
-            array_push($listArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],
+            array_push($listArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],$sta),
                 "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct));
         }
         $msg['code'] = 0;
@@ -182,7 +182,7 @@ class V0Controller extends Controller
         {
             $this->weather();
         }
-        print_r($msg);
+        echo json_encode($msg);
     }
 
     public function typepage($arr)
@@ -402,7 +402,7 @@ class V0Controller extends Controller
                 $this->msgsucc($msg);
             }
         }
-        print_r($msg);
+        echo json_encode($msg);
     }
     
     /**
