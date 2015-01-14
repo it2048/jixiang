@@ -72,7 +72,7 @@ class V0Controller extends Controller
         echo json_encode($msg);
     }
 
-    protected function getSlt($url,$sta)
+    protected function getSlt($url,$sta=1)
     {
         $utl = $url;
         if($sta!==2&&strpos($url,"/slt")!==false)
@@ -552,7 +552,7 @@ class V0Controller extends Controller
     public function actionDemo()
     {
         $params = array(
-            'action' => 'typelist',
+            'action' => 'homenews',
             'id' => '0',
             'type'=>0
         );
