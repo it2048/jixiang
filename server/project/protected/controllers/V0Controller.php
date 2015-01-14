@@ -90,11 +90,13 @@ class V0Controller extends Controller
             $i = 0;
             foreach($list as $val)
             {
+                $ct = substr_count($val['child_list'],',')+2;
+                if($ct==2) $ct=1;
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
                 if($i<4)
                     $slideArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
                 $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,
-                    "time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>substr_count($val['child_list'],',')+2);
+                    "time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
                 $i++;
             }
         }else{
@@ -106,9 +108,11 @@ class V0Controller extends Controller
             $i = 0;
             foreach($list as $val)
             {
+                $ct = substr_count($val['child_list'],',')+2;
+                if($ct==2) $ct=1;
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
                 $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],
-                    "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>substr_count($val['child_list'],',')+2);
+                    "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
                 $i++;
             }
         }
@@ -132,8 +136,10 @@ class V0Controller extends Controller
         foreach($list as $val)
         {
             $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
+            $ct = substr_count($val['child_list'],',')+2;
+            if($ct==2) $ct=1;
             array_push($listArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],
-                "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>substr_count($val['child_list'],',')+2));
+                "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct));
         }
         $msg['code'] = 0;
         $msg['msg'] = "成功";
