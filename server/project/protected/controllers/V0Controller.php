@@ -65,11 +65,21 @@ class V0Controller extends Controller
         foreach ($rows as $v ){
             $ayy[$v['type']]["title"] = $v['title'];
             $ayy[$v['type']]["news_id"] = $v['id'];
-            $ayy[$v['type']]["img_url"] = "http://it2048.cn/".Yii::app()->request->baseUrl.$v['img_url'];
+            $ayy[$v['type']]["img_url"] = $this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$v['img_url']);
         }
         $this->msgsucc($msg);
         $msg['data'] = array("slide"=>$slide,"list"=>$ayy);
         echo json_encode($msg);
+    }
+
+    protected function getSlt($url)
+    {
+        $utl = "";
+        if(strpos($url,"/slt")!==false)
+        {
+            $utl = str_replace("/slt","/slt/slt",$url);
+        }
+        return $utl;
     }
 
     /**
@@ -95,7 +105,7 @@ class V0Controller extends Controller
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
                 if($i<4)
                     $slideArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
-                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,
+                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url']),"type"=>$sta,
                     "time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
                 $i++;
             }
@@ -111,7 +121,7 @@ class V0Controller extends Controller
                 $ct = substr_count($val['child_list'],',')+2;
                 if($ct==2) $ct=1;
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],
+                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url']),
                     "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
                 $i++;
             }
@@ -172,7 +182,7 @@ class V0Controller extends Controller
         {
             $this->weather();
         }
-        echo json_encode($msg);
+        print_r($msg);
     }
 
     public function typepage($arr)
@@ -542,13 +552,9 @@ class V0Controller extends Controller
     public function actionDemo()
     {
         $params = array(
-            'action' => 'setzan',
-            'user_id' => '6',
-            'token'=>'121c0402b2c0e8b3',
-            'news_id'=>'14',
-            'type'=>'2',
-            'parent_id'=>'',
-            'parent_user'=>''
+            'action' => 'typelist',
+            'id' => '0',
+            'type'=>0
         );
         $salt = "xFlaSd!$&258";
         $data = json_encode($params);
