@@ -23,6 +23,23 @@ class AdminhomesetController extends AdminSet
             'pages' => $pages),false,true);
     }
 
+    public function actionIndex()
+    {
+        $model = AppJxConfig::model()->findAll();
+        $this->renderPartial('index',array("models"=>$model));
+    }
+    public function actionSave() {
+        $msg = $this->msgcode();
+        $model = AppJxConfig::model()->findAll();
+        foreach ($model as $value) {
+            $mod = AppJxConfig::model()->findByPk($value['name']);
+            $mod->value = Yii::app()->getRequest()->getParam($value['name'], "");
+            $mod->save();
+        }
+        $this->msgsucc($msg);
+        echo json_encode($msg);
+    }
+
     /**
      * 添加新闻
      */

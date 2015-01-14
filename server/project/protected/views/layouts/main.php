@@ -62,6 +62,8 @@
                         <li><a href="#">后台管理</a>
                             <ul>
                                 <li><a href="<?php echo Yii::app()->createAbsoluteUrl('admincontent/usermanager'); ?>" target="navTab" rel="usermaneger">管理员管理</a></li>
+
+                                <li><a href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/index'); ?>" target="navTab" rel="index">常用配置</a></li>
                                 <li><a href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsmanager'); ?>" target="navTab" rel="newsmanager">新闻设置</a></li>
                                 <li><a href="<?php echo Yii::app()->createAbsoluteUrl('adminuser/usermanager'); ?>" target="navTab" rel="usermanager">用户管理</a></li>
                                 <li><a href="<?php echo Yii::app()->createAbsoluteUrl('admincomment/commentmanager'); ?>" target="navTab" rel="commentmanager">评论管理</a></li>

@@ -194,7 +194,7 @@ class V0Controller extends Controller
         $type = $arr['type'];
         $row = AppJxNews::model()->findByPk($id);
         $src = ltrim($row['source'],"《");
-        $src = rtrim($row['source'],"》");
+        $src = rtrim($src,"》");
         $this->msgsucc($msg);
         if($type==0)
         {
@@ -221,7 +221,7 @@ class V0Controller extends Controller
 
             foreach ($rowLs as $val) {
                 $sou = ltrim($val['source'],"《");
-                $sou = rtrim($val['source'],"》");
+                $sou = rtrim($sou,"》");
                 array_push($tmp,array("id"=>$val['id'],"addtime"=>$val['addtime'],"title"=>$val['title']
                     ,"content"=>$val['content']
                     ,"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url']
@@ -332,8 +332,8 @@ class V0Controller extends Controller
     public function actionDemo()
     {
         $params = array(
-            'action' => 'typelist',
-            'id' => 0,
+            'action' => 'newsdesc',
+            'id' => 11,
             'type' => 0,
             'page' => 1
         );
