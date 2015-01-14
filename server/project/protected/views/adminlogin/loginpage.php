@@ -21,7 +21,6 @@
                     <div class="navList">
                         <ul>
                             <!-- <li><a href="#">设为首页</a></li> -->
-                            <li><a target="_blank" href="http://it2048.cn/">极客导航</a></li>
                         </ul>
                     </div>
                     <h2 class="login_title"><img src="<?php echo Yii::app()->request->baseUrl; ?>/admincss/dwzthemes/default/images/login_title.png" /></h2>
@@ -59,7 +58,7 @@
                 </div>
             </div>
             <div id="login_footer">
-                Copyright &copy; 吉祥甘孜后台.由 <a href="http://it2048.cn/" target="_blank"> 我是大熊 </a> 提供技术支持
+                Copyright &copy; 吉祥甘孜后台.由  四川爱力克思科技有限公司  提供技术支持
             </div>
         </div>
     </body>

@@ -93,7 +93,8 @@ class V0Controller extends Controller
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
                 if($i<4)
                     $slideArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
-                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
+                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,
+                    "time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>substr_count($val['child_list'],',')+2);
                 $i++;
             }
         }else{
@@ -106,7 +107,8 @@ class V0Controller extends Controller
             foreach($list as $val)
             {
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary);
+                $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],
+                    "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>substr_count($val['child_list'],',')+2);
                 $i++;
             }
         }
@@ -130,7 +132,8 @@ class V0Controller extends Controller
         foreach($list as $val)
         {
             $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-            array_push($listArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary));
+            array_push($listArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],
+                "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>substr_count($val['child_list'],',')+2));
         }
         $msg['code'] = 0;
         $msg['msg'] = "成功";
@@ -258,7 +261,7 @@ class V0Controller extends Controller
         $salt = "xFl@&^852";
         $data = date("Y-m-d",time());
         $userId = $id;
-        return $token==substr(md5($salt.$data.$userId),3,11);
+        return $token==substr(md5($salt.$data.$userId),3,16);
     }
     
     /**
@@ -284,6 +287,67 @@ class V0Controller extends Controller
         }
         else
             $msg['msg'] = "帐号或者密码错误";
+        echo json_encode($msg);
+    }
+
+    public function commentList($arr)
+    {
+        $msg = $this->msgcode();
+        $news_id = $arr['news_id'];
+        $comm = AppJxComment::model()->findAll();
+    }
+
+    /**
+     * 评论
+     */
+    public function comment($arr)
+    {
+        $msg = $this->msgcode();
+        $user_id = $arr['user_id'];
+        $token = $arr['token'];
+        $news_id = $arr['news_id'];
+        $content = $arr['content'];
+        $parent_id = $arr['parent_id'];
+        $parent_user = $arr['parent_user'];
+
+        $black = AppJxConfig::model()->findByPk("comment");
+        $lackList= explode(",",$black->value);
+        $bl = true;
+        foreach($lackList as $as)
+        {
+            if(strpos($content,$as)!==false)
+            {
+                $bl = false;
+                break;
+            }
+        }
+        if(!$bl)
+        {
+            $msg['msg'] = "评论中包含非法词汇";
+        }
+        elseif($user_id==""||$token==""||$news_id==""||$content=="")
+        {
+            $msg['msg'] = "存在必填项为空，请确定参数满足条件";
+        }elseif(!$this->chkToken($user_id,$token))
+        {
+            $msg['code'] = 2;
+            $msg['msg'] = "无权限，请登录";
+        }else{
+            $comm = new AppJxComment();
+            $comm->news_id = $news_id;
+            $comm->parent_id = $parent_id;
+            $comm->parent_user = $parent_user;
+            $comm->user_id = $user_id;
+            $comm->comment = $content;
+            $comm->addtime = time();
+            if($comm->save())
+            {
+                $mdl = AppJxNews::model()->findByPk($news_id);
+                $mdl->comment = $mdl->comment+1;
+                $mdl->save();
+                $this->msgsucc($msg);
+            }
+        }
         echo json_encode($msg);
     }
     
@@ -328,15 +392,17 @@ class V0Controller extends Controller
         }
         echo json_encode($msg);
     }
-    
+
+
     public function actionDemo()
     {
         $params = array(
-            'action' => 'newsdesc',
-            'id' => 11,
-            'type' => 0,
-            'page' => 1
+            'action' => 'typelist',
+            'id' => 2,
+            'type' => 1
         );
+
+
         $salt = "xFlaSd!$&258";
         $data = json_encode($params);
         $sign = md5($data.$salt);
