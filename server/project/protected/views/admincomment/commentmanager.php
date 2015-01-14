@@ -19,8 +19,8 @@
         <?php foreach ($models as $value) {?>
             <tr>
                 <td><?php echo $value['id']; ?></td>
-                <td><?php echo $newApp[$value['news_id']]; ?></td>
-                <td><?php echo $userApp[$value['user_id']]; ?></td>
+                <td><?php echo empty($newApp[$value['news_id']])?$value['news_id']:$newApp[$value['news_id']]; ?></td>
+                <td><?php echo empty($userApp[$value['user_id']])?$value['user_id']:$userApp[$value['user_id']]; ?></td>
                 <td><?php echo $value['comment']; ?></td>
                 <td><?php echo $value['parent_user']; ?></td>
                 <td><?php echo date("Y-m-d H:i:s", $value['addtime']); ?></td>

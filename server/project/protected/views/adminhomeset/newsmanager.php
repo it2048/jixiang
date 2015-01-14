@@ -51,7 +51,7 @@
                     <?php
                     if($value['comtype']==0){
                         ?>
-                        <a title="确实要关闭评论吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/gb',array('id'=>$value['id'])); ?>" class="btnEdit">封号</a>
+                        <a title="确实要关闭评论吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/gb',array('id'=>$value['id'])); ?>" class="btnSelect">封号</a>
                     <?php }else{ ?>
                         <a title="确实要打开评论吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/dk',array('id'=>$value['id'])); ?>" class="btnAssign">解封</a>
                     <?php }?>
