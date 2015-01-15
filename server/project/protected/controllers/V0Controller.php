@@ -350,8 +350,14 @@ class V0Controller extends Controller
         if(!empty($mod)&&md5($password.$salt)==$mod->password)
         {
             $this->msgsucc($msg);
+            $pass = empty($mod->img_url)?"":"http://it2048.cn".Yii::app()->request->baseUrl.$mod->img_url;
             $msg['data'] = array("id"=>$mod->id,
-                    "token"=>$this->getToken($mod->id));
+                    "token"=>$this->getToken($mod->id),
+                "tel"=>$mod->tel,
+                "uname"=>$mod->uname,
+                "img_url"=>$pass
+
+            );
         }
         else
             $msg['msg'] = "帐号或者密码错误";
@@ -601,9 +607,9 @@ class V0Controller extends Controller
     public function actionDemo()
     {
         $params = array(
-            'action' => 'typelist',
-            'id' => '2',
-            'type'=>1,
+            'action' => 'login',
+            'tel' => '123',
+            'password'=>'123',
             'page'=>2
         );
         $salt = "xFlaSd!$&258";
