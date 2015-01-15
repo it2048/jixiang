@@ -13,7 +13,7 @@
                 <label>新闻状态：</label>
                 <select class="combox" name="news_status">
                     <option value="0">普通</option>
-                    <option value="1">置顶</option>
+                    <option value="1">广告</option>
                 </select>
             </p>
             <p class="nowrap">

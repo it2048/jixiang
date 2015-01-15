@@ -54,8 +54,8 @@ class AdminhomesetController extends AdminSet
     public function actionNewsSave()
     {
         $msg = $this->msgcode();
-        $type = Yii::app()->getRequest()->getParam("news_type", 1); //类型
-        $status = Yii::app()->getRequest()->getParam("news_status", 1); //状态
+        $type = Yii::app()->getRequest()->getParam("news_type", 0); //类型
+        $status = Yii::app()->getRequest()->getParam("news_status", 0); //状态
         $title = Yii::app()->getRequest()->getParam("news_title", ""); //用户名
         $content = Yii::app()->getRequest()->getParam("news_content", ""); //用户名
         $source = Yii::app()->getRequest()->getParam("news_source", ""); //来源
@@ -228,8 +228,8 @@ class AdminhomesetController extends AdminSet
     {
         $msg = $this->msgcode();
         $id = Yii::app()->getRequest()->getParam("id", ""); //编号
-        $type = Yii::app()->getRequest()->getParam("news_type", 1); //类型
-        $status = Yii::app()->getRequest()->getParam("news_status", 1); //状态
+        $type = Yii::app()->getRequest()->getParam("news_type", 0); //类型
+        $status = Yii::app()->getRequest()->getParam("news_status", 0); //状态
         $title = Yii::app()->getRequest()->getParam("news_title", ""); //用户名
         $content = Yii::app()->getRequest()->getParam("news_content", ""); //用户名
         $source = Yii::app()->getRequest()->getParam("news_source", ""); //来源

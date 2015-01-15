@@ -44,7 +44,7 @@
                 <td><?php echo $value['han']; ?></td>
                 <td><?php echo $value['hate']; ?></td>
                 <td><?php echo $value['source']; ?></td>
-                <td><?php echo $value['status']==1?"普通":"广告"; ?></td>
+                <td><?php echo $value['status']==0?"普通":"广告"; ?></td>
                 <td>
                     <a title="确实要删除这条记录吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsdel',array('id'=>$value['id'])); ?>" class="btnDel">删除</a>
                     <a title="编辑" height="560" mask="true" width="620" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsedit',array('id'=>$value['id'])); ?>" class="btnEdit">编辑</a>

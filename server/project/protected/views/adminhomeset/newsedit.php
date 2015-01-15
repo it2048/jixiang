@@ -13,7 +13,7 @@
                 <label>新闻状态：</label>
                 <select class="combox" name="news_status">
                     <option value="0" <?php echo $models->status==0?"selected":"";?>>普通</option>
-                    <option value="1" <?php echo $models->status==1?"selected":"";?>>置顶</option>
+                    <option value="1" <?php echo $models->status==1?"selected":"";?>>广告</option>
                 </select>
             </p>
             <p class="nowrap">
