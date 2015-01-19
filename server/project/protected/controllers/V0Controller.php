@@ -397,7 +397,7 @@ class V0Controller extends Controller
     /**
      * 帐号登出
      */
-    public function layout($arr)
+    public function logout($arr)
     {
         $msg = $this->msgcode();
         $user_id = $arr['user_id'];
@@ -707,22 +707,54 @@ class V0Controller extends Controller
         $user_id = $arr['user_id'];
         $token = $arr['token'];
         $uname = $arr['uname'];
-        $uimg = $arr['uimg'];
-        print_r($uimg);die();
         if(!$this->chkToken($user_id,$token))
         {
             $msg['code'] = 2;
             $msg['msg'] = "无权限，请登录";
         }else{
-            $id = AppJxUser::model()->findByPk($user_id);
-            $id->uname = $uname;
-            $id->img_url = $uimg;
-            if($id->save())
+            $model = AppJxUser::model()->findByPk($user_id);
+            $uimg = $_FILES['file'];
+            if(!empty($uimg['name']))
             {
-                $this->msgsucc($msg);
-            }else
+                $img = array("png","jpg","gif");
+                $_tmp_pathinfo = pathinfo($uimg['name']);
+                if (in_array(strtolower($_tmp_pathinfo['extension']),$img)) {
+                    //设置图片路径
+                    $flname = 'photo/'.time().$user_id.".".$_tmp_pathinfo['extension'];
+                    $dest_file_path = Yii::app()->basePath . '/../public/'.$flname;
+                    $filepathh = dirname($dest_file_path);
+                    if (!file_exists($filepathh))
+                        $b_mkdir = mkdir($filepathh, 0777, true);
+                    else
+                        $b_mkdir = true;
+                    if ($b_mkdir && is_dir($filepathh)) {
+                        //转存文件到 $dest_file_path路径
+                        if (move_uploaded_file($uimg['tmp_name'], $dest_file_path)) {
+                            $img_url ='/public/'.$flname;
+                            if(!empty($model->img_url))
+                                @unlink(Yii::app()->basePath . '/..'.$model->img_url);
+                            $model->img_url = $img_url;
+                        }else
+                        {
+                            $msg["msg"] = '头像存储失败';
+                            $msg["code"] = 4;
+                        }
+                    }
+                } else {
+                    $msg["msg"] = '上传的文件格式只能为jpg,png,gif';
+                    $msg["code"] = 3;
+                }
+            }
+            if($msg["code"]==1)
             {
-                $msg['msg'] = "保存失败";
+                $model->uname = $uname;
+                if($model->save())
+                {
+                    $this->msgsucc($msg);
+                }else
+                {
+                    $msg['msg'] = "保存失败";
+                }
             }
         }
         echo json_encode($msg);
@@ -741,27 +773,27 @@ class V0Controller extends Controller
 
         );*/
 
-/*        $params = array(
-            'action' => 'login',
-            'tel' => '18228041350',
-            'password'=>md5('123')
-        );*/
+//        $params = array(
+//            'action' => 'login',
+//            'tel' => '18228041350',
+//            'password'=>md5('123')
+//        );
 
         $params = array(
-            'action' => 'newsdesc',
-            'id' => '61',
-            'type' => '0',
-            'uimg' => "@d:/t.log",
-            'token'=>'534b6f39e8430086'
+            'action' => 'updateuserinfo',
+            'user_id' => '10',
+            'uname' => '0',
+            'token'=>'35963755137a0653'
         );
 
         $salt = "xFlaSd!$&258";
         $data = json_encode($params);
         $sign = md5($data.$salt);
         $rtnList = array(
+            "file"=>'@'."d:/bg_rain.png",
             "data"=>$data,
             "sign"=>$sign
         );
-        print_r(RemoteCurl::getInstance()->post('http://127.0.0.1/jixiang/server/project/index.php',$rtnList));
+        print_r(RemoteCurl::getInstance()->postImg('http://127.0.0.1/jixiang/server/project/index.php',$rtnList));
     }
 }
