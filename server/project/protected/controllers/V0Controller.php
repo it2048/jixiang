@@ -287,7 +287,9 @@ class V0Controller extends Controller
                     ,"like"=>$row['like']
                     ,"han"=>$row['han']
                     ,"hate"=>$row['hate']
-                    ,"source"=>$src);
+                    ,"source"=>$src
+                    ,"comtype"=>$row['comtype']
+                );
         }else
         {
             $tmp = array();
@@ -298,7 +300,8 @@ class V0Controller extends Controller
                     ,"like"=>$row['like']
                     ,"han"=>$row['han']
                     ,"hate"=>$row['hate']
-                    ,"source"=>$src));
+                    ,"source"=>$src,
+                    "comtype"=>$row['comtype']));
             if(!empty($row['child_list']))
             {
                 $rowLs = AppJxNews::model()->findAll("id in(".$row['child_list'].")");
@@ -312,7 +315,8 @@ class V0Controller extends Controller
                     ,"like"=>$val['like']
                     ,"han"=>$val['han']
                     ,"hate"=>$val['hate']
-                    ,"source"=>$sou));
+                    ,"source"=>$sou
+                    ,"comtype"=>$val['comtype']));
                 }
             }
 
@@ -744,9 +748,9 @@ class V0Controller extends Controller
         );*/
 
         $params = array(
-            'action' => 'layout',
-            'user_id' => '10',
-            'uname' => '123',
+            'action' => 'newsdesc',
+            'id' => '61',
+            'type' => '0',
             'uimg' => "@d:/t.log",
             'token'=>'534b6f39e8430086'
         );
