@@ -13,6 +13,8 @@
  * @property integer $fhtime
  * @property integer $ctime
  * @property string $check
+ * @property string $key
+ * @property integer $login_time
  */
 class JxUser extends CActiveRecord
 {
@@ -43,12 +45,12 @@ class JxUser extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('tel, password, type, ctime', 'required'),
-			array('type, fhtime, ctime', 'numerical', 'integerOnly'=>true),
-			array('tel, password, uname, img_url', 'length', 'max'=>45),
+			array('type, fhtime, ctime, login_time', 'numerical', 'integerOnly'=>true),
+			array('tel, password, uname, img_url, key', 'length', 'max'=>45),
 			array('check', 'length', 'max'=>8),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, tel, password, uname, img_url, type, fhtime, ctime, check', 'safe', 'on'=>'search'),
+			array('id, tel, password, uname, img_url, type, fhtime, ctime, check, key, login_time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -78,6 +80,8 @@ class JxUser extends CActiveRecord
 			'fhtime' => 'Fhtime',
 			'ctime' => 'Ctime',
 			'check' => 'Check',
+			'key' => 'Key',
+			'login_time' => 'Login Time',
 		);
 	}
 
@@ -101,6 +105,8 @@ class JxUser extends CActiveRecord
 		$criteria->compare('fhtime',$this->fhtime);
 		$criteria->compare('ctime',$this->ctime);
 		$criteria->compare('check',$this->check,true);
+		$criteria->compare('key',$this->key,true);
+		$criteria->compare('login_time',$this->login_time);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -325,12 +325,13 @@ class V0Controller extends Controller
      * @param type $id
      * @return type
      */
-    private function getToken($id)
+    private function getToken($um)
     {
         $salt = "xFl@&^852";
-        $data = date("Y-m-d",time());
-        $userId = $id;
-        return substr(md5($salt.$data.$userId),3,16);
+        $um->login_time = time();
+        $um->key = substr(md5($um->id.$salt.$um->type.$um->login_time),3,16);
+        $um->save();
+        return $um->key;
     }
     /**
      * 验证用户是否已经登录
@@ -341,9 +342,21 @@ class V0Controller extends Controller
     private function chkToken($id,$token)
     {
         $salt = "xFl@&^852";
-        $data = date("Y-m-d",time());
-        $userId = $id;
-        return $token==substr(md5($salt.$data.$userId),3,16);
+        $um = AppJxUser::model()->findByPk($id);
+        if(empty($um))
+        {
+            return false;
+        }
+        else
+        {
+            if($um->type!=1&&$um->login_time+302400>time()&&substr(md5($um->id.$salt.$um->type.$um->login_time),3,16)==$token)
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
+        }
     }
     
     /**
@@ -361,19 +374,49 @@ class V0Controller extends Controller
             echo json_encode($msg);die();
         }
         $mod = AppJxUser::model()->find("tel=:tl and type=0",array("tl"=>$tel));
+        $tmp = $mod;
         if(!empty($mod)&&md5($password.$salt)==$mod->password)
         {
             $this->msgsucc($msg);
             $msg['data'] = array("id"=>$mod->id,
-                    "token"=>$this->getToken($mod->id),
+                "token"=>$this->getToken($tmp),
                 "tel"=>$mod->tel,
                 "uname"=>$mod->uname,
                 "img_url"=>$this->img_revert($mod->img_url)
-
             );
         }
         else
             $msg['msg'] = "帐号或者密码错误";
+        echo json_encode($msg);
+    }
+
+    /**
+     * 获取用户信息
+     */
+    public function getuserinfo($arr)
+    {
+        $msg = $this->msgcode();
+        $user_id = $arr['user_id'];
+        $token = $arr['token'];
+        if(!$this->chkToken($user_id,$token))
+        {
+            $msg['code'] = 2;
+            $msg['msg'] = "无权限，请登录";
+        }else{
+            $mod = AppJxUser::model()->findByPk($user_id);
+            if(empty($mod))
+            {
+                $msg['msg'] = "用户不存在";
+            }else{
+                $this->msgsucc($msg);
+                $msg['data'] = array(
+                    "id"=>$mod->id,
+                    "tel"=>$mod->tel,
+                    "uname"=>$mod->uname,
+                    "img_url"=>$this->img_revert($mod->img_url)
+                );
+            }
+        }
         echo json_encode($msg);
     }
 
@@ -510,7 +553,7 @@ class V0Controller extends Controller
                 $this->msgsucc($msg);
                 $id = $model->attributes['id'];
                 $msg['data'] = array("id"=>$id,
-                    "token"=>$this->getToken($id));
+                    "token"=>$this->getToken($model));
             }else
             {
                 $msg['msg'] = "注册失败";
@@ -551,7 +594,7 @@ class V0Controller extends Controller
     }
 
     /**
-     * 点赞的状态
+     * 点赞
      * @param $arr
      */
     public function setzan($arr)
@@ -624,9 +667,40 @@ class V0Controller extends Controller
         echo json_encode($msg);
     }
 
+    /**
+     * 更新用户头像和昵称
+     * @param $arr
+     */
+    public function updateuserinfo($arr)
+    {
+        $msg = $this->msgcode();
+        $user_id = $arr['user_id'];
+        $token = $arr['token'];
+        $uname = $arr['uname'];
+        $uimg = $arr['uimg'];
+        print_r($uimg);die();
+        if(!$this->chkToken($user_id,$token))
+        {
+            $msg['code'] = 2;
+            $msg['msg'] = "无权限，请登录";
+        }else{
+            $id = AppJxUser::model()->findByPk($user_id);
+            $id->uname = $uname;
+            $id->img_url = $uimg;
+            if($id->save())
+            {
+                $this->msgsucc($msg);
+            }else
+            {
+                $msg['msg'] = "保存失败";
+            }
+        }
+        echo json_encode($msg);
+    }
+
     public function actionDemo()
     {
-        $params = array(
+/*        $params = array(
             'action' => 'comment',
             'user_id' => '8',
             'token'=>'123',
@@ -635,7 +709,22 @@ class V0Controller extends Controller
             'parent_id'=>'123',
             'parent_user'=>2,
 
+        );*/
+
+/*        $params = array(
+            'action' => 'login',
+            'tel' => '18228041350',
+            'password'=>md5('123')
+        );*/
+
+        $params = array(
+            'action' => 'updateuserinfo',
+            'user_id' => '10',
+            'uname' => '123',
+            'uimg' => "@d:/t.log",
+            'token'=>'534b6f39e8430086'
         );
+
         $salt = "xFlaSd!$&258";
         $data = json_encode($params);
         $sign = md5($data.$salt);
@@ -643,6 +732,6 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
-        print_r(RemoteCurl::getInstance()->post('http://127.0.0.1/jixiang/server/project/index.php', http_build_query($rtnList)));
+        print_r(RemoteCurl::getInstance()->postImg('http://127.0.0.1/jixiang/server/project/index.php',$rtnList));
     }
 }
