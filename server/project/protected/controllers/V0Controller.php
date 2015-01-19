@@ -391,6 +391,32 @@ class V0Controller extends Controller
     }
 
     /**
+     * 帐号登出
+     */
+    public function layout($arr)
+    {
+        $msg = $this->msgcode();
+        $user_id = $arr['user_id'];
+        $token = $arr['token'];
+        if(!$this->chkToken($user_id,$token))
+        {
+            $msg['code'] = 2;
+            $msg['msg'] = "无权限，请登录";
+        }else{
+            $mod = AppJxUser::model()->findByPk($user_id);
+            if(empty($mod))
+            {
+                $msg['msg'] = "用户不存在";
+            }else{
+                $mod->login_time = time();
+                if($mod->save())
+                $this->msgsucc($msg);
+            }
+        }
+        echo json_encode($msg);
+    }
+
+    /**
      * 获取用户信息
      */
     public function getuserinfo($arr)
@@ -718,7 +744,7 @@ class V0Controller extends Controller
         );*/
 
         $params = array(
-            'action' => 'updateuserinfo',
+            'action' => 'layout',
             'user_id' => '10',
             'uname' => '123',
             'uimg' => "@d:/t.log",
@@ -732,6 +758,6 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
-        print_r(RemoteCurl::getInstance()->postImg('http://127.0.0.1/jixiang/server/project/index.php',$rtnList));
+        print_r(RemoteCurl::getInstance()->post('http://127.0.0.1/jixiang/server/project/index.php',$rtnList));
     }
 }
