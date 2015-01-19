@@ -255,6 +255,16 @@ class V0Controller extends Controller
         }
         echo json_encode($msg);
     }
+
+    protected function img_revert($str)
+    {
+        if(trim($str)=="")
+        {
+            return "";
+        }else{
+            return "http://it2048.cn".Yii::app()->request->baseUrl.$str;
+        }
+    }
     /**
      * 新闻详情
      * @param type $arr
@@ -272,7 +282,7 @@ class V0Controller extends Controller
         {
             $msg['data'] = array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
                     ,"content"=>$row['content']
-                    ,"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$row['img_url']
+                    ,"img_url"=>$this->img_revert($row['img_url'])
                     ,"comment"=>$row['comment']
                     ,"like"=>$row['like']
                     ,"han"=>$row['han']
@@ -283,7 +293,7 @@ class V0Controller extends Controller
             $tmp = array();
             array_push($tmp,array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
                     ,"content"=>$row['content']
-                    ,"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$row['img_url']
+                    ,"img_url"=>$this->img_revert($row['img_url'])
                     ,"comment"=>$row['comment']
                     ,"like"=>$row['like']
                     ,"han"=>$row['han']
@@ -297,7 +307,7 @@ class V0Controller extends Controller
                     $sou = rtrim($sou,"》");
                     array_push($tmp,array("id"=>$val['id'],"addtime"=>$val['addtime'],"title"=>$val['title']
                     ,"content"=>$val['content']
-                    ,"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url']
+                    ,"img_url"=>$this->img_revert($val['img_url'])
                     ,"comment"=>$val['comment']
                     ,"like"=>$val['like']
                     ,"han"=>$val['han']
@@ -354,12 +364,11 @@ class V0Controller extends Controller
         if(!empty($mod)&&md5($password.$salt)==$mod->password)
         {
             $this->msgsucc($msg);
-            $pass = empty($mod->img_url)?"":"http://it2048.cn".Yii::app()->request->baseUrl.$mod->img_url;
             $msg['data'] = array("id"=>$mod->id,
                     "token"=>$this->getToken($mod->id),
                 "tel"=>$mod->tel,
                 "uname"=>$mod->uname,
-                "img_url"=>$pass
+                "img_url"=>$this->img_revert($mod->img_url)
 
             );
         }
@@ -372,35 +381,42 @@ class V0Controller extends Controller
     {
         $msg = $this->msgcode();
         $news_id = $arr['news_id'];
-        $userList = AppJxUser::model()->findAll();
-        $userApp = array();
-        $userNc = array();
-        $userImg = array();
-        foreach($userList as $val)
+        $newModel = AppJxNews::model()->findByPk($news_id);
+        if(empty($newModel)||$newModel->comtype==1)
         {
-            $userApp[$val->id] = $val->tel;
-            $userNc[$val->id] = $val->uname;
-            $userImg[$val->id] = $val->img_url;
+            $msg['code'] = 3;
+            $msg['msg'] = "禁止评论";
+        }else{
+            $userList = AppJxUser::model()->findAll();
+            $userApp = array();
+            $userNc = array();
+            $userImg = array();
+            foreach($userList as $val)
+            {
+                $userApp[$val->id] = $val->tel;
+                $userNc[$val->id] = $val->uname;
+                $userImg[$val->id] = $val->img_url;
+            }
+            $page = $arr['page'];
+            $star = 20*($page-1);
+            $comm = AppJxComment::model()->findAll("news_id={$news_id} order by id desc limit {$star},20");
+            $this->msgsucc($msg);
+            $allList = array();
+            foreach($comm as $val)
+            {
+                array_push($allList,array(
+                    "id"=>$val->id,
+                    "parent_id"=>$val->parent_id,
+                    "user_id"=>$val->user_id,
+                    "comment"=>$val->comment,
+                    "user_account"=>$userApp[$val->user_id],
+                    "user_nic"=>$userNc[$val->user_id],
+                    "addtime"=>$val->addtime,
+                    "user_img"=>"http://it2048.cn".Yii::app()->request->baseUrl.$userImg[$val->user_id]
+                ));
+            }
+            $msg['data'] = $allList;
         }
-        $page = $arr['page'];
-        $star = 20*($page-1);
-        $comm = AppJxComment::model()->findAll("news_id={$news_id} order by id desc limit {$star},20");
-        $this->msgsucc($msg);
-        $allList = array();
-        foreach($comm as $val)
-        {
-            array_push($allList,array(
-                "id"=>$val->id,
-                "parent_id"=>$val->parent_id,
-                "user_id"=>$val->user_id,
-                "comment"=>$val->comment,
-                "user_account"=>$userApp[$val->user_id],
-                "user_nic"=>$userNc[$val->user_id],
-                "addtime"=>$val->addtime,
-                "user_img"=>"http://it2048.cn".Yii::app()->request->baseUrl.$userImg[$val->user_id]
-            ));
-        }
-        $msg['data'] = $allList;
         echo json_encode($msg);
     }
 
@@ -611,10 +627,14 @@ class V0Controller extends Controller
     public function actionDemo()
     {
         $params = array(
-            'action' => 'homenews',
-            'tel' => '123',
-            'password'=>'123',
-            'page'=>2
+            'action' => 'comment',
+            'user_id' => '8',
+            'token'=>'123',
+            'news_id'=>'41',
+            'content' => '123',
+            'parent_id'=>'123',
+            'parent_user'=>2,
+
         );
         $salt = "xFlaSd!$&258";
         $data = json_encode($params);
