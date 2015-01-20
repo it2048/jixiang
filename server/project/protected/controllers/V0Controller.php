@@ -275,53 +275,57 @@ class V0Controller extends Controller
         $id = $arr['id'];
         $type = $arr['type'];
         $row = AppJxNews::model()->findByPk($id);
-        $src = ltrim($row['source'],"《");
-        $src = rtrim($src,"》");
-        $this->msgsucc($msg);
-        if($type==0)
+        if(!empty($row))
         {
-            $msg['data'] = array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
-                    ,"content"=>$row['content']
-                    ,"img_url"=>$this->img_revert($row['img_url'])
-                    ,"comment"=>$row['comment']
-                    ,"like"=>$row['like']
-                    ,"han"=>$row['han']
-                    ,"hate"=>$row['hate']
-                    ,"source"=>$src
-                    ,"comtype"=>$row['comtype']
-                );
-        }else
-        {
-            $tmp = array();
-            array_push($tmp,array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
-                    ,"content"=>$row['content']
-                    ,"img_url"=>$this->img_revert($row['img_url'])
-                    ,"comment"=>$row['comment']
-                    ,"like"=>$row['like']
-                    ,"han"=>$row['han']
-                    ,"hate"=>$row['hate']
-                    ,"source"=>$src,
-                    "comtype"=>$row['comtype']));
-            if(!empty($row['child_list']))
+            $src = ltrim($row['source'],"《");
+            $src = rtrim($src,"》");
+            $this->msgsucc($msg);
+            if($type==0)
             {
-                $rowLs = AppJxNews::model()->findAll("id in(".$row['child_list'].")");
-                foreach ($rowLs as $val) {
-                    $sou = ltrim($val['source'],"《");
-                    $sou = rtrim($sou,"》");
-                    array_push($tmp,array("id"=>$val['id'],"addtime"=>$val['addtime'],"title"=>$val['title']
-                    ,"content"=>$val['content']
-                    ,"img_url"=>$this->img_revert($val['img_url'])
-                    ,"comment"=>$val['comment']
-                    ,"like"=>$val['like']
-                    ,"han"=>$val['han']
-                    ,"hate"=>$val['hate']
-                    ,"source"=>$sou
-                    ,"comtype"=>$val['comtype']));
+                $msg['data'] = array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
+                ,"content"=>$row['content']
+                ,"img_url"=>$this->img_revert($row['img_url'])
+                ,"comment"=>$row['comment']
+                ,"like"=>$row['like']
+                ,"han"=>$row['han']
+                ,"hate"=>$row['hate']
+                ,"source"=>$src
+                ,"comtype"=>$row['comtype']
+                );
+            }else
+            {
+                $tmp = array();
+                array_push($tmp,array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
+                ,"content"=>$row['content']
+                ,"img_url"=>$this->img_revert($row['img_url'])
+                ,"comment"=>$row['comment']
+                ,"like"=>$row['like']
+                ,"han"=>$row['han']
+                ,"hate"=>$row['hate']
+                ,"source"=>$src,
+                    "comtype"=>$row['comtype']));
+                if(!empty($row['child_list']))
+                {
+                    $rowLs = AppJxNews::model()->findAll("id in(".$row['child_list'].")");
+                    foreach ($rowLs as $val) {
+                        $sou = ltrim($val['source'],"《");
+                        $sou = rtrim($sou,"》");
+                        array_push($tmp,array("id"=>$val['id'],"addtime"=>$val['addtime'],"title"=>$val['title']
+                        ,"content"=>$val['content']
+                        ,"img_url"=>$this->img_revert($val['img_url'])
+                        ,"comment"=>$val['comment']
+                        ,"like"=>$val['like']
+                        ,"han"=>$val['han']
+                        ,"hate"=>$val['hate']
+                        ,"source"=>$sou
+                        ,"comtype"=>$val['comtype']));
+                    }
                 }
-            }
 
-            $msg['data'] = $tmp;
-        }
+                $msg['data'] = $tmp;
+            }
+        }else
+            $msg['msg'] = "文章不存在";
         echo json_encode($msg);
     }
     /**
@@ -706,14 +710,14 @@ class V0Controller extends Controller
         $msg = $this->msgcode();
         $user_id = $arr['user_id'];
         $token = $arr['token'];
-        $uname = $arr['uname'];
+        $uname = empty($arr['uname'])?"":$arr['uname'];
         if(!$this->chkToken($user_id,$token))
         {
             $msg['code'] = 2;
             $msg['msg'] = "无权限，请登录";
         }else{
             $model = AppJxUser::model()->findByPk($user_id);
-            $uimg = $_FILES['file'];
+            $uimg = empty($_FILES['file'])?"":$_FILES['file'];
             if(!empty($uimg['name']))
             {
                 $img = array("png","jpg","gif");
