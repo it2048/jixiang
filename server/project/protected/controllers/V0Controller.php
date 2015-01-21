@@ -716,6 +716,7 @@ class V0Controller extends Controller
             $msg['code'] = 2;
             $msg['msg'] = "无权限，请登录";
         }else{
+            file_put_contents('d:/t.log', print_r($_FILES['file'],true), 8);
             $model = AppJxUser::model()->findByPk($user_id);
             $uimg = empty($_FILES['file'])?"":$_FILES['file'];
             if(!empty($uimg['name']))
@@ -898,7 +899,8 @@ class V0Controller extends Controller
             $msg['msg'] = "用户不存在";
         }else
         {
-            $code = substr(md5($umode->tel."XDF&654".time()),7,5);
+            list($msec, $sec) = explode(' ', microtime());
+            $code = substr($msec,4,4);
             $umode->check = $code;
             if($umode->save())
             {
@@ -960,15 +962,12 @@ class V0Controller extends Controller
 //        );
 
         $params = array(
-            'action' => 'login',
+            'action' => 'sendverifycode',
             'user_id' => '10',
             'news_id' => '43',
-            'tel'=>"18228041350",
-            'verifycode'=>'3bf6f',
-            'password'=>md5('12345'),
-            'token'=>'d811b047bf0e4c13'
+            'tel' => '18228041350',
+            'token'=>'821b7cff7ff46343'
         );
-
         $salt = "xFlaSd!$&258";
         $data = json_encode($params);
         $sign = md5($data.$salt);
@@ -977,6 +976,6 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
-        print_r(RemoteCurl::getInstance()->post('http://127.0.0.1/jixiang/server/project/index.php',$rtnList));
+        print_r(RemoteCurl::getInstance()->postImg('http://192.168.1.100/jixiang/server/project/index.php',$rtnList));
     }
 }
