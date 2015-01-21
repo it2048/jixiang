@@ -751,7 +751,8 @@ class V0Controller extends Controller
             }
             if($msg["code"]==1)
             {
-                $model->uname = $uname;
+                if($uname!="")
+                    $model->uname = $uname;
                 if($model->save())
                 {
                     $this->msgsucc($msg);
@@ -849,7 +850,7 @@ class V0Controller extends Controller
      * 获取收藏列表
      * @param $arr
      */
-    public function getcollect($arr)
+    public function getcollectlist($arr)
     {
         $msg = $this->msgcode();
         $user_id = $arr['user_id'];
@@ -870,7 +871,7 @@ class V0Controller extends Controller
             $this->msgsucc($msg);
             foreach ($lst as $value) {
                 $pass = empty($value['img_url'])?"":"http://it2048.cn".Yii::app()->request->baseUrl.$value['img_url'];
-                $sta = $value['type']==3?1:0;
+                $sta = $value['type']==2?1:0;
                 array_push($data,array(
                    "id"=>$value['id'], //新闻编号
                    "title"=>$value['title'],"time"=>$value['addtime'],
