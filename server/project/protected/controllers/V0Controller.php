@@ -883,6 +883,63 @@ class V0Controller extends Controller
         }
         echo json_encode($msg);
     }
+    
+    /**
+     * 发送验证码
+     * @param type $arr
+     */
+    public function sendverifycode($arr)
+    {
+        $msg = $this->msgcode();
+        $tel = $arr['tel'];
+        $umode = AppJxUser::model()->find("tel=:tl",array(":tl"=>$tel));
+        if(empty($umode))
+        {
+            $msg['msg'] = "用户不存在";
+        }else
+        {
+            $code = substr(md5($umode->tel."XDF&654".time()),7,5);
+            $umode->check = $code;
+            if($umode->save())
+            {
+                $this->msgsucc($msg);
+            }
+        }
+        echo json_encode($msg);
+    }
+    
+    /**
+     * 获取收藏列表
+     * @param $arr
+     */
+    public function updatepassword($arr)
+    {
+        $msg = $this->msgcode();
+        $tel = $arr['tel'];
+        $newpass = $arr['newpassword'];
+        $vcode = trim($arr['verifycode']);
+        $umode = AppJxUser::model()->find("tel=:tl",array(":tl"=>$tel));
+        if(!empty($umode))
+        {
+            if($umode->check != $vcode)
+            {
+                $umode->check = "";
+                $msg['msg'] = "验证码错误，请重新获取";
+            }else
+            {
+                $salt = "xFl@&^852";
+                $umode->password = md5($newpass.$salt);
+                $umode->login_time = time();
+                $umode->check = "";
+                if($umode->save())
+                {
+                    $this->msgsucc($msg);
+                    $msg['msg'] = "修改密码成功，请重新登录";
+                }
+            }
+        }
+        echo json_encode($msg);
+    }
     public function actionDemo()
     {
 /*        $params = array(
@@ -903,11 +960,13 @@ class V0Controller extends Controller
 //        );
 
         $params = array(
-            'action' => 'getcollect',
+            'action' => 'login',
             'user_id' => '10',
             'news_id' => '43',
-            'page'=>1,
-            'token'=>'35963755137a0653'
+            'tel'=>"18228041350",
+            'verifycode'=>'3bf6f',
+            'password'=>md5('12345'),
+            'token'=>'d811b047bf0e4c13'
         );
 
         $salt = "xFlaSd!$&258";
