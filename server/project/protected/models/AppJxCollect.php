@@ -6,7 +6,7 @@
  * Time: 下午6:26
  */
 
-class AppJxJxCollect extends JxCollect {
+class AppJxCollect extends JxCollect {
 
     /**
      * 实例化模型

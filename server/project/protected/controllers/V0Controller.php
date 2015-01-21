@@ -764,6 +764,124 @@ class V0Controller extends Controller
         echo json_encode($msg);
     }
 
+
+
+    /**
+     * 收藏的状态
+     * @param $arr
+     */
+    public function collectstatus($arr)
+    {
+        $msg = $this->msgcode();
+        $user_id = $arr['user_id'];
+        $token = $arr['token'];
+        $news_id = $arr['news_id'];
+        if(!$this->chkToken($user_id,$token))
+        {
+            $msg['code'] = 2;
+            $msg['msg'] = "无权限，请登录";
+        }else{
+            $id = AppJxCollect::model()->find("news_id={$news_id} and user_id={$user_id}");
+            $this->msgsucc($msg);
+            if(empty($id))
+            {
+                $msg['data'] = 0;
+            }else
+            {
+                $msg['data'] = 1;
+            }
+        }
+        echo json_encode($msg);
+    }
+
+    /**
+     * 收藏与取消收藏
+     * @param $arr
+     */
+    public function setcollect($arr)
+    {
+        $msg = $this->msgcode();
+        $user_id = $arr['user_id'];
+        $token = $arr['token'];
+        $news_id = $arr['news_id'];
+        $type = $arr['type'];
+        if(!$this->chkToken($user_id,$token))
+        {
+            $msg['code'] = 2;
+            $msg['msg'] = "无权限，请登录";
+        }else{
+            $id = AppJxCollect::model()->find("news_id={$news_id} and user_id={$user_id}");
+            //取消收藏
+            if($type==0)
+            {
+                if(!empty($id))
+                {
+                    if($id->delete())
+                    {
+                        $this->msgsucc($msg);
+                    }
+                }else{
+                    $msg['msg'] = "该文章您并未收藏";
+                }
+            //收藏
+            }elseif($type==1)
+            {
+               if(empty($id))
+               {
+                   $modl = new AppJxCollect();
+                   $modl->news_id = $news_id;
+                   $modl->user_id = $user_id;
+                   $modl->time = time();
+                   if($modl->save())
+                   {
+                       $this->msgsucc($msg);
+                   }
+               }else
+               {
+                   $msg['msg'] = "请勿重复收藏";
+               }
+            }
+        }
+        echo json_encode($msg);
+    }
+
+    /**
+     * 获取收藏列表
+     * @param $arr
+     */
+    public function getcollect($arr)
+    {
+        $msg = $this->msgcode();
+        $user_id = $arr['user_id'];
+        $token = $arr['token'];
+        $page = empty($arr['page'])?1:$arr['page'];
+        $cnt = ($page-1)*20;
+        if(!$this->chkToken($user_id,$token))
+        {
+            $msg['code'] = 2;
+            $msg['msg'] = "无权限，请登录";
+        }else{
+
+            $connection = Yii::app()->db;
+            $sql = "SELECT * FROM jx_collect left join jx_news on jx_collect.news_id = jx_news.id where jx_collect.user_id={$user_id} order by time desc limit {$cnt},20"; //构造SQL
+            $sqlCom = $connection->createCommand($sql);
+            $lst = $sqlCom->queryAll();
+            $data = array();
+            $this->msgsucc($msg);
+            foreach ($lst as $value) {
+                $pass = empty($value['img_url'])?"":"http://it2048.cn".Yii::app()->request->baseUrl.$value['img_url'];
+                $sta = $value['type']==3?1:0;
+                array_push($data,array(
+                   "id"=>$value['id'], //新闻编号
+                   "title"=>$value['title'],"time"=>$value['addtime'],
+                    "img_url"=>$this->getSlt($pass),
+                    "type"=>$sta
+                ));
+            }
+            $msg['data'] = $data;
+        }
+        echo json_encode($msg);
+    }
     public function actionDemo()
     {
 /*        $params = array(
@@ -784,9 +902,10 @@ class V0Controller extends Controller
 //        );
 
         $params = array(
-            'action' => 'updateuserinfo',
+            'action' => 'getcollect',
             'user_id' => '10',
-            'uname' => '0',
+            'news_id' => '43',
+            'page'=>1,
             'token'=>'35963755137a0653'
         );
 
@@ -798,6 +917,6 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
-        print_r(RemoteCurl::getInstance()->postImg('http://127.0.0.1/jixiang/server/project/index.php',$rtnList));
+        print_r(RemoteCurl::getInstance()->post('http://127.0.0.1/jixiang/server/project/index.php',$rtnList));
     }
 }

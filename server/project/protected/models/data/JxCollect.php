@@ -4,10 +4,9 @@
  * This is the model class for table "jx_collect".
  *
  * The followings are the available columns in table 'jx_collect':
- * @property integer $id
- * @property string $user_id
- * @property string $news_id
- * @property string $time
+ * @property integer $user_id
+ * @property integer $news_id
+ * @property integer $time
  */
 class JxCollect extends CActiveRecord
 {
@@ -37,10 +36,10 @@ class JxCollect extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, news_id, time', 'length', 'max'=>10),
+			array('user_id, news_id, time', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, user_id, news_id, time', 'safe', 'on'=>'search'),
+			array('user_id, news_id, time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,7 +60,6 @@ class JxCollect extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
 			'user_id' => 'User',
 			'news_id' => 'News',
 			'time' => 'Time',
@@ -79,10 +77,9 @@ class JxCollect extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('user_id',$this->user_id,true);
-		$criteria->compare('news_id',$this->news_id,true);
-		$criteria->compare('time',$this->time,true);
+		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('news_id',$this->news_id);
+		$criteria->compare('time',$this->time);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
