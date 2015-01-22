@@ -143,6 +143,7 @@ class V0Controller extends Controller
      */
     private function cateImg($type,&$msg,$page=1)
     {
+        if($page<1)$page=1;
         $listArr = array();
         $lmt = ($page-1)*20;
         $list = AppJxNews::model()->findAll("type=:tp and child_list!='' order by id desc limit {$lmt},20",array(":tp"=>$type));
@@ -164,6 +165,7 @@ class V0Controller extends Controller
     }
     private function pageImg($type,&$msg,$page=1)
     {
+        if($page<1)$page=1;
         $listArr = array();
         $lmt = ($page-1)*20;
         $list = AppJxNews::model()->findAll("type=:tp and child_list!='' order by id desc limit {$lmt},20",array(":tp"=>$type));
@@ -191,6 +193,7 @@ class V0Controller extends Controller
      */
     private function catepage($type,&$msg,$page)
     {
+        if($page<1)$page=1;
         $listArr = array();
         $cnt = ($page-1)*20;
         $list = AppJxNews::model()->findAll("type=:tp order by id desc limit {$cnt},20",array(":tp"=>$type));
@@ -244,6 +247,7 @@ class V0Controller extends Controller
         $type = $arr['id'];
         $status = $arr['type'];
         $page = $arr['page'];
+        if($page<1)$page=1;
         //新闻
         if($status==0)
         {
@@ -475,6 +479,7 @@ class V0Controller extends Controller
                 $userImg[$val->id] = $val->img_url;
             }
             $page = $arr['page'];
+            if($page<1)$page=1;
             $star = 20*($page-1);
             $comm = AppJxComment::model()->findAll("news_id={$news_id} order by id desc limit {$star},20");
             $this->msgsucc($msg);
@@ -857,6 +862,7 @@ class V0Controller extends Controller
         $user_id = $arr['user_id'];
         $token = $arr['token'];
         $page = empty($arr['page'])?1:$arr['page'];
+        if($page<1)$page=1;
         $cnt = ($page-1)*20;
         if(!$this->chkToken($user_id,$token))
         {
