@@ -1,5 +1,5 @@
 <div class="pageHeader">
-    <form onsubmit="return navTabSearch(this);" action="<?php echo Yii::app()->createAbsoluteUrl('admincontent/usermanager'); ?>" method="post">
+    <form  id="pagerForm" onsubmit="return navTabSearch(this);" action="<?php echo Yii::app()->createAbsoluteUrl('admincontent/usermanager'); ?>" method="post">
         <div class="searchBar">
             <table class="searchContent">
                 <tbody><tr>

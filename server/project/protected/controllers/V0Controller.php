@@ -721,7 +721,6 @@ class V0Controller extends Controller
             $msg['code'] = 2;
             $msg['msg'] = "无权限，请登录";
         }else{
-            file_put_contents('d:/t.log', print_r($_FILES['file'],true), 8);
             $model = AppJxUser::model()->findByPk($user_id);
             $uimg = empty($_FILES['file'])?"":$_FILES['file'];
             if(!empty($uimg['name']))
@@ -762,6 +761,12 @@ class V0Controller extends Controller
                 if($model->save())
                 {
                     $this->msgsucc($msg);
+                    $msg['data'] = array(
+                        "id"=>$user_id,
+                        "tel"=>$model->tel,
+                        "uname"=>$model->uname,
+                        "img_url"=>$this->img_revert($model->img_url)
+                    );
                 }else
                 {
                     $msg['msg'] = "保存失败";
@@ -968,9 +973,9 @@ class V0Controller extends Controller
 //        );
 
         $params = array(
-            'action' => 'sendverifycode',
+            'action' => 'updateuserinfo',
             'user_id' => '10',
-            'news_id' => '43',
+            'uname' => '',
             'tel' => '18228041350',
             'token'=>'821b7cff7ff46343'
         );
