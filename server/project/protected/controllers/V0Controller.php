@@ -489,6 +489,7 @@ class V0Controller extends Controller
                 array_push($allList,array(
                     "id"=>$val->id,
                     "parent_id"=>$val->parent_id,
+                    "parent_user"=>$val->parent_user,
                     "user_id"=>$val->user_id,
                     "comment"=>$val->comment,
                     "user_account"=>$userApp[$val->user_id],
@@ -967,16 +968,16 @@ class V0Controller extends Controller
         $allList = array();
         if($data['status']=="success")
         {
-
             if(!empty($data['results'][0]['weather_data'])&&is_array($data['results'][0]['weather_data']))
             {
                 $this->msgsucc($msg);
                 $model = $data['results'][0]['weather_data'];
-                $start = strpos($model[0]['date'],":");
-                $crent = mb_substr($model[0]['date'],$start,strlen($model[0]['date'])-1);
+                $start = strpos($model[0]['date'],"：");
+                $crent = mb_substr($model[0]['date'],$start+3,strlen($model[0]['date'])-1);
                 foreach($model as $k=>$val)
                 {
-                    $day = mb_substr($val['date'],0,2);
+                    $crent = $k==0?$crent:"";
+                    $day = mb_substr($val['date'],0,6);
                     array_push($allList,array("current_temperature"=>$crent,"date"=>$day,
                         "weather"=>$this->getW($val['weather']),"temperature"=>$val['temperature'],
                         "wind"=>$val['wind']
@@ -988,15 +989,14 @@ class V0Controller extends Controller
             {
                 $msg['msg'] = "天气获取失败";
             }
-
             $msg['data'] = $allList;
         }
-        print_r($msg);
+        echo json_encode($msg);
     }
 
     private function getW($str)
     {
-        $arr = array("SUN"=>"晴","ICE"=>"雹","SNOW"=>"雪","RAIN"=>"雨","CLOUD"=>"云","WIND"=>"风");
+        $arr = array("ICE"=>"雹","SNOW"=>"雪","RAIN"=>"雨","SUN"=>"晴","CLOUD"=>"云","WIND"=>"风");
         $rtn = "";
         foreach($arr as $k=>$val)
         {
@@ -1013,26 +1013,40 @@ class V0Controller extends Controller
 
     public function search($arr)
     {
-        $page = $arr['page'];
+        $page = empty($arr['page'])?1:$arr['page'];
         $words = $arr['words'];
         if($page<1)$page=1;
         $listArr = array();
         $cnt = ($page-1)*20;
-        $list = AppJxNews::model()->findAll("title like '%:title%' or content like '%:content%' order by id desc limit {$cnt},20",array(":title"=>$words,":content"=>$words));
+        $list = AppJxNews::model()->findAll("title like '%{$words}%' or content like '%{$words}%' order by id desc limit {$cnt},20");
         foreach($list as $val)
         {
+            $content = html_entity_decode(trim(strip_tags($val['content'])));
             $type = $val['type']==2?1:0;
-            $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-
-
-
+            if(mb_strpos($val['title'],$words,1,"utf-8")!=false)
+                $summary = mb_substr($content,0,30,"utf-8");
+            else
+            {
+                $k = mb_strpos($content,$words,1,"utf-8");
+                $lmt = 30;
+                if($k<10)
+                {
+                    $star = $k;
+                    $lmt = $lmt+10-$star;
+                }
+                else
+                {
+                    $star = $k-10;
+                }
+                $summary = mb_substr($content,$star,$lmt,"utf-8");
+            }
             array_push($listArr,array("id"=>$val['id'],"category"=>$val['type'],"title"=>$val['title'],"summary"=>$summary,
-            "type"=>$type
-            ));
+            "type"=>$type));
         }
         $msg['code'] = 0;
         $msg['msg'] = "成功";
         $msg['data'] = $listArr;
+        echo json_encode($msg);
     }
 
 
@@ -1050,9 +1064,9 @@ class V0Controller extends Controller
 //        );
 
         $params = array(
-            'action' => 'getweather',
-            'zone' => "甘孜",
-            'type'=>0
+            'action' => 'search',
+            'words' => "实习生",
+            'page'=>1
         );
 
 //        $params = array(
