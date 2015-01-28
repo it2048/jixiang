@@ -1,4 +1,4 @@
-<form onsubmit="return navTabSearch(this);" action="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsmanager'); ?>" method="post">
+<form id="pagerForm" onsubmit="return navTabSearch(this);" action="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsmanager'); ?>" method="post">
     <input type="hidden" name="pageNum" value="<?php echo $pages['pageNum'];?>" /><!--【必须】value=1可以写死-->
     <input type="hidden" name="numPerPage" value="50" /><!--【可选】每页显示多少条-->
 </form>
