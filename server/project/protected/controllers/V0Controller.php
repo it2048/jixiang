@@ -134,8 +134,8 @@ class V0Controller extends Controller
         $msg['data'] = array("slide"=>$slideArr,"list"=>$listArr);
     }
 
-    
-        /**
+
+    /**
      * 新闻分类接口
      * @param $type
      * @param $msg
@@ -143,6 +143,7 @@ class V0Controller extends Controller
      */
     private function cateImg($type,&$msg,$page=1)
     {
+        if($page<1)$page=1;
         $listArr = array();
         $lmt = ($page-1)*20;
         $list = AppJxNews::model()->findAll("type=:tp and child_list!='' order by id desc limit {$lmt},20",array(":tp"=>$type));
@@ -164,6 +165,7 @@ class V0Controller extends Controller
     }
     private function pageImg($type,&$msg,$page=1)
     {
+        if($page<1)$page=1;
         $listArr = array();
         $lmt = ($page-1)*20;
         $list = AppJxNews::model()->findAll("type=:tp and child_list!='' order by id desc limit {$lmt},20",array(":tp"=>$type));
@@ -191,6 +193,7 @@ class V0Controller extends Controller
      */
     private function catepage($type,&$msg,$page)
     {
+        if($page<1)$page=1;
         $listArr = array();
         $cnt = ($page-1)*20;
         $list = AppJxNews::model()->findAll("type=:tp order by id desc limit {$cnt},20",array(":tp"=>$type));
@@ -226,11 +229,11 @@ class V0Controller extends Controller
         if($status==0)
         {
             $this->cateNews($type,$msg);
-        //图片
+            //图片
         }elseif($status==1)
         {
             $this->cateImg(2,$msg);
-        //天气
+            //天气
         }elseif($status==2)
         {
             $this->weather();
@@ -244,6 +247,7 @@ class V0Controller extends Controller
         $type = $arr['id'];
         $status = $arr['type'];
         $page = $arr['page'];
+        if($page<1)$page=1;
         //新闻
         if($status==0)
         {
@@ -366,7 +370,7 @@ class V0Controller extends Controller
             }
         }
     }
-    
+
     /**
      * 帐号登录
      */
@@ -418,7 +422,7 @@ class V0Controller extends Controller
             }else{
                 $mod->login_time = time();
                 if($mod->save())
-                $this->msgsucc($msg);
+                    $this->msgsucc($msg);
             }
         }
         echo json_encode($msg);
@@ -475,6 +479,7 @@ class V0Controller extends Controller
                 $userImg[$val->id] = $val->img_url;
             }
             $page = $arr['page'];
+            if($page<1)$page=1;
             $star = 20*($page-1);
             $comm = AppJxComment::model()->findAll("news_id={$news_id} order by id desc limit {$star},20");
             $this->msgsucc($msg);
@@ -556,7 +561,7 @@ class V0Controller extends Controller
         }
         echo json_encode($msg);
     }
-    
+
     /**
      * 帐号注册
      * @param type $arr
@@ -751,10 +756,17 @@ class V0Controller extends Controller
             }
             if($msg["code"]==1)
             {
-                $model->uname = $uname;
+                if($uname!="")
+                    $model->uname = $uname;
                 if($model->save())
                 {
                     $this->msgsucc($msg);
+                    $msg['data'] = array(
+                        "id"=>$user_id,
+                        "tel"=>$model->tel,
+                        "uname"=>$model->uname,
+                        "img_url"=>$this->img_revert($model->img_url)
+                    );
                 }else
                 {
                     $msg['msg'] = "保存失败";
@@ -823,23 +835,23 @@ class V0Controller extends Controller
                 }else{
                     $msg['msg'] = "该文章您并未收藏";
                 }
-            //收藏
+                //收藏
             }elseif($type==1)
             {
-               if(empty($id))
-               {
-                   $modl = new AppJxCollect();
-                   $modl->news_id = $news_id;
-                   $modl->user_id = $user_id;
-                   $modl->time = time();
-                   if($modl->save())
-                   {
-                       $this->msgsucc($msg);
-                   }
-               }else
-               {
-                   $msg['msg'] = "请勿重复收藏";
-               }
+                if(empty($id))
+                {
+                    $modl = new AppJxCollect();
+                    $modl->news_id = $news_id;
+                    $modl->user_id = $user_id;
+                    $modl->time = time();
+                    if($modl->save())
+                    {
+                        $this->msgsucc($msg);
+                    }
+                }else
+                {
+                    $msg['msg'] = "请勿重复收藏";
+                }
             }
         }
         echo json_encode($msg);
@@ -849,12 +861,13 @@ class V0Controller extends Controller
      * 获取收藏列表
      * @param $arr
      */
-    public function getcollect($arr)
+    public function getcollectlist($arr)
     {
         $msg = $this->msgcode();
         $user_id = $arr['user_id'];
         $token = $arr['token'];
         $page = empty($arr['page'])?1:$arr['page'];
+        if($page<1)$page=1;
         $cnt = ($page-1)*20;
         if(!$this->chkToken($user_id,$token))
         {
@@ -870,15 +883,73 @@ class V0Controller extends Controller
             $this->msgsucc($msg);
             foreach ($lst as $value) {
                 $pass = empty($value['img_url'])?"":"http://it2048.cn".Yii::app()->request->baseUrl.$value['img_url'];
-                $sta = $value['type']==3?1:0;
+                $sta = $value['type']==2?1:0;
                 array_push($data,array(
-                   "id"=>$value['id'], //新闻编号
-                   "title"=>$value['title'],"time"=>$value['addtime'],
+                    "id"=>$value['id'], //新闻编号
+                    "title"=>$value['title'],"time"=>$value['addtime'],
                     "img_url"=>$this->getSlt($pass),
                     "type"=>$sta
                 ));
             }
             $msg['data'] = $data;
+        }
+        echo json_encode($msg);
+    }
+
+    /**
+     * 发送验证码
+     * @param type $arr
+     */
+    public function sendverifycode($arr)
+    {
+        $msg = $this->msgcode();
+        $tel = $arr['tel'];
+        $umode = AppJxUser::model()->find("tel=:tl",array(":tl"=>$tel));
+        if(empty($umode))
+        {
+            $msg['msg'] = "用户不存在";
+        }else
+        {
+            list($msec, $sec) = explode(' ', microtime());
+            $code = substr($msec,4,4);
+            $umode->check = $code;
+            if($umode->save())
+            {
+                $this->msgsucc($msg);
+            }
+        }
+        echo json_encode($msg);
+    }
+
+    /**
+     * 获取收藏列表
+     * @param $arr
+     */
+    public function updatepassword($arr)
+    {
+        $msg = $this->msgcode();
+        $tel = $arr['tel'];
+        $newpass = $arr['newpassword'];
+        $vcode = trim($arr['verifycode']);
+        $umode = AppJxUser::model()->find("tel=:tl",array(":tl"=>$tel));
+        if(!empty($umode))
+        {
+            if($umode->check != $vcode)
+            {
+                $umode->check = "";
+                $msg['msg'] = "验证码错误，请重新获取";
+            }else
+            {
+                $salt = "xFl@&^852";
+                $umode->password = md5($newpass.$salt);
+                $umode->login_time = time();
+                $umode->check = "";
+                if($umode->save())
+                {
+                    $this->msgsucc($msg);
+                    $msg['msg'] = "修改密码成功，请重新登录";
+                }
+            }
         }
         echo json_encode($msg);
     }
@@ -939,4 +1010,5 @@ class V0Controller extends Controller
         );
         print_r(RemoteCurl::getInstance()->post('http://127.0.0.1/jixiang/server/project/index.php',$rtnList));
     }
+
 }
