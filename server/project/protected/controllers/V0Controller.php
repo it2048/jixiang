@@ -94,7 +94,7 @@ class V0Controller extends Controller
         $slideArr = array();
         $listArr = array();
         $slide = AppJxNews::model()->findAll("type=:tp and img_url is not null and status=1 order by id desc limit 0,6",array(":tp"=>$type));
-        $list = AppJxNews::model()->findAll("type=:tp and status=0 order by id desc limit 0,24",array(":tp"=>$type));
+        $list = AppJxNews::model()->findAll("type=:tp and status=0 order by id desc limit 0,20",array(":tp"=>$type));
         $sta = $type==2?1:0;
         if(empty($slide))
         {
@@ -882,32 +882,52 @@ class V0Controller extends Controller
         }
         echo json_encode($msg);
     }
+    /**
+     * 天气显示接口
+     *
+     */
+    public function getweather($arr)
+    {
+        $msg = $this->msgcode();
+        $zone = $arr['zone'];
+        $url = "http://api.map.baidu.com/telematics/v3/weather?location={$zone}&output=json&ak=0QDaLukGIKr22SwQKTWNxGSz";
+
+        $data = json_decode(RemoteCurl::getInstance()->get($url),true);
+        if($data['status']=="success")
+        {
+            $this->msgsucc($msg);
+            $msg['data'] = $data;
+        }
+        echo json_encode($msg);
+    }
+
+
     public function actionDemo()
     {
-/*        $params = array(
-            'action' => 'comment',
-            'user_id' => '8',
-            'token'=>'123',
-            'news_id'=>'41',
-            'content' => '123',
-            'parent_id'=>'123',
-            'parent_user'=>2,
-
-        );*/
-
-//        $params = array(
-//            'action' => 'login',
-//            'tel' => '18228041350',
-//            'password'=>md5('123')
+//       $params = array(
+//            'action' => 'comment',
+//            'user_id' => '23',
+//            'token'=>'7cb5f1867099ffab',
+//            'news_id'=>'41',
+//            'content' => '123',
+//            'parent_id'=>'23',
+//            'parent_user'=>"测试",
+//
 //        );
 
         $params = array(
-            'action' => 'getcollect',
-            'user_id' => '10',
-            'news_id' => '43',
-            'page'=>1,
-            'token'=>'35963755137a0653'
+            'action' => 'typelist',
+            'id' => 0,
+            'type'=>0
         );
+
+//        $params = array(
+//            'action' => 'comment',
+//            'user_id' => '23',
+//            'news_id' => '286',
+//            'content'=>1,
+//            'token'=>'35963755137a0653'
+//        );
 
         $salt = "xFlaSd!$&258";
         $data = json_encode($params);
