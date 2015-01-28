@@ -964,12 +964,75 @@ class V0Controller extends Controller
         $url = "http://api.map.baidu.com/telematics/v3/weather?location={$zone}&output=json&ak=0QDaLukGIKr22SwQKTWNxGSz";
 
         $data = json_decode(RemoteCurl::getInstance()->get($url),true);
+        $allList = array();
         if($data['status']=="success")
         {
-            $this->msgsucc($msg);
-            $msg['data'] = $data;
+
+            if(!empty($data['results'][0]['weather_data'])&&is_array($data['results'][0]['weather_data']))
+            {
+                $this->msgsucc($msg);
+                $model = $data['results'][0]['weather_data'];
+                $start = strpos($model[0]['date'],":");
+                $crent = mb_substr($model[0]['date'],$start,strlen($model[0]['date'])-1);
+                foreach($model as $k=>$val)
+                {
+                    $day = mb_substr($val['date'],0,2);
+                    array_push($allList,array("current_temperature"=>$crent,"date"=>$day,
+                        "weather"=>$this->getW($val['weather']),"temperature"=>$val['temperature'],
+                        "wind"=>$val['wind']
+                    ));
+                }
+
+            }
+            else
+            {
+                $msg['msg'] = "天气获取失败";
+            }
+
+            $msg['data'] = $allList;
         }
-        echo json_encode($msg);
+        print_r($msg);
+    }
+
+    private function getW($str)
+    {
+        $arr = array("SUN"=>"晴","ICE"=>"雹","SNOW"=>"雪","RAIN"=>"雨","CLOUD"=>"云","WIND"=>"风");
+        $rtn = "";
+        foreach($arr as $k=>$val)
+        {
+            if(strpos($str,$val)!==false)
+            {
+                $rtn = $k;
+                break;
+            }
+        }
+        if($rtn=="")
+            $rtn="SUN";
+        return $rtn;
+    }
+
+    public function search($arr)
+    {
+        $page = $arr['page'];
+        $words = $arr['words'];
+        if($page<1)$page=1;
+        $listArr = array();
+        $cnt = ($page-1)*20;
+        $list = AppJxNews::model()->findAll("title like '%:title%' or content like '%:content%' order by id desc limit {$cnt},20",array(":title"=>$words,":content"=>$words));
+        foreach($list as $val)
+        {
+            $type = $val['type']==2?1:0;
+            $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
+
+
+
+            array_push($listArr,array("id"=>$val['id'],"category"=>$val['type'],"title"=>$val['title'],"summary"=>$summary,
+            "type"=>$type
+            ));
+        }
+        $msg['code'] = 0;
+        $msg['msg'] = "成功";
+        $msg['data'] = $listArr;
     }
 
 
@@ -987,8 +1050,8 @@ class V0Controller extends Controller
 //        );
 
         $params = array(
-            'action' => 'typelist',
-            'id' => 0,
+            'action' => 'getweather',
+            'zone' => "甘孜",
             'type'=>0
         );
 
