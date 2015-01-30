@@ -1040,7 +1040,7 @@ class V0Controller extends Controller
                 }
                 $summary = mb_substr($content,$star,$lmt,"utf-8");
             }
-            array_push($listArr,array("id"=>$val['id'],"category"=>$val['type'],"title"=>$val['title'],"summary"=>$summary,
+            array_push($listArr,array("id"=>$val['id'],"addtime"=>$val['addtime'],"title"=>$val['title'],"summary"=>$summary,
             "type"=>$type));
         }
         $msg['code'] = 0;
