@@ -287,7 +287,7 @@ class V0Controller extends Controller
             if($type==0)
             {
                 $msg['data'] = array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
-                ,"content"=>$row['content']
+                ,"content"=> strip_tags($row['content'],'<img><br>')
                 ,"img_url"=>$this->img_revert($row['img_url'])
                 ,"comment"=>$row['comment']
                 ,"like"=>$row['like']
@@ -300,7 +300,7 @@ class V0Controller extends Controller
             {
                 $tmp = array();
                 array_push($tmp,array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
-                ,"content"=>$row['content']
+                ,"content"=>strip_tags($row['content'],'<img><br>')
                 ,"img_url"=>$this->img_revert($row['img_url'])
                 ,"comment"=>$row['comment']
                 ,"like"=>$row['like']
