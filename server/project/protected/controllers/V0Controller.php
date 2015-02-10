@@ -66,7 +66,7 @@ class V0Controller extends Controller
             $pass = empty($v['img_url'])?"":"http://it2048.cn".Yii::app()->request->baseUrl.$v['img_url'];
             $ayy[$v['type']]["title"] = $v['title'];
             $ayy[$v['type']]["news_id"] = $v['id'];
-            $ayy[$v['type']]["img_url"] = $this->getSlt($pass);
+            $ayy[$v['type']]["img_url"] = $this->getSlt($pass,0);
         }
         $this->msgsucc($msg);
         $msg['data'] = array("slide"=>$slide,"list"=>$ayy);
@@ -76,7 +76,7 @@ class V0Controller extends Controller
     protected function getSlt($url,$sta=1)
     {
         $utl = $url;
-        if($sta!==2&&strpos($url,"/slt")!==false)
+        if($sta!==1&&strpos($url,"/slt")!==false)
         {
             $utl = str_replace("/slt","/slt/slt",$url);
         }
@@ -155,7 +155,7 @@ class V0Controller extends Controller
             if($ct==0) $ct = 2;
             else $ct += 2;
             $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-            $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],$sta),
+            $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],1),
                 "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
             $i++;
         }
@@ -177,7 +177,7 @@ class V0Controller extends Controller
             if($ct==0) $ct = 2;
             else $ct += 2;
             $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-            $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],$sta),
+            $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],1),
                 "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
             $i++;
         }
@@ -197,7 +197,7 @@ class V0Controller extends Controller
         $listArr = array();
         $cnt = ($page-1)*20;
         $list = AppJxNews::model()->findAll("type=:tp order by id desc limit {$cnt},20",array(":tp"=>$type));
-        $sta = $type==3?1:0;
+        $sta = $type==2?1:0;
         foreach($list as $val)
         {
             $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
@@ -889,7 +889,7 @@ class V0Controller extends Controller
                 array_push($data,array(
                     "id"=>$value['id'], //新闻编号
                     "title"=>$value['title'],"time"=>$value['addtime'],
-                    "img_url"=>$this->getSlt($pass),
+                    "img_url"=>$this->getSlt($pass,0),
                     "type"=>$sta
                 ));
             }
