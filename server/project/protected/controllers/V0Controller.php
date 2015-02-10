@@ -284,10 +284,11 @@ class V0Controller extends Controller
             $src = ltrim($row['source'],"《");
             $src = rtrim($src,"》");
             $this->msgsucc($msg);
+            $content = str_replace("<img ","<img width='100%' ",$row['content']);
             if($type==0)
             {
                 $msg['data'] = array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
-                ,"content"=> strip_tags($row['content'],'<img><br>')
+                ,"content"=> $content
                 ,"img_url"=>$this->img_revert($row['img_url'])
                 ,"comment"=>$row['comment']
                 ,"like"=>$row['like']
@@ -300,7 +301,7 @@ class V0Controller extends Controller
             {
                 $tmp = array();
                 array_push($tmp,array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
-                ,"content"=>strip_tags($row['content'],'<img><br>')
+                ,"content"=>$content
                 ,"img_url"=>$this->img_revert($row['img_url'])
                 ,"comment"=>$row['comment']
                 ,"like"=>$row['like']
