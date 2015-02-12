@@ -320,8 +320,16 @@ class V0Controller extends Controller
                 {
                     $rowLs = AppJxNews::model()->findAll("id in(".$row['child_list'].")");
                     foreach ($rowLs as $val) {
-                        $sou = ltrim($val['source'],"《");
-                        $sou = rtrim($sou,"》");
+
+                        $sou = $val['source'];
+                        if(strpos($val['source'],"《")!==false)
+                        {
+                            $sou = ltrim($sou,"《");
+                        }
+                        if(strpos($val['source'],"》")!==false)
+                        {
+                            $sou = rtrim($sou,"》");
+                        }
                         array_push($tmp,array("id"=>$val['id'],"addtime"=>$val['addtime'],"title"=>$val['title']
                         ,"content"=>$val['content']
                         ,"img_url"=>$this->img_revert($val['img_url'])
@@ -1073,8 +1081,8 @@ class V0Controller extends Controller
 
         $params = array(
             'action' => 'newsdesc',
-            'id' => 60,
-            'type'=>0
+            'id' => 956,
+            'type'=>1
         );
 
 //        $params = array(
@@ -1093,7 +1101,7 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
-        print_r(RemoteCurl::getInstance()->post('http://127.0.0.1/jixiang/server/project/index.php',$rtnList));
+        print_r(RemoteCurl::getInstance()->post('http://it2048.cn/api/jixiang/server/project/index.php',$rtnList));
     }
 
 }
