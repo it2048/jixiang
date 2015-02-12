@@ -603,7 +603,7 @@ class V0Controller extends Controller
             $model->fhtime = time();
             $model->ctime = time();
             //注册用户默认是被封号的
-            $model->type = 1;
+            $model->type = 0;
             if($model->save())
             {
                 $this->msgsucc($msg);
