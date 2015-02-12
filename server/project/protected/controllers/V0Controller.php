@@ -281,8 +281,15 @@ class V0Controller extends Controller
         $row = AppJxNews::model()->findByPk($id);
         if(!empty($row))
         {
-            $src = ltrim($row['source'],"《");
-            $src = rtrim($src,"》");
+            $src = $row['source'];
+            if(strpos($row['source'],"《")!==false)
+            {
+                $src = ltrim($src,"《");
+            }
+            if(strpos($row['source'],"》")!==false)
+            {
+                $src = rtrim($src,"》");
+            }
             $this->msgsucc($msg);
             $content = str_replace("<img ","<img width='100%' ",$row['content']);
             if($type==0)
@@ -1054,20 +1061,20 @@ class V0Controller extends Controller
     public function actionDemo()
     {
 //       $params = array(
-//            'action' => 'comment',
+//            'action' => 'commentlist',
 //            'user_id' => '23',
 //            'token'=>'7cb5f1867099ffab',
-//            'news_id'=>'41',
-//            'content' => '123',
+//            'news_id'=>'973',
+//            'page' => '1',
 //            'parent_id'=>'23',
 //            'parent_user'=>"测试",
 //
 //        );
 
         $params = array(
-            'action' => 'search',
-            'words' => "实习生",
-            'page'=>1
+            'action' => 'newsdesc',
+            'id' => 60,
+            'type'=>0
         );
 
 //        $params = array(
