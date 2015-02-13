@@ -2,6 +2,7 @@
 
 class V0Controller extends Controller
 {
+    public $utrl = "http://120.24.234.19";
     /**
      * 生成首页
      *
@@ -58,12 +59,12 @@ class V0Controller extends Controller
                 $typ = 1;
             else
                 $typ = 0;
-            array_push($slide,array('id'=>$v['type'],"title"=>$v['title'],"img_url"=>"http://it2048.cn".Yii::app()->request->baseUrl.$v['img_url'],"type"=>$typ,"news_id"=>$v['id']));
+            array_push($slide,array('id'=>$v['type'],"title"=>$v['title'],"img_url"=>$this->utrl.Yii::app()->request->baseUrl.$v['img_url'],"type"=>$typ,"news_id"=>$v['id']));
         }
 
         $rows = $connection->createCommand($sql)->query();
         foreach ($rows as $v ){
-            $pass = empty($v['img_url'])?"":"http://it2048.cn".Yii::app()->request->baseUrl.$v['img_url'];
+            $pass = empty($v['img_url'])?"":$this->utrl.Yii::app()->request->baseUrl.$v['img_url'];
             $ayy[$v['type']]["title"] = $v['title'];
             $ayy[$v['type']]["news_id"] = $v['id'];
             $ayy[$v['type']]["img_url"] = $this->getSlt($pass,0);
@@ -104,7 +105,7 @@ class V0Controller extends Controller
                 $ct = substr_count($val['child_list'],',')+2;
                 if($ct==2) $ct=1;
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-                $pass = empty($val['img_url'])?"":"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'];
+                $pass = empty($val['img_url'])?"":$this->utrl.Yii::app()->request->baseUrl.$val['img_url'];
                 $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt($pass,
                         $sta),"type"=>$sta,
                     "time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
@@ -113,7 +114,7 @@ class V0Controller extends Controller
         }else{
             foreach($slide as $val)
             {
-                $pass = empty($val['img_url'])?"":"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'];
+                $pass = empty($val['img_url'])?"":$this->utrl.Yii::app()->request->baseUrl.$val['img_url'];
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
                 array_push($slideArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$pass,"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary));
             }
@@ -123,7 +124,7 @@ class V0Controller extends Controller
                 $ct = substr_count($val['child_list'],',')+2;
                 if($ct==2) $ct=1;
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-                $pass = empty($val['img_url'])?"":"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'];
+                $pass = empty($val['img_url'])?"":$this->utrl.Yii::app()->request->baseUrl.$val['img_url'];
                 $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt($pass,$sta),
                     "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
                 $i++;
@@ -155,7 +156,7 @@ class V0Controller extends Controller
             if($ct==0) $ct = 2;
             else $ct += 2;
             $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-            $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],1),
+            $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt($this->utrl.Yii::app()->request->baseUrl.$val['img_url'],1),
                 "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
             $i++;
         }
@@ -177,7 +178,7 @@ class V0Controller extends Controller
             if($ct==0) $ct = 2;
             else $ct += 2;
             $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-            $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt("http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'],1),
+            $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt($this->utrl.Yii::app()->request->baseUrl.$val['img_url'],1),
                 "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
             $i++;
         }
@@ -202,7 +203,7 @@ class V0Controller extends Controller
         {
             $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
             $ct = substr_count($val['child_list'],',')+2;
-            $pass = empty($val['img_url'])?"":"http://it2048.cn".Yii::app()->request->baseUrl.$val['img_url'];
+            $pass = empty($val['img_url'])?"":$this->utrl.Yii::app()->request->baseUrl.$val['img_url'];
             if($ct==2) $ct=1;
             array_push($listArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt($pass,$sta),
                 "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct));
@@ -266,7 +267,7 @@ class V0Controller extends Controller
         {
             return "";
         }else{
-            return "http://it2048.cn".Yii::app()->request->baseUrl.$str;
+            return $this->utrl.Yii::app()->request->baseUrl.$str;
         }
     }
     /**
@@ -511,7 +512,7 @@ class V0Controller extends Controller
                     "user_account"=>$userApp[$val->user_id],
                     "user_nic"=>$userNc[$val->user_id],
                     "addtime"=>$val->addtime,
-                    "user_img"=>"http://it2048.cn".Yii::app()->request->baseUrl.$userImg[$val->user_id]
+                    "user_img"=>$this->utrl.Yii::app()->request->baseUrl.$userImg[$val->user_id]
                 ));
             }
             $msg['data'] = $allList;
@@ -899,7 +900,7 @@ class V0Controller extends Controller
             $data = array();
             $this->msgsucc($msg);
             foreach ($lst as $value) {
-                $pass = empty($value['img_url'])?"":"http://it2048.cn".Yii::app()->request->baseUrl.$value['img_url'];
+                $pass = empty($value['img_url'])?"":$this->utrl.Yii::app()->request->baseUrl.$value['img_url'];
                 $sta = $value['type']==2?1:0;
                 array_push($data,array(
                     "id"=>$value['id'], //新闻编号
@@ -1101,7 +1102,7 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
-        print_r(RemoteCurl::getInstance()->post('http://it2048.cn/api/jixiang/server/project/index.php',$rtnList));
+        print_r(RemoteCurl::getInstance()->post('http://120.24.234.19/api/jixiang/server/project/index.php',$rtnList));
     }
 
 }
