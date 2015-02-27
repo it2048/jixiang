@@ -7,19 +7,6 @@ class AdmindegreeController extends AdminSet
      */
     public function actiondegreeManager()
     {
-        $newsList = AppJxNews::model()->findAll();
-        $userList = AppJxUser::model()->findAll();
-        $newApp = array();
-        $userApp = array();
-        foreach($newsList as $val)
-        {
-            $newApp[$val->id] = $val->title;
-        }
-        foreach($userList as $val)
-        {
-            $userApp[$val->id] = $val->tel;
-        }
-
         //先获取当前是否有页码信息
         $pages['pageNum'] = Yii::app()->getRequest()->getParam("pageNum", 1); //当前页
         $pages['countPage'] = Yii::app()->getRequest()->getParam("countPage", 0); //总共多少记录
@@ -30,6 +17,34 @@ class AdmindegreeController extends AdminSet
         $criteria->offset = $pages['numPerPage'] * ($pages['pageNum'] - 1);
         $criteria->order = 'news_id DESC';
         $allList = AppJxDegree::model()->findAll($criteria);
+        $strNew = "";
+        $strUser = "";
+        foreach($allList as $val)
+        {
+            $strNew .= $val->news_id.",";
+            $strUser .= $val->user_id.",";
+        }
+        $newApp = array();
+        $userApp = array();
+        $strNew = rtrim($strNew,",");
+        $strUser = rtrim($strUser,",");
+        if($strNew != "")
+        {
+            $newsList = AppJxNews::model()->findAll("id in ({$strNew})");
+            foreach($newsList as $val)
+            {
+                $newApp[$val->id] = $val->title;
+            }
+        }
+        if($strUser != "")
+        {
+            $userList = AppJxUser::model()->findAll("id in ({$strUser})");
+            foreach($userList as $val)
+            {
+                $userApp[$val->id] = $val->tel;
+            }
+
+        }
         $this->renderPartial('degreemanager', array(
             'models' => $allList,
             'pages' => $pages,

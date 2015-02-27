@@ -64,7 +64,7 @@
         <div class="pages">
             <span>共<?php echo $pages['countPage'];?>条</span>
         </div>
-        <div class="pagination" targetType="navTab" totalCount="<?php echo $pages['countPage'];?>" numPerPage="30" pageNumShown="10" currentPage="<?php echo $pages['pageNum'];?>"></div>
+        <div class="pagination" targetType="navTab" totalCount="<?php echo $pages['countPage'];?>" numPerPage="<?php echo $pages['numPerPage'];?>" pageNumShown="10" currentPage="<?php echo $pages['pageNum'];?>"></div>
     </div>
 </div>
 <script type="text/javascript">
