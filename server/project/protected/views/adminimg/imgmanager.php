@@ -1,11 +1,11 @@
-<form id="pagerForm" onsubmit="return navTabSearch(this);" action="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsmanager'); ?>" method="post">
+<form id="pagerForm" onsubmit="return navTabSearch(this);" action="<?php echo Yii::app()->createAbsoluteUrl('adminimg/imgmanager'); ?>" method="post">
     <input type="hidden" name="pageNum" value="<?php echo $pages['pageNum'];?>" /><!--【必须】value=1可以写死-->
     <input type="hidden" name="numPerPage" value="50" /><!--【可选】每页显示多少条-->
 </form>
 <div class="pageContent">
     <div class="panelBar">
         <ul class="toolBar">
-            <li><a class="add" mask="true" height="560" width="600" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsadd');?>"><span>添加</span></a></li>
+            <li><a class="add" mask="true" height="560" width="600" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminimg/newsadd');?>"><span>添加</span></a></li>
         </ul>
     </div>
     <table class="table" width="1040" layoutH="76">
@@ -44,14 +44,14 @@
                 <td><?php echo $value['source']; ?></td>
                 <td><?php echo $value['status']==0?"普通":"广告"; ?></td>
                 <td>
-                    <a title="确实要删除这条记录吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsdel',array('id'=>$value['id'])); ?>" class="btnDel">删除</a>
-                    <a title="编辑" height="560" mask="true" width="620" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsedit',array('id'=>$value['id'])); ?>" class="btnEdit">编辑</a>
+                    <a title="确实要删除这条记录吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminimg/newsdel',array('id'=>$value['id'])); ?>" class="btnDel">删除</a>
+                    <a title="编辑" height="560" mask="true" width="620" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminimg/newsedit',array('id'=>$value['id'])); ?>" class="btnEdit">编辑</a>
                     <?php
                     if($value['comtype']==0){
                         ?>
-                        <a title="确实要关闭评论吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/gb',array('id'=>$value['id'])); ?>" class="btnSelect">封号</a>
+                        <a title="确实要关闭评论吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminimg/gb',array('id'=>$value['id'])); ?>" class="btnSelect">封号</a>
                     <?php }else{ ?>
-                        <a title="确实要打开评论吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/dk',array('id'=>$value['id'])); ?>" class="btnAssign">解封</a>
+                        <a title="确实要打开评论吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminimg/dk',array('id'=>$value['id'])); ?>" class="btnAssign">解封</a>
                     <?php }?>
                 </td>
             </tr>

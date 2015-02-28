@@ -14,6 +14,7 @@ class AdminhomesetController extends AdminSet
         $pages['numPerPage'] = Yii::app()->getRequest()->getParam("numPerPage", 50); //每页多少条数据
         $criteria = new CDbCriteria;
         $pages['countPage'] = AppJxNews::model()->count($criteria);
+        $criteria->addCondition("type!=2");
         $criteria->limit = $pages['numPerPage'];
         $criteria->offset = $pages['numPerPage'] * ($pages['pageNum'] - 1);
         $criteria->order = 'id DESC';

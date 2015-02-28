@@ -7,10 +7,12 @@
     <link href="<?php echo Yii::app()->request->baseUrl; ?>/admincss/dwzthemes/css/core.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="<?php echo Yii::app()->request->baseUrl; ?>/admincss/dwzthemes/css/print.css" rel="stylesheet" type="text/css" media="print"/>
     <link href="<?php echo Yii::app()->request->baseUrl; ?>/admincss/dwzthemes/css/login.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo Yii::app()->request->baseUrl; ?>/admincss/dwzthemes/uploadify/css/uploadify.css" rel="stylesheet" type="text/css" media="screen"/>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/adminjs/jquery.min.js" type="text/javascript"></script>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/adminjs/jquery.validate.min.js" type="text/javascript"></script>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/adminjs/dwz.min.js" type="text/javascript"></script>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/adminjs/xheditor/xheditor-zh-cn.min.js" type="text/javascript"></script>
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/admincss/dwzthemes/uploadify/scripts/jquery.uploadify.js" type="text/javascript"></script>
 
     <!--[if IE]>
     <link href="<?php echo Yii::app()->request->baseUrl; ?>/admincss/dwzthemes/css/ieHack.css" rel="stylesheet" type="text/css" media="screen"/>
@@ -65,6 +67,7 @@
 
                                 <li><a href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/index'); ?>" target="navTab" rel="index">常用配置</a></li>
                                 <li><a href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsmanager'); ?>" target="navTab" rel="newsmanager">新闻设置</a></li>
+                                <li><a href="<?php echo Yii::app()->createAbsoluteUrl('adminimg/imgmanager'); ?>" target="navTab" rel="imgmanager">图片新闻</a></li>
                                 <li><a href="<?php echo Yii::app()->createAbsoluteUrl('adminuser/usermanager'); ?>" target="navTab" rel="usermanager">用户管理</a></li>
                                 <li><a href="<?php echo Yii::app()->createAbsoluteUrl('admincomment/commentmanager'); ?>" target="navTab" rel="commentmanager">评论管理</a></li>
                                 <li><a href="<?php echo Yii::app()->createAbsoluteUrl('admindegree/degreemanager'); ?>" target="navTab" rel="degreemanager">点赞管理</a></li>
