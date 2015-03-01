@@ -42,7 +42,7 @@
                  {
                      $str .= '</tr><tr>';
                  }
-                 $str .= sprintf('<td><img src="%s%s" width="128" height="100"><input name="desc0" type="text" class="textInput" size="16" value="%s"></td>',Yii::app()->request->baseUrl,$value['img_url'],$value['content']);
+                 $str .= sprintf('<td><img src="%s%s" width="128" height="100"><br><input name="desc0" type="text" class="textInput" size="16" value="%s"></td>',Yii::app()->request->baseUrl,$value['img_url'],$value['content']);
              }
              $str .= '</tr>';
              echo $str;

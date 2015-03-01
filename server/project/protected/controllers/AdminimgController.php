@@ -181,7 +181,7 @@ class AdminimgController extends AdminSet
             if(count($idArr)>0)
             {
                 $id = $idArr[0];
-                $tst = implode(",",array_slice($idArr,2));
+                $tst = implode(",",array_slice($idArr,1));
                 $model = AppJxNews::model()->findByPk($id);
                 $model->child_list = $tst;
                 $model->save();
@@ -205,7 +205,7 @@ class AdminimgController extends AdminSet
         if($id!="")
         {
             $model = AppJxNews::model()->findByPk($id);
-            $mdd = AppJxNews::model()->findAll("id in({$model->child_list})");
+            $mdd = AppJxNews::model()->findAll("id in({$id},{$model->child_list})");
         }
         $this->renderPartial('newsedit',array("models"=>$model,"mdd"=>$mdd));
     }
