@@ -209,7 +209,7 @@ class AdminhomesetController extends AdminSet
             if ($b_mkdir && is_dir($filepathh)) {
                 //转存文件到 $dest_file_path路径
                 if (move_uploaded_file($_FILES[$inputName]['tmp_name'], $dest_file_path)) {
-                    $img_url ='http://it2048.cn/api/jixiang/server/project/public/'.$flname;
+                    $img_url ='http://120.24.234.19/api/jixiang/server/project/public/'.$flname;
                     $msg="{'url':'".$img_url."','localname':'".$this->jsonString($localName)."','id':1}";
                 }
             } 

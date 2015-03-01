@@ -109,6 +109,31 @@ class AdminimgController extends AdminSet
         $this->renderPartial('newsadd');
     }
 
+        /**
+     * 删除新闻
+     */
+    public function actionNewsDel()
+    {
+        $msg = $this->msgcode();
+        $id = Yii::app()->getRequest()->getParam("id", 0); //用户名
+        if($id!=0)
+        {
+            $model = AppJxNews::model()->findByPk($id);
+            $tst = $model->child_list==""?$id:$id.",".$model->child_list;
+            
+            if(AppJxNews::model()->deleteAll("id in({$tst})"))
+            {
+                $this->msgsucc($msg);
+            }
+            else
+                $msg['msg'] = "数据删除失败";
+        }else
+        {
+            $msg['msg'] = "id不能为空";
+        }
+        echo json_encode($msg);
+    }
+    
     /**
      * 编辑新闻
      */
@@ -126,11 +151,47 @@ class AdminimgController extends AdminSet
      */
     public function actionSave()
     {
+        $msg = $this->msgcode();
         $title = Yii::app()->getRequest()->getParam("news_title", ""); //新闻标题
         $source = Yii::app()->getRequest()->getParam("news_source", ""); //新闻来源
-        $title = Yii::app()->getRequest()->getParam("news_title", 0); //新闻标题
-        $title = Yii::app()->getRequest()->getParam("news_title", 0); //新闻标题
-
+        if($title=="") $msg['msg'] = "标题不能为空";
+        else
+        {
+            $username = $this->getUserName(); //用户名
+            $idArr = array();
+            for($i=0;$i<30;$i++)
+            {
+                $url = Yii::app()->getRequest()->getParam("url{$i}", ""); //图片地址
+                if($url=="")continue;
+                $desc = Yii::app()->getRequest()->getParam("desc{$i}", ""); //图片描述
+                $model = new AppJxNews();
+                $model->title = $title;
+                $model->type = 2;
+                $model->status = 0;
+                $model->content = $desc;
+                $model->addtime = time();
+                $model->adduser = $username;
+                $model->img_url = $url;
+                $model->source = $source;
+                if($model->save())
+                {
+                    array_push($idArr,Yii::app()->db->getLastInsertID());
+                }
+            }
+            if(count($idArr)>0)
+            {
+                $id = $idArr[0];
+                $tst = implode(",",array_slice($idArr,2));
+                $model = AppJxNews::model()->findByPk($id);
+                $model->child_list = $tst;
+                $model->save();
+                $this->msgsucc($msg);
+            }else
+            {
+                $msg['msg'] = "不存在图片";
+            }
+        }
+         echo json_encode($msg);
     }
 
 
@@ -142,8 +203,11 @@ class AdminimgController extends AdminSet
         $id = Yii::app()->getRequest()->getParam("id", 0); //用户名
         $model = array();
         if($id!="")
+        {
             $model = AppJxNews::model()->findByPk($id);
-        $this->renderPartial('newsedit',array("models"=>$model));
+            $mdd = AppJxNews::model()->findAll("id in({$model->child_list})");
+        }
+        $this->renderPartial('newsedit',array("models"=>$model,"mdd"=>$mdd));
     }
 
 }

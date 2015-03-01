@@ -45,13 +45,13 @@
                 <td><?php echo $value['status']==0?"普通":"广告"; ?></td>
                 <td>
                     <a title="确实要删除这条记录吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminimg/newsdel',array('id'=>$value['id'])); ?>" class="btnDel">删除</a>
-                    <a title="编辑" height="560" mask="true" width="620" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminimg/newsedit',array('id'=>$value['id'])); ?>" class="btnEdit">编辑</a>
+                    <a title="查看" height="560" mask="true" width="620" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminimg/newsedit',array('id'=>$value['id'])); ?>" class="btnLook">查看</a>
                     <?php
                     if($value['comtype']==0){
                         ?>
-                        <a title="确实要关闭评论吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminimg/gb',array('id'=>$value['id'])); ?>" class="btnSelect">封号</a>
+                        <a title="确实要关闭评论吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/gb',array('id'=>$value['id'])); ?>" class="btnSelect">封号</a>
                     <?php }else{ ?>
-                        <a title="确实要打开评论吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminimg/dk',array('id'=>$value['id'])); ?>" class="btnAssign">解封</a>
+                        <a title="确实要打开评论吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/dk',array('id'=>$value['id'])); ?>" class="btnAssign">解封</a>
                     <?php }?>
                 </td>
             </tr>
