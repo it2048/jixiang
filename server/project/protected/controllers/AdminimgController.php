@@ -13,8 +13,8 @@ class AdminimgController extends AdminSet
         $pages['countPage'] = Yii::app()->getRequest()->getParam("countPage", 0); //总共多少记录
         $pages['numPerPage'] = Yii::app()->getRequest()->getParam("numPerPage", 50); //每页多少条数据
         $criteria = new CDbCriteria;
-        $pages['countPage'] = AppJxNews::model()->count($criteria);
         $criteria->addCondition("type=2 and child_list is not null");
+        $pages['countPage'] = AppJxNews::model()->count($criteria);
         $criteria->limit = $pages['numPerPage'];
         $criteria->offset = $pages['numPerPage'] * ($pages['pageNum'] - 1);
         $criteria->order = 'id DESC';
