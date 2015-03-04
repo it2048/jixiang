@@ -199,7 +199,7 @@ class AdminhomesetController extends AdminSet
             $username = md5($this->getUserName()); //用户名
             $_tmp_pathinfo = pathinfo($_FILES[$inputName]['name']);
             //设置图片路径
-            $flname = Yii::app()->params['filetmpcache'].'/'.time().".".$username.".".$_tmp_pathinfo['extension'];
+            $flname = 'upload/'.time().".".$username.".".$_tmp_pathinfo['extension'];
             $dest_file_path = Yii::app()->basePath . '/../public/'.$flname;
             $filepathh = dirname($dest_file_path);
             if (!file_exists($filepathh))
