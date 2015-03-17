@@ -1,6 +1,3 @@
-<?php
-file_put_contents('d:/t.log', print_r($model, true), 8);
-?>
   <div id="header"><b><?php  echo empty($model['type'])?"":$model['type']; ?><b></div>
   <div id="info_content">
     <div id="title_zone">
