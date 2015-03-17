@@ -31,9 +31,8 @@ class HomeController extends Controller {
                     , "source" => $src
                     ,"type"=>TmpList::$news_list[$row->type]
                 );
-                if ($row->type != 2) {
-                    $data['content'] = $content;
-                }else
+                $data['content'] = $content;
+                if($row->type == 2)
                 {
                     if(!empty($row['child_list']))
                     {

@@ -20,7 +20,7 @@
 	background-color:#ffffff;
 }
 body {
-	width: 320px;
+	width: 100%;
 	min-width: 240px;
 }
 html,body{
