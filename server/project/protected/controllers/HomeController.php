@@ -61,7 +61,7 @@ class HomeController extends Controller {
         {
             return "";
         }else{
-            return $this->utrl.Yii::app()->request->baseUrl.$str;
+            return "http://120.24.234.19".Yii::app()->request->baseUrl.$str;
         }
     }
 }
