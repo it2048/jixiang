@@ -5,8 +5,8 @@
                 <label>广告类型：</label>
                 <select class="combox" name="slide_type">
                     <option value="0" selected>首页</option>
-                    <option value="1">安卓引导</option>
-                    <option value="2">iOS引导</option>
+                    <option value="1">iOS引导</option>
+                    <option value="2">安卓引导</option>
                 </select>
             </p>
             <p class="nowrap">
