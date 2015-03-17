@@ -73,6 +73,11 @@
                                 <li><a href="<?php echo Yii::app()->createAbsoluteUrl('admindegree/degreemanager'); ?>" target="navTab" rel="degreemanager">点赞管理</a></li>
                             </ul>
                         </li>
+                        <li><a href="#">广告管理</a>
+                            <ul>
+                                <li><a href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/slidemanager'); ?>" target="navTab" rel="usermaneger">广告位</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>

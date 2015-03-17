@@ -374,4 +374,211 @@ class AdminhomesetController extends AdminSet
         }
         echo json_encode($msg);
     }
+    
+    /**
+     * 幻灯片管理
+     */
+    public function actionSlideManager()
+    {
+        //print_r(Yii::app()->user->getState('username'));
+        //先获取当前是否有页码信息
+        $pages['pageNum'] = Yii::app()->getRequest()->getParam("pageNum", 1); //当前页
+        $pages['countPage'] = Yii::app()->getRequest()->getParam("countPage", 0); //总共多少记录
+        $pages['numPerPage'] = Yii::app()->getRequest()->getParam("numPerPage", 50); //每页多少条数据
+
+        $criteria = new CDbCriteria;
+        $pages['countPage'] = AppRsSlide::model()->count($criteria);
+        $criteria->limit = $pages['numPerPage'];
+        $criteria->offset = $pages['numPerPage'] * ($pages['pageNum'] - 1);
+        $criteria->order = 'id DESC';
+        $allList = AppRsSlide::model()->findAll($criteria);
+        $this->renderPartial('slidemanager', array(
+            'models' => $allList,
+            'pages' => $pages),false,true);
+    }
+    
+        /**
+     * 添加幻灯
+     */
+    public function actionSlideAdd()
+    {
+        $this->renderPartial('slideadd');
+    }
+    
+     /**
+     * 保存幻灯
+     */
+    public function actionSlideSave()
+    {
+        $msg = $this->msgcode();
+        $type = Yii::app()->getRequest()->getParam("slide_type", 1); //用户名
+        $title = Yii::app()->getRequest()->getParam("slide_title", ""); //用户名
+        $img_url = Yii::app()->getRequest()->getParam("slide_img", ""); //用户名
+        $redirect = Yii::app()->getRequest()->getParam("slide_redirect", ""); //用户名
+        
+        $stime = Yii::app()->getRequest()->getParam("slide_stime", ""); //用户名
+        $etime = Yii::app()->getRequest()->getParam("slide_etime", ""); //用户名
+        $username = $this->getUserName(); //用户名
+        if($img_url=="")
+        {
+            if(!empty($_FILES['slide_up']['name']))
+            {
+                $img = array("png","jpg");
+                $_tmp_pathinfo = pathinfo($_FILES['slide_up']['name']);
+                if (in_array(strtolower($_tmp_pathinfo['extension']),$img)) {
+                    //设置图片路径
+                    $flname = 'upload/'.time().".".md5($username).".".$_tmp_pathinfo['extension'];
+                    $dest_file_path = Yii::app()->basePath . '/../public/'.$flname;
+                    $filepathh = dirname($dest_file_path);
+                    if (!file_exists($filepathh))
+                        $b_mkdir = mkdir($filepathh, 0777, true);
+                    else
+                        $b_mkdir = true;
+                    if ($b_mkdir && is_dir($filepathh)) {
+                        //转存文件到 $dest_file_path路径
+                        if (move_uploaded_file($_FILES['slide_up']['tmp_name'], $dest_file_path)) {
+                            $img_url ='/public/'.$flname;
+                        }
+                    }
+                } else {
+                    $msg["msg"] = '上传的文件格式只能为jpg,png';
+                    $msg["code"] = 3;
+                }
+            }
+        }
+        if($username!=""&&$title!=""&&$img_url!="")
+        {
+            $model = new AppRsSlide();
+            $model->title = $title;
+            $model->type = $type;
+            $model->img_url = $img_url;
+            $model->newsid = $redirect;
+            $model->stime = strtotime($stime);
+            $model->etime = strtotime($etime);
+            $model->add_user = $username;
+            if($model->save())
+            {
+                $this->msgsucc($msg);
+                $msg['msg'] = "添加成功";
+            }else
+            {
+                $msg['msg'] = "存入数据库异常";
+            }
+        }else{
+            if($msg["code"]!=3)
+                $msg['msg'] = "必填项不能为空";
+        }
+        echo json_encode($msg);
+    }
+    
+        /**
+     * 编辑幻灯
+     */
+    public function actionSlideEdit()
+    {
+        $id = Yii::app()->getRequest()->getParam("id", 0); //用户名
+        $model = array();
+        if($id!="")
+            $model = AppRsSlide::model()->findByPk($id);
+        $this->renderPartial('slideedit',array("models"=>$model));
+    }
+    
+     /**
+     * 更新幻灯
+     */
+    public function actionSlideUpdate()
+    {
+        $msg = $this->msgcode();
+        $id = Yii::app()->getRequest()->getParam("id", 1); //用户名
+        $type = Yii::app()->getRequest()->getParam("slide_type", 1); //用户名
+        $status = Yii::app()->getRequest()->getParam("slide_status", 0); //用户名
+        $title = Yii::app()->getRequest()->getParam("slide_title", ""); //用户名
+        $img_url = Yii::app()->getRequest()->getParam("slide_img", ""); //用户名
+        $redirect = Yii::app()->getRequest()->getParam("slide_redirect", ""); //用户名
+        
+        $content = Yii::app()->getRequest()->getParam("content", ""); //用户名
+        $username = $this->getUserName(); //用户名
+        $model = AppRsSlide::model()->findByPk($id);
+        if($img_url=="")
+        {
+            if(!empty($_FILES['slide_up']['name']))
+            {
+                $img = array("png","jpg");
+                $_tmp_pathinfo = pathinfo($_FILES['slide_up']['name']);
+                if (in_array(strtolower($_tmp_pathinfo['extension']),$img)) {
+                    //设置图片路径
+                    $flname = Yii::app()->params['filetmpcache'].'/'.time().".".md5($username).".".$_tmp_pathinfo['extension'];
+                    $dest_file_path = Yii::app()->basePath . '/../public/'.$flname;
+                    $filepathh = dirname($dest_file_path);
+                    if (!file_exists($filepathh))
+                        $b_mkdir = mkdir($filepathh, 0777, true);
+                    else
+                        $b_mkdir = true;
+                    if ($b_mkdir && is_dir($filepathh)) {
+                        //转存文件到 $dest_file_path路径
+                        if (move_uploaded_file($_FILES['slide_up']['tmp_name'], $dest_file_path)) {
+                            $img_url ='/public/'.$flname;
+                            if(strpos($model->img_url,"http://")===false)
+                                @unlink(Yii::app()->basePath . '/..'.$model->img_url);
+                        }
+                    }
+                } else {
+                    $msg["msg"] = '上传的文件格式只能为jpg,png';
+                    $msg["code"] = 3;
+                }
+            }
+        }
+
+        if($username!=""&&$title!=""&&$img_url!=""&&$id!="")
+        {
+            $model->title = $title;
+            $model->type = $type;
+            $model->status = $status;
+            $model->img_url = $img_url;
+            $model->redirect_url = $redirect;
+            $model->content = $content;
+            $model->add_time = time();
+            $model->add_user = $username;
+            if($model->save())
+            {
+                $this->msgsucc($msg);
+                $msg['msg'] = "更新成功";
+            }else
+            {
+                $msg['msg'] = "存入数据库异常";
+            }
+            
+        }else
+        {
+            if($msg["code"]!=3)
+                $msg['msg'] = "必填项不能为空";
+        }
+        echo json_encode($msg);
+    }
+    
+        /**
+     * 删除幻灯
+     */
+    public function actionSlideDel()
+    {
+        $msg = $this->msgcode();
+        $id = Yii::app()->getRequest()->getParam("id", 0); //用户名
+        if($id!=0)
+        {
+            //图片需要一起删除
+            $img = AppRsSlide::model()->findByPk($id);
+            if(AppRsSlide::model()->deleteByPk($id))
+            {
+                if(strpos($img->img_url,"http://")===false)
+                    @unlink(Yii::app()->basePath . '/..'.$img->img_url);
+                $this->msgsucc($msg);
+            }
+            else
+                $msg['msg'] = "数据删除失败";
+        }else
+        {
+            $msg['msg'] = "id不能为空";
+        }
+        echo json_encode($msg);
+    }
 }
