@@ -76,6 +76,8 @@
                         <li><a href="#">广告管理</a>
                             <ul>
                                 <li><a href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/slidemanager'); ?>" target="navTab" rel="usermaneger">广告位</a></li>
+                                <li><a href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/addmanager'); ?>" target="navTab" rel="newsmanager">广告详情设置</a></li>
+
                             </ul>
                         </li>
                     </ul>

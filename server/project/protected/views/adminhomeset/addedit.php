@@ -4,19 +4,10 @@
             <p>
                 <label>新闻类型：</label>
                 <select class="combox" name="news_type">
-                    <?php foreach(TmpList::$news_list as $k=>$val){
-                        if($k==8||$k==3||$k==2)continue;
-                        printf('<option value="%s" %s>%s</option>',$k,$models->type==$k?"selected":"",$val);
-                    } ?>
+                    <option value="8">广告</option>
                 </select>
             </p>
-            <p>
-                <label>新闻状态：</label>
-                <select class="combox" name="news_status">
-                    <option value="0" <?php echo $models->status==0?"selected":"";?>>普通</option>
-                    <option value="1" <?php echo $models->status==1?"selected":"";?>>广告</option>
-                </select>
-            </p>
+
             <p class="nowrap">
                 <label>评论,赞,汗,厌：</label>
                 <input  name="news_comment" type="text" class="required" size="2" value="<?php echo $models->comment;?>">

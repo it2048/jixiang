@@ -28,6 +28,25 @@ class V0Controller extends Controller
         echo json_encode($msg);
     }
 
+    public function getslide($arr)
+    {
+        $msg = $this->msgcode();
+        $status = empty($arr['type'])?1:$arr['type'];
+        $status = $status==1?1:2;
+        $tm = time();
+        $arr = array();
+        $allList = AppRsSlide::model()->findAll("type={$status} and stime<{$tm} and etime>{$tm}");
+        foreach($allList as $val)
+        {
+            array_push($arr,array(
+                "img_url"=>$this->utrl.Yii::app()->request->baseUrl.$val['img_url'],"type"=>0,
+                "news_id"=>$val['newsid']
+            ));
+        }
+        $this->msgsucc($msg);
+        $msg['data'] = $arr;
+        echo json_encode($msg);
+    }
 
     /**
      * 首页新闻接口
@@ -39,6 +58,7 @@ class V0Controller extends Controller
         $slide = array();
         foreach(TmpList::$news_list as $k=>$val)
         {
+            if($k>7) break;
             if($k==2)
                 $type = 1;
             elseif($k==5)
@@ -61,9 +81,20 @@ class V0Controller extends Controller
                 $typ = 0;
             array_push($slide,array('id'=>$v['type'],"title"=>$v['title'],"img_url"=>$this->utrl.Yii::app()->request->baseUrl.$v['img_url'],"type"=>$typ,"news_id"=>$v['id']));
         }
+        $tm = time();
+        $allList = AppRsSlide::model()->findAll("type=0 and stime<{$tm} and etime>{$tm}");
+        foreach($allList as $val)
+        {
+            array_push($slide,array(
+                'id'=>8,"title"=>$val['title'],
+                "img_url"=>$this->utrl.Yii::app()->request->baseUrl.$val['img_url'],"type"=>0,
+                "news_id"=>$val['newsid']
+            ));
+        }
 
         $rows = $connection->createCommand($sql)->query();
         foreach ($rows as $v ){
+            if(empty($v['img_url'])||$v['type']==8) continue;
             $pass = empty($v['img_url'])?"":$this->utrl.Yii::app()->request->baseUrl.$v['img_url'];
             $ayy[$v['type']]["title"] = $v['title'];
             $ayy[$v['type']]["news_id"] = $v['id'];
@@ -73,6 +104,8 @@ class V0Controller extends Controller
         $msg['data'] = array("slide"=>$slide,"list"=>$ayy);
         echo json_encode($msg);
     }
+
+
 
     protected function getSlt($url,$sta=1)
     {
@@ -1081,8 +1114,7 @@ class V0Controller extends Controller
 //        );
 
         $params = array(
-            'action' => 'newsdesc',
-            'id' => 956,
+            'action' => 'getslide',
             'type'=>1
         );
 
@@ -1102,7 +1134,7 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
-        print_r(RemoteCurl::getInstance()->post('http://120.24.234.19/api/jixiang/server/project/index.php',$rtnList));
+        print_r(json_decode(RemoteCurl::getInstance()->post('http://127.0.0.1/jixiang/server/project/index.php',$rtnList)));
     }
 
 }

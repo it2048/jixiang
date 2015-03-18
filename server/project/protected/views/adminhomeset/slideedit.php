@@ -2,41 +2,37 @@
     <form method="post" action="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/slideupdate'); ?>" class="pageForm required-validate" onsubmit="return iframeCallback(this, viData);" enctype="multipart/form-data">
         <div class="pageFormContent" layoutH="56">
             <p>
-                <label>幻灯类型：</label>
+                <label>广告类型：</label>
                 <select class="combox" name="slide_type">
-                    <option value="1" <?php echo $models->type==1?"selected":"";?>>不固定</option>
-                    <option value="0" <?php echo $models->type==0?"selected":"";?>>固定</option>
-                </select>
-            </p>
-            <p>
-                <label>幻灯状态：</label>
-                <select class="combox" name="slide_status">
-                    <option value="1" <?php echo $models->status==1?"selected":"";?>>永久下线</option>
-                    <option value="0" <?php echo $models->status==0?"selected":"";?>>上线</option>
+                    <option value="0" <?php echo $models->type==0?"selected":"";?>>首页</option>
+                    <option value="1" <?php echo $models->type==1?"selected":"";?>>iOS引导</option>
+                    <option value="2" <?php echo $models->type==2?"selected":"";?>>安卓引导</option>
                 </select>
             </p>
             <p class="nowrap">
-                <label>幻灯标题：</label>
+                <label>广告标题：</label>
                 <input  name="slide_title" type="text" class="textInput required" size="50" value="<?php echo $models->title;?>">
                 <input  name="id" type="hidden" value="<?php echo $models->id;?>">
             </p>
+            <?php if($models->img_url!=""){?><p class="nowrap"><label>封面图片：</label><img width="120" height="120" src="<?php echo Yii::app()->request->baseUrl.$models->img_url;?>"></p>
+            <?php }?>
             <p class="nowrap">
-                <label>图片地址：</label>
-                <input  name="slide_img" type="text" class="textInput" size="50" value="<?php echo $models->img_url;?>">
-            </p>
-            <p class="nowrap">
-                <label>图片上传：</label>
+                <label>更换封面图片：</label>
                 <input name="slide_up" type="file">
             </p>
             <p class="nowrap">
-                <label>跳转地址：</label>
-                <input  name="slide_redirect" type="text" class="textInput" size="50" value="<?php echo $models->redirect_url;?>">
+                <label>跳转新闻编号：</label>
+                <input  name="slide_redirect" type="text" class="textInput" size="50" value="<?php echo $models->newsid;?>">
             </p>
             <p class="nowrap">
-                <label>幻灯内容：</label>
-                <textarea name="content" cols="50" rows="9"><?php echo $models->content;?></textarea>
+                <label>开始时间：</label>
+                <input type="text" name="slide_stime" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" value="<?php echo empty($models->stime)?date("Y-m-d H:i:s",time()):date("Y-m-d H:i:s",$models->stime); ?>"/>
             </p>
+            <p class="nowrap">
+                <label>结束时间：</label>
+                <input type="text" name="slide_etime" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" value="<?php echo empty($models->etime)?date("Y-m-d H:i:s",time()):date("Y-m-d H:i:s",$models->etime); ?>"/>
 
+            </p>
         </div>
         <div class="formBar">
             <ul>

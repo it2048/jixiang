@@ -26,15 +26,15 @@
             <tr>
                 <td><?php echo $value['id']; ?></td>
                 <td title="<?php echo $value['title']; ?>"><?php echo $value['title']; ?></td>
-                <td><a href="<?php echo Yii::app()->request->baseUrl.$value['img_url']; ?>" class="btnLook" target="_blank">图片查看</a></td>
+                <td><?php if(!empty($value['img_url'])){?><a href="<?php echo Yii::app()->request->baseUrl.$value['img_url']; ?>" class="btnLook" target="_blank">图片查看</a><?php }?></td>
                 <td><?php echo $value['newsid']; ?></td>
                 <td><?php echo date("Y-m-d H:i:s", $value['stime']); ?></td>
                 <td><?php echo date("Y-m-d H:i:s", $value['etime']); ?></td>
                 <td><?php echo TmpList::$news_type[$value['type']]; ?></td>
                 <td>
                     <a title="确实要删除这条记录吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/slidedel',array('id'=>$value['id'])); ?>" class="btnDel">删除</a>
-                    <?php if(false){?><a title="编辑" mask="true" height="560" width="620" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/slideedit',array('id'=>$value['id'])); ?>" class="btnEdit">编辑</a>
-                    <?php }?>
+                    <a title="编辑" mask="true" height="560" width="620" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/slideedit',array('id'=>$value['id'])); ?>" class="btnEdit">编辑</a>
+
                 </td>
             </tr>
         <?php }?>
