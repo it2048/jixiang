@@ -43,8 +43,14 @@ class V0Controller extends Controller
                 "news_id"=>$val['newsid']
             ));
         }
-        $this->msgsucc($msg);
-        $msg['data'] = $arr;
+        if(!empty($arr))
+        {
+            $this->msgsucc($msg);
+            $msg['data'] = $arr;
+        }else
+        {
+            $msg['msg'] = "广告位为空";
+        }
         echo json_encode($msg);
     }
 
@@ -71,7 +77,7 @@ class V0Controller extends Controller
         $connection = Yii::app()->db;
         $sql = 'select * from(select * from jixiang.jx_news where status=0 order by id desc )a group by type';
 
-        $sql1 = 'select * from(select * from jixiang.jx_news where img_url is not null and type in(0,2,3) and status=1 order by id desc )a group by type';
+        $sql1 = 'select * from(select * from jixiang.jx_news where img_url is not null and type in(0,2,3) order by id desc )a group by type';
         $row1 =  $connection->createCommand($sql1)->query();
         foreach($row1 as $v)
         {
@@ -127,8 +133,13 @@ class V0Controller extends Controller
     {
         $slideArr = array();
         $listArr = array();
-        $slide = AppJxNews::model()->findAll("type=:tp and img_url is not null and status=1 order by id desc limit 0,6",array(":tp"=>$type));
-        $list = AppJxNews::model()->findAll("type=:tp and status=0 order by id desc limit 0,20",array(":tp"=>$type));
+        $connection = Yii::app()->db;
+        $sql = "select distinct title,a.* from jixiang.jx_news a where type={$type} and status=0 group by title order by id desc limit 0,20";
+        $list =  $connection->createCommand($sql)->query();
+        
+        $sql1 = "select distinct title,a.* from jixiang.jx_news a where type={$type} and img_url is not null and status=1 group by title order by id desc limit 0,6";
+        $slide =  $connection->createCommand($sql1)->query();
+
         $sta = $type==2?1:0;
         if(empty($slide))
         {
@@ -180,7 +191,11 @@ class V0Controller extends Controller
         if($page<1)$page=1;
         $listArr = array();
         $lmt = ($page-1)*20;
-        $list = AppJxNews::model()->findAll("type=:tp and child_list!='' order by id desc limit {$lmt},20",array(":tp"=>$type));
+        $connection = Yii::app()->db;
+
+        $sql = "select distinct title,a.* from jixiang.jx_news a where type={$type} and child_list!='' group by title order by id desc limit {$lmt},20";
+        $list =  $connection->createCommand($sql)->query();
+        
         $sta = 1;
         $i = 0;
         foreach($list as $val)
@@ -202,7 +217,9 @@ class V0Controller extends Controller
         if($page<1)$page=1;
         $listArr = array();
         $lmt = ($page-1)*20;
-        $list = AppJxNews::model()->findAll("type=:tp and child_list!='' order by id desc limit {$lmt},20",array(":tp"=>$type));
+        $connection = Yii::app()->db;
+        $sql = "select distinct title,a.* from jixiang.jx_news a where type={$type} and child_list!='' group by title order by id desc limit {$lmt},20";
+        $list =  $connection->createCommand($sql)->query();
         $sta = 1;
         $i = 0;
         foreach($list as $val)
@@ -230,7 +247,10 @@ class V0Controller extends Controller
         if($page<1)$page=1;
         $listArr = array();
         $cnt = ($page-1)*20;
-        $list = AppJxNews::model()->findAll("type=:tp order by id desc limit {$cnt},20",array(":tp"=>$type));
+        $connection = Yii::app()->db;
+        $sql = "select distinct title,a.* from jixiang.jx_news a where type={$type} and status=0 group by title order by id desc limit {$cnt},20";
+        $list =  $connection->createCommand($sql)->query();
+        
         $sta = $type==2?1:0;
         foreach($list as $val)
         {
@@ -927,7 +947,7 @@ class V0Controller extends Controller
         }else{
 
             $connection = Yii::app()->db;
-            $sql = "SELECT * FROM jx_collect left join jx_news on jx_collect.news_id = jx_news.id where jx_collect.user_id={$user_id} order by time desc limit {$cnt},20"; //构造SQL
+            $sql = "SELECT * FROM jx_collect left join jx_news on jx_collect.news_id = jx_news.id where jx_collect.user_id={$user_id} and jx_news.title is not null order by time desc limit {$cnt},20"; //构造SQL
             $sqlCom = $connection->createCommand($sql);
             $lst = $sqlCom->queryAll();
             $data = array();
@@ -1114,8 +1134,9 @@ class V0Controller extends Controller
 //        );
 
         $params = array(
-            'action' => 'getslide',
-            'type'=>1
+            'action' => 'homenews',
+            'type'=>1,
+            'id'=>2
         );
 
 //        $params = array(
