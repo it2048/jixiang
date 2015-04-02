@@ -652,7 +652,7 @@ class V0Controller extends Controller
         $model = AppJxUser::model()->find("tel=:tl and type=1 and password='123456'",array("tl"=>$tel));
         if(!empty($model))
         {
-            if("9999" != $vcode)
+            if($model->check != $vcode)
             {
                 $model->check = "";
                 $model->save();
@@ -998,14 +998,26 @@ class V0Controller extends Controller
                 $umode->check = $code;
                 if($umode->save())
                 {
-                    $this->msgsucc($msg);
+                    $con = new Sms();
+                    $mll = $con->sendNotice($tel);
+                    if($mll['code']==0)
+                    {
+                        $content = sprintf("验证码：%s ，您目前正在使用行走甘孜账密保护功能，请勿告知他人。",$code);
+                        if($con->sendSMS($tel,$content))
+                            $this->msgsucc($msg);
+                        else
+                            $msg['msg'] = '发送短信出错';
+                    }
+                    else{
+                        $msg['msg'] = $mll['msg'];
+                    }
                 }
             }
         }else
         {
             if(empty($umode))
             {
-                $msg['msg'] = "用户不存在";
+                $msg['msg'] = "号码有误";
                 $model = new AppJxUser();
                 $model->tel = $tel;
                 $model->password = "123456";
@@ -1019,7 +1031,19 @@ class V0Controller extends Controller
 
                 if($model->save())
                 {
-                    $this->msgsucc($msg);
+                    $con = new Sms();
+                    $mll = $con->sendNotice($tel);
+                    if($mll['code']==0)
+                    {
+                        $content = sprintf("验证码：%s ，您目前正在使用行走甘孜账密保护功能，请勿告知他人。",$code);
+                        if($con->sendSMS($tel,$content))
+                            $this->msgsucc($msg);
+                        else
+                            $msg['msg'] = '发送短信出错';
+                    }
+                    else{
+                        $msg['msg'] = $mll['msg'];
+                    }
                 }
 
             }else
