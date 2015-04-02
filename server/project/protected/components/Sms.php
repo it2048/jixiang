@@ -32,6 +32,7 @@ class Sms {
     {
         $msg = array("code"=>1,"msg"=>"");
         $tm = time()-86400;
+        $tmj = time()-90;
         $model = AppSmsNotice::model()->findByPk($sb);
         if(!empty($model))
         {
@@ -55,9 +56,15 @@ class Sms {
                     $model->ltime = time();
                     $model->save();
                 }else{
-                    $model->ctn += 1;
-                    $model->ltime = time();
-                    $model->save();
+                    if($model->ltime<$tmj)
+                    {
+                        $msg['msg'] = "请勿短时间内连续发送短信";
+                    }else
+                    {
+                        $model->ctn += 1;
+                        $model->ltime = time();
+                        $model->save();
+                    }
                 }
             }
         }
