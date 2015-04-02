@@ -56,7 +56,7 @@ class Sms {
                     $model->ltime = time();
                     $model->save();
                 }else{
-                    if($model->ltime<$tmj)
+                    if($model->ltime>$tmj)
                     {
                         $msg['msg'] = "请勿短时间内连续发送短信";
                     }else
