@@ -77,7 +77,7 @@ class V0Controller extends Controller
         $connection = Yii::app()->db;
         $sql = 'select * from(select * from jixiang.jx_news where status=0 order by id desc )a group by type';
 
-        $sql1 = 'select * from(select * from jixiang.jx_news where img_url is not null and type in(0,2,3) order by id desc )a group by type';
+        $sql1 = 'select * from(select * from jixiang.jx_news where img_url is not null and img_url != "" and type in(0,2,3) order by id desc )a group by type';
         $row1 =  $connection->createCommand($sql1)->query();
         foreach($row1 as $v)
         {
@@ -1200,7 +1200,7 @@ class V0Controller extends Controller
         $params = array(
             'action' => 'homenews',
             'type'=>1,
-            'id'=>2
+            'tel'=>18228041350
         );
 
 //        $params = array(
@@ -1219,7 +1219,7 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
-        print_r(json_decode(RemoteCurl::getInstance()->post('http://127.0.0.1/jixiang/server/project/index.php',$rtnList)));
+        print_r(json_decode(RemoteCurl::getInstance()->post('127.0.0.1/jixiang/server/project/index.php',$rtnList)));
     }
 
 }
