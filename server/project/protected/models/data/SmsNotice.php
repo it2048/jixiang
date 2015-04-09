@@ -8,6 +8,7 @@
  * @property integer $ftime
  * @property integer $ctn
  * @property integer $ltime
+ * @property integer $num
  */
 class SmsNotice extends CActiveRecord
 {
@@ -38,11 +39,11 @@ class SmsNotice extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('telorsb, ftime, ctn, ltime', 'required'),
-			array('ftime, ctn, ltime', 'numerical', 'integerOnly'=>true),
+			array('ftime, ctn, ltime, num', 'numerical', 'integerOnly'=>true),
 			array('telorsb', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('telorsb, ftime, ctn, ltime', 'safe', 'on'=>'search'),
+			array('telorsb, ftime, ctn, ltime, num', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,6 +68,7 @@ class SmsNotice extends CActiveRecord
 			'ftime' => 'Ftime',
 			'ctn' => 'Ctn',
 			'ltime' => 'Ltime',
+			'num' => 'Num',
 		);
 	}
 
@@ -85,6 +87,7 @@ class SmsNotice extends CActiveRecord
 		$criteria->compare('ftime',$this->ftime);
 		$criteria->compare('ctn',$this->ctn);
 		$criteria->compare('ltime',$this->ltime);
+		$criteria->compare('num',$this->num);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -652,7 +652,17 @@ class V0Controller extends Controller
         $model = AppJxUser::model()->find("tel=:tl and type=1 and password='123456'",array("tl"=>$tel));
         if(!empty($model))
         {
-            if($model->check != $vcode)
+            if(empty($model->check))
+            {
+                $msg['msg'] = "验证码失效，请重新获取";
+            }
+            elseif(!Sms::check($tel))
+            {
+                $model->check = "";
+                $model->save();
+                $msg['msg'] = "验证时间超时，请重新获取";
+            }
+            elseif($model->check != $vcode)
             {
                 $model->check = "";
                 $model->save();
@@ -1070,7 +1080,17 @@ class V0Controller extends Controller
         $umode = AppJxUser::model()->find("tel=:tl",array(":tl"=>$tel));
         if(!empty($umode))
         {
-            if($umode->check != $vcode)
+            if(empty($umode->check))
+            {
+                $msg['msg'] = "验证码失效，请重新获取";
+            }
+            elseif(!Sms::check($tel))
+            {
+                $umode->check = "";
+                $umode->save();
+                $msg['msg'] = "验证时间超时或次数过多，请重新获取";
+            }
+            elseif($umode->check != $vcode)
             {
                 $umode->check = "";
                 $msg['msg'] = "验证码错误，请重新获取";
