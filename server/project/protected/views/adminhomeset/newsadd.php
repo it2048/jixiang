@@ -5,7 +5,7 @@
                 <label>新闻类型：</label>
                 <select class="combox" name="news_type">
                     <?php foreach(TmpList::$news_list as $k=>$val){
-                        if($k==8||$k==3||$k==2)continue;
+                        if($k==8||$k==5||$k==2)continue;
                         printf('<option value="%s">%s</option>',$k,$val);
                     } ?>
                 </select>

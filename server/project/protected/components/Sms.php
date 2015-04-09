@@ -28,6 +28,24 @@ class Sms {
 
     }
 
+    public static function check($tel)
+    {
+        $model = AppSmsNotice::model()->findByPk($tel);
+        if(!empty($model))
+        {
+            if(time()-$model->ltime<1800&&$model->num<3)
+            {
+                $model->num = $model->num+1;
+                $model->save();
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     private function insert($sb)
     {
         $msg = array("code"=>1,"msg"=>"");
