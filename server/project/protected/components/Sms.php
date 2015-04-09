@@ -85,12 +85,12 @@ class Sms {
     {
         $data = array
         (
-            'cpid'=>Yii::app()->params['sms']['username'],					//用户账号
-            'cppwd'=>Yii::app()->params['sms']['password'],				//密码
-            'phone'=>$mobile,					//号码
-            'spnumber'=>time(),
-            'msgcont'=>iconv("UTF-8","GBK//IGNORE",$content."【行走甘孜】"),				//内容
-            'extend'=>9527
+            'uc'=>Yii::app()->params['sms']['username'],					//用户账号
+            'pwd'=>Yii::app()->params['sms']['password'],				//密码
+            'callee'=>$mobile,					//号码
+            'cont'=>$content,				//内容
+            'msgid'=>time()%100000000,
+            'otime'=>''
         );
         $result= $this->curlSMS(Yii::app()->params['sms']['url'],$data);			//POST方式提交
         $model = new AppSmsSend();
@@ -111,11 +111,24 @@ class Sms {
         }
     }
     private function curlSMS($url,$post_fields=array()){
-        $tmp = $url."?".http_build_query($post_fields);
-        if(file_get_contents($tmp)==0)
+        $ch = curl_init();
+        $header = "Content-type: text/xml; charset=utf-8";
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_fields));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);     //同步或异步
+        curl_setopt($ch, CURLOPT_HEADER, $header);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        if($result>=0)
+        {
             return true;
+        }
         else
+        {
             return false;
+        }
     }
 
 }

@@ -1002,7 +1002,7 @@ class V0Controller extends Controller
                     $mll = $con->sendNotice($tel);
                     if($mll['code']==0)
                     {
-                        $content = sprintf("验证码：%s ，您目前正在使用行走甘孜账密保护功能，请勿告知他人。",$code);
+                        $content = sprintf("验证码：%s ，您目前正在使用吉祥甘孜账密保护功能，请勿告知他人。",$code);
                         if($con->sendSMS($tel,$content))
                             $this->msgsucc($msg);
                         else
@@ -1035,7 +1035,7 @@ class V0Controller extends Controller
                     $mll = $con->sendNotice($tel);
                     if($mll['code']==0)
                     {
-                        $content = sprintf("验证码：%s ，您目前正在使用行走甘孜账密保护功能，请勿告知他人。",$code);
+                        $content = sprintf("验证码：%s ，您目前正在使用吉祥甘孜账密保护功能，请勿告知他人。",$code);
                         if($con->sendSMS($tel,$content))
                             $this->msgsucc($msg);
                         else
@@ -1182,8 +1182,6 @@ class V0Controller extends Controller
         $msg['data'] = $listArr;
         echo json_encode($msg);
     }
-
-
     public function actionDemo()
     {
 //       $params = array(
@@ -1198,7 +1196,7 @@ class V0Controller extends Controller
 //        );
 
         $params = array(
-            'action' => 'homenews',
+            'action' => 'sendverifycode',
             'type'=>1,
             'tel'=>18228041350
         );
