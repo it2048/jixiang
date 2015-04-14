@@ -3,6 +3,7 @@
 <head>
     <?php $home = Yii::app()->request->baseUrl."/public/home/";?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=320,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.3,user-scalable=no">
 <title>每日新闻</title>
 <link rel="stylesheet" href="<?php echo $home; ?>css/cssreset.css">
 <script src="<?php echo $home; ?>js/jquery.min.js"></script>
