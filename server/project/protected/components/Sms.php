@@ -63,6 +63,7 @@ class Sms {
                     $model->ftime = time();
                     $model->ctn = 1;
                     $model->ltime = time();
+                    $model->num = 0;
                     $model->save();
                 }
             }
@@ -72,6 +73,7 @@ class Sms {
                     $model->ftime = time();
                     $model->ctn = 1;
                     $model->ltime = time();
+                    $model->num = 0;
                     $model->save();
                 }else{
                     if($model->ltime>$tmj)
@@ -81,6 +83,7 @@ class Sms {
                     {
                         $model->ctn += 1;
                         $model->ltime = time();
+                        $model->num= 0;
                         $model->save();
                     }
                 }
