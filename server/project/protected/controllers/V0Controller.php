@@ -28,6 +28,27 @@ class V0Controller extends Controller
         echo json_encode($msg);
     }
 
+    protected function zm($str)
+    {
+        $strmp = '<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=320,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.3,user-scalable=no">
+</head>
+<body>
+%s
+</body>
+</html>
+';
+        $str = preg_replace("/width[:0-9\s]+px;/is","", $str);
+        preg_match_all("/<img(.*)(src=\"[^\"]+\")[^>]+>/isU", $str, $arr);
+        for($i=0,$j=count($arr[0]);$i<$j;$i++){
+            $str = str_replace($arr[0][$i],"<img ".$arr[2][$i]." style='width:99%; height:auto; margin:4px;'/>",$str);
+        }
+        return sprintf($strmp,$str);
+    }
+
+
     public function getslide($arr)
     {
         $msg = $this->msgcode();
@@ -349,7 +370,7 @@ class V0Controller extends Controller
             if($type==0)
             {
                 $msg['data'] = array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
-                ,"content"=> $content
+                ,"content"=> $this->zm($content)
                 ,"img_url"=>$this->img_revert($row['img_url'])
                 ,"comment"=>$row['comment']
                 ,"like"=>$row['like']
@@ -362,7 +383,7 @@ class V0Controller extends Controller
             {
                 $tmp = array();
                 array_push($tmp,array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
-                ,"content"=>$content
+                ,"content"=>$this->zm($content)
                 ,"img_url"=>$this->img_revert($row['img_url'])
                 ,"comment"=>$row['comment']
                 ,"like"=>$row['like']
@@ -385,7 +406,7 @@ class V0Controller extends Controller
                             $sou = rtrim($sou,"》");
                         }
                         array_push($tmp,array("id"=>$val['id'],"addtime"=>$val['addtime'],"title"=>$val['title']
-                        ,"content"=>$val['content']
+                        ,"content"=>$this->zm($val['content'])
                         ,"img_url"=>$this->img_revert($val['img_url'])
                         ,"comment"=>$val['comment']
                         ,"like"=>$val['like']
