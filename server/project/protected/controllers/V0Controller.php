@@ -1047,10 +1047,14 @@ class V0Controller extends Controller
             }
         }else
         {
-            if(empty($umode))
+            if(empty($umode)||$umode->password=="123456")
             {
                 $msg['msg'] = "号码有误";
-                $model = new AppJxUser();
+
+                if(empty($umode))
+                    $model = new AppJxUser();
+                else
+                    $model = $umode;
                 $model->tel = $tel;
                 $model->password = "123456";
                 $model->fhtime = time();
@@ -1239,8 +1243,10 @@ class V0Controller extends Controller
 
         $params = array(
             'action' => 'sendverifycode',
-            'type'=>1,
-            'tel'=>18228041350
+            'type'=>0,
+            'tel'=>'18228041350',
+            'password'=>md5('123456'.'xFl@&^852'),
+            'verifycode'=>'9046'
         );
 
 //        $params = array(
