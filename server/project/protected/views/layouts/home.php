@@ -95,7 +95,6 @@ html,body{
 <body>
 <div bgcolor="#ffffff">
     <?php echo $content; ?>
- <div id="float_layer" ><img id="icon" src="<?php echo $home; ?>img/icon.png" /><img id="btn_open" src="<?php echo $home; ?>img/btn_open.png" /></div>
 </div>
 
 </body>
