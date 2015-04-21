@@ -367,6 +367,7 @@ class V0Controller extends Controller
             }
             $this->msgsucc($msg);
             $content = str_replace("<img ","<img width='100%' ",$row['content']);
+            $content = str_replace('src="/UploadFiles','src="http://www.kbcmw.com/UploadFiles',$content);
             if($type==0)
             {
                 $msg['data'] = array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
