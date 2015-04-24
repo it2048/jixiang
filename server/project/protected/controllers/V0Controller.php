@@ -482,6 +482,7 @@ class V0Controller extends Controller
         if(!empty($mod)&&md5($password.$salt)==$mod->password)
         {
             $this->msgsucc($msg);
+            $msg['msg'] = "登录成功";
             $msg['data'] = array("id"=>$mod->id,
                 "token"=>$this->getToken($tmp),
                 "tel"=>$mod->tel,
@@ -514,7 +515,11 @@ class V0Controller extends Controller
             }else{
                 $mod->login_time = time();
                 if($mod->save())
+                {
                     $this->msgsucc($msg);
+                    $msg['msg'] = "已退出登录";
+                }
+
             }
         }
         echo json_encode($msg);
@@ -650,6 +655,7 @@ class V0Controller extends Controller
                 $mdl->comment = $mdl->comment+1;
                 $mdl->save();
                 $this->msgsucc($msg);
+                $msg['msg'] = "评论发布成功";
             }
         }
         echo json_encode($msg);
@@ -873,6 +879,7 @@ class V0Controller extends Controller
                 if($model->save())
                 {
                     $this->msgsucc($msg);
+                    $msg['msg'] = "用户名已修改完成";
                     $msg['data'] = array(
                         "id"=>$user_id,
                         "tel"=>$model->tel,
@@ -959,6 +966,7 @@ class V0Controller extends Controller
                     if($modl->save())
                     {
                         $this->msgsucc($msg);
+                        $msg['msg'] = "文章已添加至“我的收藏”";
                     }
                 }else
                 {
