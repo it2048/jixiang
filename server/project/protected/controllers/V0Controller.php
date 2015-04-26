@@ -591,8 +591,7 @@ class V0Controller extends Controller
             $msg['code'] = 3;
             $msg['msg'] = "禁止评论";
         }else{
-
-            $page = $arr['page'];
+            $page = empty($arr['page'])?1:$arr['page'];
             if($page<1)$page=1;
             $star = 20*($page-1);
             $comm = AppJxComment::model()->findAll("news_id={$news_id} order by id desc limit {$star},20");
@@ -607,6 +606,7 @@ class V0Controller extends Controller
             $userImg = array();
             if($str!="")
             {
+                $str = rtrim($str,",");
                 $userList = AppJxUser::model()->findAll("id in({$str})");
                 foreach($userList as $val)
                 {
@@ -1287,11 +1287,11 @@ class V0Controller extends Controller
 //        );
 
         $params = array(
-            'action' => 'sendverifycode',
+            'action' => 'commentlist',
             'type'=>0,
-            'tel'=>'18228041350',
+            'news_id'=>'3748',
             'password'=>md5('123456'.'xFl@&^852'),
-            'verifycode'=>'9046'
+            'page'=>'1'
         );
 
 //        $params = array(
@@ -1310,7 +1310,13 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
-        print_r(json_decode(RemoteCurl::getInstance()->post('127.0.0.1/jixiang/server/project/index.php',$rtnList)));
+
+        $str = "http://120.24.234.19/api/jixiang/server/project/index.php";
+
+        //$url1 ＝ "http://120.24.234.19/api/jixiang/server/project/index.php";//"http://127.0.0.1/jixiang/server/project/index.php";
+echo RemoteCurl::getInstance()->post($str,$rtnList);die();
+
+        print_r(json_decode(RemoteCurl::getInstance()->post($str,$rtnList)));
     }
 
 }
