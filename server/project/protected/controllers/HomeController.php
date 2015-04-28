@@ -72,7 +72,12 @@ class HomeController extends Controller {
                 $img = $this->img_revert($row['img_url']);
                 if(!empty($img))
                     $content = '<img src="'.$img.'" />'.$content;
-                $data = array("addtime" => date("Y-m-d H:i",$row['addtime']), "title" => $row['title']
+                if(date('H:i:s',$row['addtime'])=='00:00:00')
+                    $time = date('Y-m-d',$row['addtime']);
+                else
+                    $time = date('Y-m-d H:i:s',$row['addtime']);
+
+                $data = array("addtime" => $time, "title" => $row['title']
                 , "img_url" => $this->img_revert($row['img_url'])
                 , "source" => $src
                 ,"type"=>TmpList::$news_list[$row->type]
