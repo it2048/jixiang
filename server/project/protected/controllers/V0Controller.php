@@ -409,7 +409,8 @@ class V0Controller extends Controller
                 ,"hate"=>$row['hate']
                 ,"source"=>$src
                 ,"comtype"=>$row['comtype']
-                ,"html"=>$this->getHtml($row['title'],$this->zm($content,0),$src,$row['addtime'])
+                ,"url"=>$this->utrl.'/api/jixiang/server/project/index.php/home/news/id/'.$row['id']
+                //,"html"=>$this->getHtml($row['title'],$this->zm($content,0),$src,$row['addtime'])
                 );
             }else
             {
@@ -1325,8 +1326,12 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
-        echo RemoteCurl::getInstance()->post('127.0.0.1/jixiang/server/project/index.php',$rtnList);
-        print_r(json_decode(RemoteCurl::getInstance()->post('127.0.0.1/jixiang/server/project/index.php',$rtnList)));
+        $url = true?"http://120.24.234.19/api":"http://127.0.0.1";
+
+        $arr = json_decode(RemoteCurl::getInstance()->post($url.'/jixiang/server/project/index.php',$rtnList),true);
+
+        echo $arr['data']['html'];
+
     }
 
 }

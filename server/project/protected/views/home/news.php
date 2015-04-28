@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=320,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.3,user-scalable=no">
     <title>每日新闻</title>
-    <link rel="stylesheet" href="<?php echo $home; ?>css/cssreset.css">
+    <link rel="stylesheet" href="http://120.24.234.19<?php echo $home; ?>css/cssreset.css">
     <script src="http://120.24.234.19<?php echo $home; ?>js/jquery.min.js"></script>
     <script src="http://120.24.234.19<?php echo $home; ?>js/jquery.mobile.min.js"></script>
     <style type="text/css">
@@ -97,7 +97,7 @@
     <div id="info_content">
         <div id="title_zone">
             <p id="title"><?php echo empty($model['title'])?"":$model['title']; ?></p>
-            <p id="time"><?php echo empty($model['source'])?"":$model['source']; ?>：<?php echo empty($model['time'])?"":$model['time']; ?></p>
+            <p id="time"><?php echo empty($model['source'])?"":$model['source']; ?>：<?php echo empty($model['addtime'])?"":$model['addtime']; ?></p>
         </div>
         <div id="msg_content">
             <p><?php echo empty($model['content'])?"":$model['content']; ?></p>
