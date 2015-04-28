@@ -1,14 +1,36 @@
-<form id="pagerForm" onsubmit="return navTabSearch(this);" action="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsmanager'); ?>" method="post">
-    <input type="hidden" name="pageNum" value="<?php echo $pages['pageNum'];?>" /><!--【必须】value=1可以写死-->
-    <input type="hidden" name="numPerPage" value="50" /><!--【可选】每页显示多少条-->
-</form>
+<div class="pageHeader">
+    <form id="pagerForm" onsubmit="return navTabSearch(this);" action="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsmanager'); ?>" method="post">
+        <input type="hidden" name="pageNum" value="<?php echo $pages['pageNum'];?>" /><!--【必须】value=1可以写死-->
+        <input type="hidden" name="numPerPage" value="50" /><!--【可选】每页显示多少条-->
+        <div class="searchBar">
+            <table class="searchContent">
+                <tbody><tr>
+                    <td>
+                        <label>新闻类型：</label>
+                        <select class="combox" name="news_type">
+                            <option value="all_zone">所有类型</option>
+                            <?php foreach(TmpList::$news_list as $k=>$val){
+                                if($k==8||$k==5||$k==2)continue;
+                                printf('<option value="%s" %s>%s</option>',$k,$pages['news_type']==$k?"selected":"",$val);
+                            } ?>
+                        </select>
+                    </td>
+                    <td>
+                        新闻名称：<input type="text" name="news_name" class="textInput" value="<?php echo $pages['news_name'];?>">
+                    </td>
+                    <td><div class="buttonActive"><div class="buttonContent"><button type="submit">搜索</button></div></div></td>
+                </tr>
+                </tbody></table>
+        </div>
+    </form>
+</div>
 <div class="pageContent">
     <div class="panelBar">
         <ul class="toolBar">
             <li><a class="add" mask="true" height="560" width="600" target="dialog" href="<?php echo Yii::app()->createAbsoluteUrl('adminhomeset/newsadd');?>"><span>添加</span></a></li>
         </ul>
     </div>
-    <table class="table" width="1040" layoutH="76">
+    <table class="table" width="1040" layoutH="116">
         <thead>
         <tr>
             <th width="20">编号</th>

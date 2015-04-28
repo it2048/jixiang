@@ -12,8 +12,14 @@ class AdminhomesetController extends AdminSet
         $pages['pageNum'] = Yii::app()->getRequest()->getParam("pageNum", 1); //当前页
         $pages['countPage'] = Yii::app()->getRequest()->getParam("countPage", 0); //总共多少记录
         $pages['numPerPage'] = Yii::app()->getRequest()->getParam("numPerPage", 50); //每页多少条数据
+        $pages['news_type'] = Yii::app()->getRequest()->getParam("news_type", "all_zone"); //每页多少条数据
+        $pages['news_name'] = Yii::app()->getRequest()->getParam("news_name", ""); //每页多少条数据
+
         $criteria = new CDbCriteria;
         $criteria->addCondition("type!=2 or type!=8");
+        $pages['news_type']!="all_zone"&&$criteria->addCondition("type='{$pages['news_type']}'");
+        !empty($pages['news_name'])&&$criteria->addSearchCondition('title',$pages['news_name']);
+
         $pages['countPage'] = AppJxNews::model()->count($criteria);
         $criteria->limit = $pages['numPerPage'];
         $criteria->offset = $pages['numPerPage'] * ($pages['pageNum'] - 1);

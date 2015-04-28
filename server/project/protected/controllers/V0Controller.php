@@ -3,6 +3,7 @@
 class V0Controller extends Controller
 {
     public $utrl = "http://120.24.234.19";
+    public $layout = '//layouts/home';
     /**
      * 生成首页
      *
@@ -379,6 +380,7 @@ class V0Controller extends Controller
                 ,"hate"=>$row['hate']
                 ,"source"=>$src
                 ,"comtype"=>$row['comtype']
+                ,"html"=>$this->getHtml($row['title'],$this->zm($content),$src,$row['addtime'])
                 );
             }else
             {
@@ -523,6 +525,16 @@ class V0Controller extends Controller
             }
         }
         echo json_encode($msg);
+    }
+
+    private function getHtml($title,$content,$source,$time)
+    {
+        if(date('H:i:s',$time)=='00:00:00')
+            $time = date('Y-m-d',$time);
+        else
+            $time = date('Y-m-d H:i:s',$time);
+        return $this->renderPartial('news', array(
+            'model' => array("title"=>$title,"content"=>$content,"source"=>$source,"time"=>$time)),true,false);
     }
 
     /**
@@ -1251,9 +1263,9 @@ class V0Controller extends Controller
 //        );
 
         $params = array(
-            'action' => 'sendverifycode',
+            'action' => 'newsdesc',
             'type'=>0,
-            'tel'=>'18228041350',
+            'id'=>'9509',
             'password'=>md5('123456'.'xFl@&^852'),
             'verifycode'=>'9046'
         );
