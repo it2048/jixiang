@@ -46,7 +46,10 @@ class V0Controller extends Controller
         for($i=0,$j=count($arr[0]);$i<$j;$i++){
             $str = str_replace($arr[0][$i],"<img ".$arr[2][$i]." style='width:99%; height:auto; margin:4px;'/>",$str);
         }
-        return sprintf($strmp,$str);
+        if($status==0)
+            return $str;
+        else
+            return sprintf($strmp,$str);
     }
 
 
@@ -406,7 +409,7 @@ class V0Controller extends Controller
                 ,"hate"=>$row['hate']
                 ,"source"=>$src
                 ,"comtype"=>$row['comtype']
-                ,"html"=>$this->getHtml($row['title'],$this->zm($content),$src,$row['addtime'])
+                ,"html"=>$this->getHtml($row['title'],$this->zm($content,0),$src,$row['addtime'])
                 );
             }else
             {
@@ -1299,9 +1302,9 @@ class V0Controller extends Controller
 //        );
 
         $params = array(
-            'action' => 'sendverifycode',
+            'action' => 'newsdesc',
             'type'=>0,
-            'tel'=>'18228041350',
+            'id'=>'9509',
             'password'=>md5('123456'.'xFl@&^852'),
             'verifycode'=>'9046'
         );
@@ -1322,6 +1325,7 @@ class V0Controller extends Controller
             "data"=>$data,
             "sign"=>$sign
         );
+        echo RemoteCurl::getInstance()->post('127.0.0.1/jixiang/server/project/index.php',$rtnList);
         print_r(json_decode(RemoteCurl::getInstance()->post('127.0.0.1/jixiang/server/project/index.php',$rtnList)));
     }
 
