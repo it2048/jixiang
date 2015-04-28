@@ -91,7 +91,7 @@ class HomeController extends Controller {
                         }
                     }
                 }
-                $this->render('news',array("model"=>$data));
+                $this->renderPartial('news',array("model"=>$data));
             }
             else
             {
