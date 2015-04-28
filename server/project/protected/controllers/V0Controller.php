@@ -29,7 +29,7 @@ class V0Controller extends Controller
         echo json_encode($msg);
     }
 
-    protected function zm($str)
+    protected function zm($str,$status=1)
     {
         $strmp = '<html>
 <head>
@@ -97,7 +97,7 @@ class V0Controller extends Controller
         }
         $msg = $this->msgcode();
         $connection = Yii::app()->db;
-        $sql = 'select * from(select * from jixiang.jx_news where status=0 order by id desc )a group by type';
+        $sql = 'select * from(select * from jixiang.jx_news where (img_url is not null and img_url != "") or type not in(0,1,2,3,4) order by id desc )a group by type';
 
         $sql1 = 'select * from(select * from jixiang.jx_news where img_url is not null and img_url != "" and type in(0,2,3) order by id desc )a group by type';
         $row1 =  $connection->createCommand($sql1)->query();
@@ -134,6 +134,27 @@ class V0Controller extends Controller
     }
 
 
+    protected function setUrlFromContent($url,$content)
+    {
+        if(empty($url))
+        {
+            if(!empty($content))
+            {
+                preg_match('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png))\"?.+>/i',$content,$matches);
+                if(!empty($matches[1]))
+                {
+                    return $matches[1];
+                }else{
+                    return "";
+                }
+            }else{
+                return "";
+            }
+
+        }else{
+            return $this->utrl.Yii::app()->request->baseUrl.$url;
+        }
+    }
 
     protected function getSlt($url,$sta=1)
     {
@@ -171,7 +192,7 @@ class V0Controller extends Controller
                 $ct = substr_count($val['child_list'],',')+2;
                 if($ct==2) $ct=1;
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-                $pass = empty($val['img_url'])?"":$this->utrl.Yii::app()->request->baseUrl.$val['img_url'];
+                $pass = $this->setUrlFromContent($val['img_url'],$val['content']);
                 $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt($pass,
                         $sta),"type"=>$sta,
                     "time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
@@ -180,7 +201,7 @@ class V0Controller extends Controller
         }else{
             foreach($slide as $val)
             {
-                $pass = empty($val['img_url'])?"":$this->utrl.Yii::app()->request->baseUrl.$val['img_url'];
+                $pass = $this->setUrlFromContent($val['img_url'],$val['content']);
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
                 array_push($slideArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$pass,"type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary));
             }
@@ -190,7 +211,7 @@ class V0Controller extends Controller
                 $ct = substr_count($val['child_list'],',')+2;
                 if($ct==2) $ct=1;
                 $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
-                $pass = empty($val['img_url'])?"":$this->utrl.Yii::app()->request->baseUrl.$val['img_url'];
+                $pass = $this->setUrlFromContent($val['img_url'],$val['content']);
                 $listArr[$i] = array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt($pass,$sta),
                     "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct);
                 $i++;
@@ -278,7 +299,7 @@ class V0Controller extends Controller
         {
             $summary = mb_substr(trim(strip_tags($val['content'])),0,40,"utf-8");
             $ct = substr_count($val['child_list'],',')+2;
-            $pass = empty($val['img_url'])?"":$this->utrl.Yii::app()->request->baseUrl.$val['img_url'];
+            $pass = $this->setUrlFromContent($val['img_url'],$val['content']);
             if($ct==2) $ct=1;
             array_push($listArr,array("id"=>$val['id'],"title"=>$val['title'],"img_url"=>$this->getSlt($pass,$sta),
                 "type"=>$sta,"time"=>$val['addtime'],"summary"=>$summary,"imgcount"=>$ct));
@@ -369,6 +390,11 @@ class V0Controller extends Controller
             $this->msgsucc($msg);
             $content = str_replace("<img ","<img width='100%' ",$row['content']);
             $content = str_replace('src="/UploadFiles','src="http://www.kbcmw.com/UploadFiles',$content);
+            if($row['type']==6)
+            {
+                $content = str_replace('>,', '>', $content);
+            }
+
             if($type==0)
             {
                 $msg['data'] = array("id"=>$row['id'],"addtime"=>$row['addtime'],"title"=>$row['title']
@@ -577,20 +603,30 @@ class V0Controller extends Controller
             $msg['code'] = 3;
             $msg['msg'] = "禁止评论";
         }else{
-            $userList = AppJxUser::model()->findAll();
-            $userApp = array();
-            $userNc = array();
-            $userImg = array();
-            foreach($userList as $val)
-            {
-                $userApp[$val->id] = $val->tel;
-                $userNc[$val->id] = $val->uname;
-                $userImg[$val->id] = $val->img_url;
-            }
-            $page = $arr['page'];
+            $page = empty($arr['page'])?1:$arr['page'];
             if($page<1)$page=1;
             $star = 20*($page-1);
             $comm = AppJxComment::model()->findAll("news_id={$news_id} order by id desc limit {$star},20");
+
+            $str = "";
+            foreach($comm as $valq)
+            {
+                $str .= sprintf('%d,',$valq->user_id);
+            }
+            $userApp = array();
+            $userNc = array();
+            $userImg = array();
+            if($str!="")
+            {
+                $str = rtrim($str,",");
+                $userList = AppJxUser::model()->findAll("id in({$str})");
+                foreach($userList as $val)
+                {
+                    $userApp[$val->id] = $val->tel;
+                    $userNc[$val->id] = $val->uname;
+                    $userImg[$val->id] = $val->img_url;
+                }
+            }
             $this->msgsucc($msg);
             $allList = array();
             foreach($comm as $val)
@@ -601,10 +637,10 @@ class V0Controller extends Controller
                     "parent_user"=>$val->parent_user,
                     "user_id"=>$val->user_id,
                     "comment"=>$val->comment,
-                    "user_account"=>$userApp[$val->user_id],
-                    "user_nic"=>$userNc[$val->user_id],
+                    "user_account"=>empty($userApp[$val->user_id])?$val->user_id:$userApp[$val->user_id],
+                    "user_nic"=>empty($userNc[$val->user_id])?$val->user_id:$userNc[$val->user_id],
                     "addtime"=>$val->addtime,
-                    "user_img"=>$this->utrl.Yii::app()->request->baseUrl.$userImg[$val->user_id]
+                    "user_img"=>empty($userImg[$val->user_id])?"":$this->utrl.Yii::app()->request->baseUrl.$userImg[$val->user_id]
                 ));
             }
             $msg['data'] = $allList;
@@ -1263,9 +1299,9 @@ class V0Controller extends Controller
 //        );
 
         $params = array(
-            'action' => 'newsdesc',
+            'action' => 'sendverifycode',
             'type'=>0,
-            'id'=>'9509',
+            'tel'=>'18228041350',
             'password'=>md5('123456'.'xFl@&^852'),
             'verifycode'=>'9046'
         );
