@@ -284,12 +284,12 @@ class AdminhomesetController extends AdminSet
         $like = Yii::app()->getRequest()->getParam("news_like", ""); //关联
         $hate = Yii::app()->getRequest()->getParam("news_hate", ""); //关联
 
-        $img_url = Yii::app()->getRequest()->getParam("news_img", "");
+        //$img_url1 = Yii::app()->getRequest()->getParam("news_img", "");
         $username = $this->getUserName(); //用户名
 
         $model = AppJxNews::model()->findByPk($id);
-        if($img_url=="")
-        {
+        $img_url = $model->img_url;
+
             if(!empty($_FILES['news_up']['name']))
             {
                 $img = array("png","jpg");
@@ -316,9 +316,9 @@ class AdminhomesetController extends AdminSet
                     $msg["code"] = 3;
                 }
             }
-        }
 
-        if($id!==""&&$username!=""&&$img_url!="")
+
+        if($id!==""&&$username!="")
         {
             $model->title = $title;
             $model->type = $type;
