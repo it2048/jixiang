@@ -15,7 +15,7 @@
             <tr>
                 <td><?php echo $value['telorsb']; ?></td>
                 <td>
-                    <a title="确实要删除这条记录吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminblack/del',array('id'=>$value['telorsb'])); ?>" class="btnDel">删除</a>
+                    <a title="确实要删除这条记录吗?" callback="deleteAuCall" target="ajaxTodo" href="<?php echo Yii::app()->createAbsoluteUrl('adminblack/del',array('tel'=>$value['telorsb'])); ?>" class="btnDel">删除</a>
                 </td>
             </tr>
         <?php }?>

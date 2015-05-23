@@ -29,7 +29,7 @@ class AdminblackController extends AdminSet
     public function actionDel()
     {
         $msg = $this->msgcode();
-        $id = Yii::app()->getRequest()->getParam("id", 0); //用户名
+        $id = Yii::app()->getRequest()->getParam("tel", 0); //用户名
         if($id!=0)
         {
             if(AppSmsNotice::model()->deleteByPk($id))
