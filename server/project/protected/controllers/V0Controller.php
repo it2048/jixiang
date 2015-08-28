@@ -684,7 +684,7 @@ class V0Controller extends Controller
         }
         elseif(empty($newmodel))
         {
-            $msg['msg'] = "该文章静止评论";
+            $msg['msg'] = "该文章禁止评论";
         }
         elseif($user_id==""||$token==""||$news_id==""||$content=="")
         {
